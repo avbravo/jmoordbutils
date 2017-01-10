@@ -311,45 +311,27 @@ public static boolean isDummySelectItem(UIComponent component, String value) {
 
     }
 
+  /**
+   * 
+   * @param folder  forExample: getPathResources("/fotos/paises/");
+   * @return  getPath() + "resources"+folder
+   *       
+   */
+public static String getAddPathResources(String folder){
+    
+ try {
+
+            String path = getPath() + "resources"+folder;
+            return path;
+        } catch (Exception e) {
+
+            addErrorMessage("getAddPathResources() " + e.getLocalizedMessage());
+        }
+        return null;
+
+    }
+
   
-
-    public static String getPathFotosPais() {
-        try {
-
-            String path = getPath() + "resources/fotos/paises/";
-            return path;
-        } catch (Exception e) {
-
-            addErrorMessage("getPathFotosPais() " + e.getLocalizedMessage());
-        }
-        return null;
-
-    }
-    public static String getPathFotosClientes() {
-        try {
-
-            String path = getPath() + "resources/fotos/clientes/";
-            return path;
-        } catch (Exception e) {
-
-            addErrorMessage("getPathFotosClientes() " + e.getLocalizedMessage());
-        }
-        return null;
-
-    }
-
-    public static String getPathExcel() {
-        try {
-
-            String path = getPath() + "resources/excel/";
-            return path;
-        } catch (Exception e) {
-
-            addErrorMessage("getPathArduino() " + e.getLocalizedMessage());
-        }
-        return null;
-
-    }
 
     
 
