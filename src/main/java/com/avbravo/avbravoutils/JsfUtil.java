@@ -2,7 +2,7 @@
 * To change this license header, choose License Headers in Project Properties.
 * To change this template file, choose Tools | Templates
  * and open the template in the editor.
-*/
+ */
 package com.avbravo.avbravoutils;
 
 import java.io.File;
@@ -41,34 +41,33 @@ import org.primefaces.context.RequestContext;
  *
  * @authoravbravo
  */
-
-public class JsfUtil implements Serializable{
+public class JsfUtil implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(JsfUtil.class.getName());
 
-public static SelectItem[] getSelectItems(List<?> entities, boolean selectOne) {
-    int size = selectOne ? entities.size() + 1 : entities.size();
-    SelectItem[] items = new SelectItem[size];
-    int i = 0;
-    if (selectOne) {
-        items[0] = new SelectItem("", "­­­");
-        i++;
+    public static SelectItem[] getSelectItems(List<?> entities, boolean selectOne) {
+        int size = selectOne ? entities.size() + 1 : entities.size();
+        SelectItem[] items = new SelectItem[size];
+        int i = 0;
+        if (selectOne) {
+            items[0] = new SelectItem("", "­­­");
+            i++;
+        }
+        for (Object x : entities) {
+            items[i++] = new SelectItem(x, x.toString());
+        }
+        return items;
     }
-    for (Object x : entities) {
-        items[i++] = new SelectItem(x, x.toString());
-    }
-    return items;
-}
 
-
-public String logout() {
-    HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-    if (session != null) {
-        session.invalidate();
+    public String logout() {
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "/index";
     }
-    return "/index";
-}
-public static void addErrorMessage(Exception ex, String defaultMsg) {
+
+    public static void addErrorMessage(Exception ex, String defaultMsg) {
         String msg = ex.getLocalizedMessage();
         if (msg != null && msg.length() > 0) {
             addErrorMessage(msg);
@@ -80,7 +79,7 @@ public static void addErrorMessage(Exception ex, String defaultMsg) {
     public static void addErrorMessages(List<String> messages) {
         for (String message : messages) {
             addErrorMessage(message);
-            
+
         }
     }
 
@@ -91,11 +90,11 @@ public static void addErrorMessage(Exception ex, String defaultMsg) {
         LOG.warning(msg);
     }
 
-     public static void testMessage(String msg) {
+    public static void testMessage(String msg) {
         FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                 msg, msg);
         FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-          LOG.warning(msg);
+        LOG.warning(msg);
     }
 
     public static void addSuccessMessage(String msg) {
@@ -106,12 +105,12 @@ public static void addErrorMessage(Exception ex, String defaultMsg) {
 
     public static void addWarningMessage(String msg) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, msg, ""));
-          LOG.warning(msg);
+        LOG.warning(msg);
     }
 
     public static void addFatalMessage(String msg) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, msg, ""));
-          LOG.warning(msg);
+        LOG.warning(msg);
     }
 
     public static String getRequestParameter(String key) {
@@ -134,21 +133,21 @@ public static void addErrorMessage(Exception ex, String defaultMsg) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, titulo,
                 texto);
         RequestContext.getCurrentInstance().showMessageInDialog(message);
-          LOG.warning(titulo + " " +texto);
+        LOG.warning(titulo + " " + texto);
     }
 
     public static void fatalDialog(String titulo, String texto) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_FATAL, titulo,
                 texto);
         RequestContext.getCurrentInstance().showMessageInDialog(message);
-         LOG.warning(titulo + " " +texto);
+        LOG.warning(titulo + " " + texto);
     }
 
     public static void errorDialog(String titulo, String texto) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                 titulo, texto);
         RequestContext.getCurrentInstance().showMessageInDialog(message);
-         LOG.warning(titulo + " " +texto);
+        LOG.warning(titulo + " " + texto);
     }
 
     public static java.sql.Date converterDate(java.util.Date fecha) {
@@ -161,7 +160,8 @@ public static void addErrorMessage(Exception ex, String defaultMsg) {
         }
         return null;
     }
-public static boolean isDummySelectItem(UIComponent component, String value) {
+
+    public static boolean isDummySelectItem(UIComponent component, String value) {
         for (UIComponent children : component.getChildren()) {
             if (children instanceof UISelectItem) {
                 UISelectItem item = (UISelectItem) children;
@@ -221,34 +221,34 @@ public static boolean isDummySelectItem(UIComponent component, String value) {
         return h.toString();
     }
 
-/**
-   genera id
-* 
- * @return returna un randomUUID automatico
-*/
+    /**
+     * genera id
+     *
+     * @return returna un randomUUID automatico
+     */
     public static String getUUID() {
- 
+
         UUID uuid = UUID.randomUUID();
-        return  uuid.toString().toLowerCase();
+        return uuid.toString().toLowerCase();
 
     }
 
-/**
-    * getExtension()
-    * 
-    * @param texto
-    * @return la extension de un nombre de archivo
-    */
-   public static String getExtension(String texto){
-       try {
-            return texto.substring(texto.indexOf("."),texto.length());
-       } catch (Exception e) {
+    /**
+     * getExtension()
+     *
+     * @param texto
+     * @return la extension de un nombre de archivo
+     */
+    public static String getExtension(String texto) {
+        try {
+            return texto.substring(texto.indexOf("."), texto.length());
+        } catch (Exception e) {
             JsfUtil.addErrorMessage("getExtension() " + e.getLocalizedMessage());
-       }
-       return "";
-   }
+        }
+        return "";
+    }
 
-/*
+    /*
 /*
      copia un archivo generalmente cuando se usa el fileupload
      fileName: nombre del archivo a copiar
@@ -280,12 +280,11 @@ public static boolean isDummySelectItem(UIComponent component, String value) {
         return false;
     }
 
+    public static String getPathFotos() {
+        try {
 
- public static String getPathFotos() {
-        try {             
-        
             String path = getPath() + "resources/fotos/";
- return path;
+            return path;
         } catch (Exception e) {
 
             addErrorMessage("getPathFotosPlagas() " + e.getLocalizedMessage());
@@ -294,7 +293,7 @@ public static boolean isDummySelectItem(UIComponent component, String value) {
 
     }
 
- /*
+    /*
      devuelve el path 
      */
     public static String getPath() {
@@ -311,17 +310,17 @@ public static boolean isDummySelectItem(UIComponent component, String value) {
 
     }
 
-  /**
-   * 
-   * @param folder  forExample: getPathResources("/fotos/paises/");
-   * @return  getPath() + "resources"+folder
-   *       
-   */
-public static String getAddPathResources(String folder){
-    
- try {
+    /**
+     *
+     * @param folder forExample: getPathResources("/fotos/paises/");
+     * @return getPath() + "resources"+folder
+     *
+     */
+    public static String getAddPathResources(String folder) {
 
-            String path = getPath() + "resources"+folder;
+        try {
+
+            String path = getPath() + "resources" + folder;
             return path;
         } catch (Exception e) {
 
@@ -330,14 +329,6 @@ public static String getAddPathResources(String folder){
         return null;
 
     }
-
-  
-
-    
-
-    
-
-    
 
     public static Double redondear(Double n, Integer decimales) {
         Double r = 0.0;
@@ -378,13 +369,13 @@ public static String getAddPathResources(String folder){
         return strValue.toUpperCase();
     }
 
- public static Double round(Double value) {
+    public static Double round(Double value) {
 
         if (value != null) {
-            System.out.println("value: "+value);
-            System.out.println("value to String: "+value.toString());
+            System.out.println("value: " + value);
+            System.out.println("value to String: " + value.toString());
             String[] splitter = value.toString().split("\\.");
-            System.out.println("decimals: "+splitter[1].length());
+            System.out.println("decimals: " + splitter[1].length());
             if (splitter[1].length() <= 2) {
                 return value;
             } else {
@@ -395,21 +386,20 @@ public static String getAddPathResources(String folder){
             return 1d;
         }
     }
- 
- public static java.util.Date getFechaActual() {
-  LocalDateTime timePoint = LocalDateTime.now( );  
-            LocalDate currentDate = LocalDate.now();
-            java.util.Date date = java.sql.Date.valueOf(currentDate );
-            return date;
- }
-            
+
+    public static java.util.Date getFechaActual() {
+        LocalDateTime timePoint = LocalDateTime.now();
+        LocalDate currentDate = LocalDate.now();
+        java.util.Date date = java.sql.Date.valueOf(currentDate);
+        return date;
+    }
+
 //  public static java.util.Date getFechaActual() {
 //        java.util.Calendar ca = java.util.Calendar.getInstance();
 //        java.sql.Date mydate = new java.sql.Date(ca.getTimeInMillis());
 //        return new java.sql.Date(mydate.getTime());
 //
 //    }
-
     public static Integer getAnioActual() {
         java.util.Calendar ca = java.util.Calendar.getInstance();
         java.sql.Date mydate = new java.sql.Date(ca.getTimeInMillis());
@@ -491,9 +481,14 @@ public static String getAddPathResources(String folder){
         return date;
 
     }
+
     public static String getISODate(Date date) {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
-		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-		return dateFormat.format(date);
-	}
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return dateFormat.format(date);
+    }
+
+    
+   
+    
 }
