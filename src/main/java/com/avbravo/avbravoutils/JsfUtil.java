@@ -27,6 +27,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -531,4 +532,8 @@ public class JsfUtil implements Serializable {
         return texto;
     }
     
+    public static LocalTime getHour(){
+       
+       return LocalTime.now();
+    }
 }
