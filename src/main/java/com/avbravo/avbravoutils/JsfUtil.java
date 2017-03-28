@@ -536,4 +536,18 @@ public class JsfUtil implements Serializable {
        
        return LocalTime.now();
     }
+    
+    public Integer diasEntreFechas(Date fechaMayor, Date fechaMenor) {
+       int d=0;
+        try {
+             long diferenciaEn_ms = fechaMayor.getTime() - fechaMenor.getTime();
+
+        long dias = diferenciaEn_ms / (1000 * 60 * 60 * 24);
+        d = (int) dias;
+        } catch (Exception e) {
+ System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
+        }
+       
+        return d;
+    }
 }
