@@ -41,8 +41,11 @@ public class MenuElement implements Serializable{
         this.list = list;
     }
     
-    
-    public void habilitar(Boolean t){
+    /**
+     * inicializa
+     * @param t 
+     */
+    public void initialize(Boolean t){
         menu=t;
         create=t;
         query=t;
@@ -59,45 +62,47 @@ public class MenuElement implements Serializable{
         this.menu = menu;
     }
 
-    public Boolean getCrear() {
+    public Boolean getCreate() {
         return create;
     }
 
-    public void setCrear(Boolean create) {
+    public void setCreate(Boolean create) {
         this.create = create;
     }
 
-    public Boolean getConsultar() {
+    public Boolean getQuery() {
         return query;
     }
-    public void setConsultar(Boolean query) {
+
+    public void setQuery(Boolean query) {
         this.query = query;
     }
 
-    public Boolean getEditar() {
+    public Boolean getEdit() {
         return edit;
     }
 
-    public void setEditar(Boolean edit) {
+    public void setEdit(Boolean edit) {
         this.edit = edit;
     }
 
-    public Boolean getEliminar() {
+    public Boolean getDelete() {
         return delete;
     }
 
-    public void setEliminar(Boolean delete) {
+    public void setDelete(Boolean delete) {
         this.delete = delete;
     }
 
-    public Boolean getListar() {
+    public Boolean getList() {
         return list;
     }
 
-    public void setListar(Boolean list) {
+    public void setList(Boolean list) {
         this.list = list;
     }
 
+  
 
 
 
