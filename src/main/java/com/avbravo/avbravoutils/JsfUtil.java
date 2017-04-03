@@ -482,6 +482,25 @@ public class JsfUtil implements Serializable {
         return date;
 
     }
+    /**
+     * 
+     * @param month
+     * @return devuelve una fecha correspondiente al primer dia de ese mes
+     */
+    public static Date getDateFirtsOfMonth(Integer year, Integer month) {
+        LocalDate now = LocalDate.now();//# 2015-11-23
+        Integer day = 1;
+        LocalDate firstDay = LocalDate.of(year, month, day);
+        Date date = java.sql.Date.valueOf(firstDay);
+        return date;
+    }
+    public static Date getDateLastOfMonth(Integer year, Integer month) {
+        LocalDate now = LocalDate.now();//# 2015-11-23
+        Integer day = 1;
+        LocalDate firstDay = LocalDate.of(year, month, day);
+        Date date = java.sql.Date.valueOf(firstDay);
+        return date;
+    }
 
     public static String getISODate(Date date) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
