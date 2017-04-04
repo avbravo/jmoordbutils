@@ -4,7 +4,7 @@
 
     <groupId>com.avbravo</groupId>
     <artifactId>avbravoutils</artifactId>
-    <version>0.4</version>
+    <version>0.5</version>
     <packaging>ejb</packaging>
 
     <name>avbravoutils</name>
@@ -15,6 +15,17 @@
     </properties>
 
     <dependencies>
+          <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.twitter4j</groupId>
+            <artifactId>twitter4j-core</artifactId>
+            <version>4.0.6</version>
+        </dependency>
+        
           <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
