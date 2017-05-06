@@ -13,14 +13,12 @@ import java.io.IOException;
 import java.util.UUID;
 import java.util.List;
 import java.util.logging.Logger;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
-import javax.inject.Named;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.text.DateFormat;
@@ -568,5 +566,21 @@ public class JsfUtil implements Serializable {
         }
        
         return d;
+    }
+    
+    /*
+    
+    */
+     public static Date sumarMesaFechaActual(Integer mes) {
+  java.util.Date date = new Date();
+        try {
+          LocalDate localDate = LocalDate.now().plusMonths(3);
+       date = java.sql.Date.valueOf(localDate);
+
+        } catch (Exception e) {
+ System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
+        }
+       
+        return date;
     }
 }
