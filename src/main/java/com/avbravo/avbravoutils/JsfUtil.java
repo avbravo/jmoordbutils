@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 import javax.faces.component.UIInput;
 import javax.faces.component.UISelectItem;
 import javax.servlet.ServletContext;
@@ -583,4 +584,25 @@ public class JsfUtil implements Serializable {
        
         return date;
     }
+     
+     public long getMilisegundos(){
+         long milisegundos=0;
+         try {
+          milisegundos= System.nanoTime();
+             
+         } catch (Exception e) {
+             System.out.println("getMilisegundos() "+e.getLocalizedMessage());
+         }
+         return milisegundos;
+     }
+     public long getMilisegundosTranscurridos(long t0, long t1){
+         long milisegundos=0;
+         try {
+          milisegundos= TimeUnit.NANOSECONDS.toMillis(t1 -t0);
+             
+         } catch (Exception e) {
+             System.out.println("getMilisegundos() "+e.getLocalizedMessage());
+         }
+         return milisegundos;
+     }
 }
