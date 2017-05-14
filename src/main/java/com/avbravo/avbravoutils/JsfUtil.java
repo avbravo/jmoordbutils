@@ -481,8 +481,9 @@ public class JsfUtil implements Serializable {
         return date;
 
     }
+
     /**
-     * 
+     *
      * @param month
      * @return devuelve una fecha correspondiente al primer dia de ese mes
      */
@@ -493,6 +494,7 @@ public class JsfUtil implements Serializable {
         Date date = java.sql.Date.valueOf(firstDay);
         return date;
     }
+
     public static Date getDateLastOfMonth(Integer year, Integer month) {
         LocalDate now = LocalDate.now();//# 2015-11-23
         Integer day = 1;
@@ -507,8 +509,7 @@ public class JsfUtil implements Serializable {
         return dateFormat.format(date);
     }
 
-    
-   public  String letterToUpper(String texto) {
+    public String letterToUpper(String texto) {
         try {
 
             texto = texto.trim();
@@ -520,7 +521,7 @@ public class JsfUtil implements Serializable {
 
             texto = letra.toUpperCase() + texto.substring(1);
         } catch (Exception ex) {
-          System.out.println("letterToUpper() " + ex.getLocalizedMessage());
+            System.out.println("letterToUpper() " + ex.getLocalizedMessage());
         }
         return texto;
     }
@@ -532,7 +533,7 @@ public class JsfUtil implements Serializable {
      * @param caracter
      * @return
      */
-    public  String letterToLower(String texto) {
+    public String letterToLower(String texto) {
 
         try {
 
@@ -545,64 +546,73 @@ public class JsfUtil implements Serializable {
 
             texto = letra.toLowerCase() + texto.substring(1);
         } catch (Exception ex) {
-          System.out.println("letterToLower() " + ex.getLocalizedMessage());
+            System.out.println("letterToLower() " + ex.getLocalizedMessage());
         }
         return texto;
     }
-    
-    public static LocalTime getHour(){
-       
-       return LocalTime.now();
-    }
-    
-    public static Integer diasEntreFechas(Date fechaMayor, Date fechaMenor) {
-       int d=0;
-        try {
-             long diferenciaEn_ms = fechaMayor.getTime() - fechaMenor.getTime();
 
-        long dias = diferenciaEn_ms / (1000 * 60 * 60 * 24);
-        d = (int) dias;
+    public static LocalTime getHour() {
+
+        return LocalTime.now();
+    }
+
+    public static Integer diasEntreFechas(Date fechaMayor, Date fechaMenor) {
+        int d = 0;
+        try {
+            long diferenciaEn_ms = fechaMayor.getTime() - fechaMenor.getTime();
+
+            long dias = diferenciaEn_ms / (1000 * 60 * 60 * 24);
+            d = (int) dias;
         } catch (Exception e) {
- System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
+            System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
         }
-       
+
         return d;
     }
-    
+
     /*
     
-    */
-     public static Date sumarMesaFechaActual(Integer mes) {
-  java.util.Date date = new Date();
+     */
+    public static Date sumarMesaFechaActual(Integer mes) {
+        java.util.Date date = new Date();
         try {
-          LocalDate localDate = LocalDate.now().plusMonths(3);
-       date = java.sql.Date.valueOf(localDate);
+            LocalDate localDate = LocalDate.now().plusMonths(3);
+            date = java.sql.Date.valueOf(localDate);
 
         } catch (Exception e) {
- System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
+            System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
         }
-       
+
         return date;
     }
-     
-     public long getMilisegundos(){
-         long milisegundos=0;
-         try {
-          milisegundos= System.nanoTime();
-             
-         } catch (Exception e) {
-             System.out.println("getMilisegundos() "+e.getLocalizedMessage());
-         }
-         return milisegundos;
-     }
-     public long getMilisegundosTranscurridos(long t0, long t1){
-         long milisegundos=0;
-         try {
-          milisegundos= TimeUnit.NANOSECONDS.toMillis(t1 -t0);
-             
-         } catch (Exception e) {
-             System.out.println("getMilisegundos() "+e.getLocalizedMessage());
-         }
-         return milisegundos;
-     }
+
+    public static long getMilisegundos() {
+        long milisegundos = 0;
+        try {
+            milisegundos = System.nanoTime();
+
+        } catch (Exception e) {
+            System.out.println("getMilisegundos() " + e.getLocalizedMessage());
+        }
+        return milisegundos;
+    }
+
+    public static long getMilisegundosTranscurridos(long t0, long t1) {
+        long milisegundos = 0;
+        try {
+            milisegundos = TimeUnit.NANOSECONDS.toMillis(t1 - t0);
+
+        } catch (Exception e) {
+            System.out.println("getMilisegundos() " + e.getLocalizedMessage());
+        }
+        return milisegundos;
+    }
+
+    public static boolean esImpar(int iNumero) {
+        if (iNumero % 2 != 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
