@@ -608,7 +608,7 @@ public class JsfUtil implements Serializable {
         return milisegundos;
     }
 
-    public static boolean esImpar(int iNumero) {
+    public static Boolean esImpar(int iNumero) {
         if (iNumero % 2 != 0) {
             return true;
         } else {
