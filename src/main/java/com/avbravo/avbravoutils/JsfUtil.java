@@ -509,6 +509,25 @@ public class JsfUtil implements Serializable {
         return dateFormat.format(date);
     }
 
+     public static LocalTime getTiempo() {
+        LocalTime now = LocalTime.now();
+      
+        return now;
+
+    }
+    
+      public static String printTiempo() {
+        LocalTime now = LocalTime.now();
+        String tiempo="";
+       
+
+          tiempo="En este momento son las %d horas con %d minutos y %d segundos\n"+ now.getHour()+
+                    now.getMinute()+now.getSecond();
+     
+        return tiempo;
+
+    }
+    
     public String letterToUpper(String texto) {
         try {
 
