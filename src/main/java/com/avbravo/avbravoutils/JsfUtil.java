@@ -595,7 +595,7 @@ public class JsfUtil implements Serializable {
     public static Date sumarMesaFechaActual(Integer mes) {
         java.util.Date date = new Date();
         try {
-            LocalDate localDate = LocalDate.now().plusMonths(3);
+            LocalDate localDate = LocalDate.now().plusMonths(mes);
             date = java.sql.Date.valueOf(localDate);
 
         } catch (Exception e) {
