@@ -5,6 +5,8 @@
  */
 package com.avbravo.avbravoutils;
 
+import com.avbravo.avbravoutils.crypto.CryptoConverter;
+import com.avbravo.avbravoutils.crypto.Encriptador;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -35,6 +37,7 @@ import java.util.concurrent.TimeUnit;
 import javax.faces.component.UIInput;
 import javax.faces.component.UISelectItem;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -67,23 +70,23 @@ public class JsfUtil implements Serializable {
         return "/index";
     }
 
-    public static void addErrorMessage(Exception ex, String defaultMsg) {
+    public static void errorMessage(Exception ex, String defaultMsg) {
         String msg = ex.getLocalizedMessage();
         if (msg != null && msg.length() > 0) {
-            addErrorMessage(msg);
+           errorMessage(msg);
         } else {
-            addErrorMessage(defaultMsg);
+            errorMessage(defaultMsg);
         }
     }
 
-    public static void addErrorMessages(List<String> messages) {
+    public static void errorMessages(List<String> messages) {
         for (String message : messages) {
-            addErrorMessage(message);
+            errorMessage(message);
 
         }
     }
 
-    public static void addErrorMessage(String msg) {
+    public static void errorMessage(String msg) {
         FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                 msg, msg);
         FacesContext.getCurrentInstance().addMessage(null, facesMsg);
@@ -156,7 +159,7 @@ public class JsfUtil implements Serializable {
             java.sql.Date dtfecha = new java.sql.Date(lfecha);
             return dtfecha;
         } catch (Exception e) {
-            addErrorMessage("converterDate() " + e.getLocalizedMessage());
+            errorMessage("converterDate() " + e.getLocalizedMessage());
         }
         return null;
     }
@@ -243,7 +246,7 @@ public class JsfUtil implements Serializable {
         try {
             return texto.substring(texto.indexOf("."), texto.length());
         } catch (Exception e) {
-            JsfUtil.addErrorMessage("getExtension() " + e.getLocalizedMessage());
+            JsfUtil.errorMessage("getExtension() " + e.getLocalizedMessage());
         }
         return "";
     }
@@ -275,7 +278,7 @@ public class JsfUtil implements Serializable {
 
             return true;
         } catch (IOException e) {
-            JsfUtil.addErrorMessage("copyFile() " + e.getLocalizedMessage());
+            JsfUtil.errorMessage("copyFile() " + e.getLocalizedMessage());
         }
         return false;
     }
@@ -287,7 +290,7 @@ public class JsfUtil implements Serializable {
             return path;
         } catch (Exception e) {
 
-            addErrorMessage("getPathFotosPlagas() " + e.getLocalizedMessage());
+            errorMessage("getPathFotosPlagas() " + e.getLocalizedMessage());
         }
         return null;
 
@@ -304,7 +307,7 @@ public class JsfUtil implements Serializable {
 
         } catch (Exception e) {
 
-            addErrorMessage("getPath() " + e.getLocalizedMessage());
+            errorMessage("getPath() " + e.getLocalizedMessage());
         }
         return null;
 
@@ -324,7 +327,7 @@ public class JsfUtil implements Serializable {
             return path;
         } catch (Exception e) {
 
-            addErrorMessage("getAddPathResources() " + e.getLocalizedMessage());
+            errorMessage("getAddPathResources() " + e.getLocalizedMessage());
         }
         return null;
 
@@ -352,7 +355,7 @@ public class JsfUtil implements Serializable {
 
             return r;
         } catch (Exception e) {
-            addErrorMessage("redondear() " + e.getLocalizedMessage());
+            errorMessage("redondear() " + e.getLocalizedMessage());
         }
         return r;
     }
@@ -509,25 +512,24 @@ public class JsfUtil implements Serializable {
         return dateFormat.format(date);
     }
 
-     public static LocalTime getTiempo() {
+    public static LocalTime getTiempo() {
         LocalTime now = LocalTime.now();
-      
+
         return now;
 
     }
-    
-      public static String printTiempo() {
-        LocalTime now = LocalTime.now();
-        String tiempo="";
-       
 
-          tiempo="En este momento son las %d horas con %d minutos y %d segundos\n"+ now.getHour()+
-                    now.getMinute()+now.getSecond();
-     
+    public static String printTiempo() {
+        LocalTime now = LocalTime.now();
+        String tiempo = "";
+
+        tiempo = "En este momento son las %d horas con %d minutos y %d segundos\n" + now.getHour()
+                + now.getMinute() + now.getSecond();
+
         return tiempo;
 
     }
-    
+
     public String letterToUpper(String texto) {
         try {
 
@@ -634,4 +636,67 @@ public class JsfUtil implements Serializable {
             return false;
         }
     }
+    // <editor-fold defaultstate="collapsed" desc="getIp">  
+
+    /**
+     * Devuelve el IP
+     *
+     * @return
+     */
+    public static String getIp() {
+        String myip = "";
+        try {
+            HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            String ipAddress = request.getHeader("X-FORWARDED-FOR");
+            if (ipAddress == null) {
+                ipAddress = request.getRemoteAddr();
+
+            }
+            myip = ipAddress;
+        } catch (Exception e) {
+            errorMessage("getIp() " + e.getLocalizedMessage());
+        }
+        return myip;
+    }// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="encriptar">  
+    /**
+     * Encripta un texto en base a una llave
+     *
+     * @param texto: myclavepersonal
+     * @param key : mykey
+     * @return
+     */
+    public static String encritpar(String texto) {
+
+        try {
+            CryptoConverter cryptoConverter = new CryptoConverter();
+
+           return cryptoConverter.convertToDatabaseColumn(texto);
+        } catch (Exception e) {
+            errorMessage("encriptar() " + e.getLocalizedMessage());
+        }
+        return "";
+    }// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="desencritpar">  
+
+    /**
+     * Encripta un texto en base a una llave
+     *
+     * @param textoencriptado
+     * @param texto: myclavepersonal
+     * @param key : mykey
+     * @return
+     */
+    public static String desencritpar(String textoencriptado) {
+        try {
+           CryptoConverter cryptoConverter = new CryptoConverter();
+
+          return cryptoConverter.convertToEntityAttribute(textoencriptado);
+        } catch (Exception e) {
+            errorMessage("desencriptar() " + e.getLocalizedMessage());
+        }
+        return "";
+    }// </editor-fold>
+
 }

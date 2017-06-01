@@ -68,7 +68,7 @@ public Printer() {
         
             }
         } catch (JRException | IOException  e ) {
-            JsfUtil.addErrorMessage(e.getMessage());
+            JsfUtil.errorMessage(e.getMessage());
         }
         return null;
     }
@@ -83,7 +83,7 @@ public Printer() {
             JasperExportManager.exportReportToPdfStream(jasperPrint, servletOutputStream);
             FacesContext.getCurrentInstance().responseComplete();
         } catch (JRException | IOException e) {
-            JsfUtil.addErrorMessage(e.getMessage());
+            JsfUtil.errorMessage(e.getMessage());
         }
         return null;
     }
@@ -102,7 +102,7 @@ public Printer() {
             docxExporter.exportReport();
             FacesContext.getCurrentInstance().responseComplete();
         } catch (JRException | IOException e) {
-            JsfUtil.addErrorMessage(e.getMessage());
+            JsfUtil.errorMessage(e.getMessage());
         }
         return null;
     }
@@ -121,7 +121,7 @@ public Printer() {
             docxExporter.exportReport();
             FacesContext.getCurrentInstance().responseComplete();
         } catch (JRException | IOException e) {
-            JsfUtil.addErrorMessage(e.getMessage());
+            JsfUtil.errorMessage(e.getMessage());
         }
         return null;
     }
@@ -140,7 +140,7 @@ public Printer() {
             docxExporter.exportReport();
             FacesContext.getCurrentInstance().responseComplete();
         } catch (JRException | IOException e) {
-            JsfUtil.addErrorMessage(e.getMessage());
+            JsfUtil.errorMessage(e.getMessage());
         }
         return null;
     }
@@ -159,7 +159,7 @@ public Printer() {
             docxExporter.exportReport();
             FacesContext.getCurrentInstance().responseComplete();
         } catch (JRException | IOException e) {
-            JsfUtil.addErrorMessage(e.getMessage());
+            JsfUtil.errorMessage(e.getMessage());
         }
         return null;
     }
@@ -172,7 +172,7 @@ public Printer() {
             scontext = (ServletContext) facesContext.getExternalContext().getContext();
             jasperPrint = JasperFillManager.fillReport(scontext.getRealPath(ruta), hashmap, ds);
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e.getMessage());
+            JsfUtil.errorMessage(e.getMessage());
         }
     }
 

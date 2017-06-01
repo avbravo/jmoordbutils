@@ -4,7 +4,7 @@
 
     <groupId>com.avbravo</groupId>
     <artifactId>avbravoutils</artifactId>
-    <version>0.6</version>
+    <version>0.7</version>
     <packaging>ejb</packaging>
 
     <name>avbravoutils</name>
@@ -30,6 +30,11 @@
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
             <version>6.0</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.10</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
