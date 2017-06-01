@@ -100,18 +100,18 @@ public class JsfUtil implements Serializable {
         LOG.warning(msg);
     }
 
-    public static void addSuccessMessage(String msg) {
+    public static void successMessage(String msg) {
         FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg,
                 msg);
         FacesContext.getCurrentInstance().addMessage("successInfo", facesMsg);
     }
 
-    public static void addWarningMessage(String msg) {
+    public static void warningMessage(String msg) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, msg, ""));
         LOG.warning(msg);
     }
 
-    public static void addFatalMessage(String msg) {
+    public static void fatalMessage(String msg) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, msg, ""));
         LOG.warning(msg);
     }
