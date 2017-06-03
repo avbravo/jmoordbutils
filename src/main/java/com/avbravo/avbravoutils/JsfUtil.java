@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.avbravo.avbravoutils;
+// <editor-fold defaultstate="collapsed" desc="import">  
 
 import com.avbravo.avbravoutils.crypto.CryptoConverter;
 import com.avbravo.avbravoutils.crypto.Encriptador;
@@ -39,7 +40,7 @@ import javax.faces.component.UISelectItem;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import org.primefaces.context.RequestContext;
-
+    // </editor-fold>
 /**
  *
  * @authoravbravo
@@ -47,7 +48,7 @@ import org.primefaces.context.RequestContext;
 public class JsfUtil implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(JsfUtil.class.getName());
-
+// <editor-fold defaultstate="collapsed" desc="getSelectItems"> 
     public static SelectItem[] getSelectItems(List<?> entities, boolean selectOne) {
         int size = selectOne ? entities.size() + 1 : entities.size();
         SelectItem[] items = new SelectItem[size];
@@ -60,16 +61,16 @@ public class JsfUtil implements Serializable {
             items[i++] = new SelectItem(x, x.toString());
         }
         return items;
-    }
-
+    }    // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="logout"> 
     public String logout() {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         if (session != null) {
             session.invalidate();
         }
         return "/index";
-    }
-
+    }    // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="errorMessage"> 
     public static void errorMessage(Exception ex, String defaultMsg) {
         String msg = ex.getLocalizedMessage();
         if (msg != null && msg.length() > 0) {
@@ -77,81 +78,81 @@ public class JsfUtil implements Serializable {
         } else {
             errorMessage(defaultMsg);
         }
-    }
-
+    }    // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="errorMessages"> 
     public static void errorMessages(List<String> messages) {
         for (String message : messages) {
             errorMessage(message);
 
         }
-    }
-
+    }    // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="errorMessage(String msg)"> 
     public static void errorMessage(String msg) {
         FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                 msg, msg);
         FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         LOG.warning(msg);
-    }
+    }    // </editor-fold>
 
     public static void testMessage(String msg) {
         FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                 msg, msg);
         FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         LOG.warning(msg);
-    }
+    }    // </editor-fold>
 
     public static void successMessage(String msg) {
         FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg,
                 msg);
         FacesContext.getCurrentInstance().addMessage("successInfo", facesMsg);
-    }
+    }    // </editor-fold>
 
     public static void warningMessage(String msg) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, msg, ""));
         LOG.warning(msg);
-    }
+    }    // </editor-fold>
 
     public static void fatalMessage(String msg) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, msg, ""));
         LOG.warning(msg);
-    }
+    }    // </editor-fold>
 
     public static String getRequestParameter(String key) {
         return FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get(key);
-    }
+    }    // </editor-fold>
 
     public static Object getObjectFromRequestParameter(String requestParameterName,
             Converter converter, UIComponent component) {
         String theId = JsfUtil.getRequestParameter(requestParameterName);
         return converter.getAsObject(FacesContext.getCurrentInstance(), component, theId);
-    }
+    }    // </editor-fold>
 
     public static void infoDialog(String titulo, String texto) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, titulo,
                 texto);
         RequestContext.getCurrentInstance().showMessageInDialog(message);
-    }
+    }    // </editor-fold>
 
     public static void warningDialog(String titulo, String texto) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, titulo,
                 texto);
         RequestContext.getCurrentInstance().showMessageInDialog(message);
         LOG.warning(titulo + " " + texto);
-    }
+    }    // </editor-fold>
 
     public static void fatalDialog(String titulo, String texto) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_FATAL, titulo,
                 texto);
         RequestContext.getCurrentInstance().showMessageInDialog(message);
         LOG.warning(titulo + " " + texto);
-    }
+    }    // </editor-fold>
 
     public static void errorDialog(String titulo, String texto) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                 titulo, texto);
         RequestContext.getCurrentInstance().showMessageInDialog(message);
         LOG.warning(titulo + " " + texto);
-    }
+    }    // </editor-fold>
 
     public static java.sql.Date converterDate(java.util.Date fecha) {
         try {
@@ -162,7 +163,7 @@ public class JsfUtil implements Serializable {
             errorMessage("converterDate() " + e.getLocalizedMessage());
         }
         return null;
-    }
+    }    // </editor-fold>
 
     public static boolean isDummySelectItem(UIComponent component, String value) {
         for (UIComponent children : component.getChildren()) {
@@ -175,7 +176,7 @@ public class JsfUtil implements Serializable {
             }
         }
         return false;
-    }
+    }    // </editor-fold>
 
     public static String getComponentMessages(String clientComponent, String defaultMessage) {
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -192,7 +193,7 @@ public class JsfUtil implements Serializable {
             }
         }
         return "";
-    }
+    }    // </editor-fold>
 
     public static Throwable getRootCause(Throwable cause) {
         if (cause != null) {
@@ -204,7 +205,7 @@ public class JsfUtil implements Serializable {
             }
         }
         return null;
-    }
+    }    // </editor-fold>
 
     public static String md5(String clear) throws Exception {
         MessageDigest md = MessageDigest.getInstance("MD5");
@@ -222,7 +223,7 @@ public class JsfUtil implements Serializable {
         }
         //clave encriptada
         return h.toString();
-    }
+    }    // </editor-fold>
 
     /**
      * genera id
@@ -698,5 +699,5 @@ public class JsfUtil implements Serializable {
         }
         return "";
     }// </editor-fold>
-
+ 
 }
