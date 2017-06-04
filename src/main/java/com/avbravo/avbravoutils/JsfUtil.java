@@ -700,4 +700,37 @@ public class JsfUtil implements Serializable {
         return "";
     }// </editor-fold>
  
+     // <editor-fold defaultstate="collapsed" desc="getSession">  
+    /**
+     * devuelve Un objeto Session correspondiente a la sesion local
+     * @return 
+     */
+    public static HttpSession getSession(){
+            HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            HttpSession session = request.getSession();
+            return session;
+    }// </editor-fold>
+    
+     // <editor-fold defaultstate="collapsed" desc="getSession">  
+    /**
+     * devuelve Un objeto Session correspondiente a la sesion local
+     * @return 
+     */
+    public static Boolean addParametersUserNameToSession(String username){
+        Boolean add=false;
+        try {
+           HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            HttpSession session = request.getSession();
+             session.setAttribute("username", username);
+             add=true;
+        } catch (Exception e) {
+                 errorMessage("addParametersUserNameToSession() " + e.getLocalizedMessage());
+        }
+            
+            return add;
+    }// </editor-fold>
+    
+    
+    
+    
 }
