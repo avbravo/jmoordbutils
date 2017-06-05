@@ -171,7 +171,7 @@ public class SessionListener implements HttpSessionListener, HttpSessionAttribut
     public static List<String> getUsernameOnline() {
         return usernameList;
     }
-
+   // <editor-fold defaultstate="collapsed" desc="killAllSesion()">  
     /**
      * mata todas las sesiones
      *
@@ -188,7 +188,7 @@ public class SessionListener implements HttpSessionListener, HttpSessionAttribut
             JsfUtil.errorMessage("killAllSesion()" + e.getLocalizedMessage());
         }
         return false;
-    }
+    }// </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="killSesionById">  
     /**
@@ -214,7 +214,7 @@ public class SessionListener implements HttpSessionListener, HttpSessionAttribut
         }
         return kill;
     }// </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="killSesionById">  
+    // <editor-fold defaultstate="collapsed" desc="killSesionByUsername">  
     /**
      *
      * @param id
@@ -223,10 +223,28 @@ public class SessionListener implements HttpSessionListener, HttpSessionAttribut
     public static Boolean killSesionByUsername(String username) {
         Boolean kill = false;
         try {
+            System.out.println("-----------------------------------------");
+            System.out.println("killSessionByUsername()");
+            System.out.println("-----------------------------------------");
+            if(username == null || username.equals("")){
+                JsfUtil.warningMessage("El username es null");
+                System.out.println(" username null o vacio");
+                return false;
+            }
             for (HttpSession s : sessionList) {
+                System.out.println("s.getId() "+s.getId());
+                JsfUtil.warningMessage("s.getId() "+s.getId());
+                if(s.getAttribute("username")==null){
+                    System.out.println(" Esa sesion no tiene username asignado");
+                    JsfUtil.errorMessage(" Esa sesion no tiene username asignado");
+                    return false;
+                }
                 if (s.getAttribute("username").equals(username)) {
+                    JsfUtil.warningMessage("voy a eliminar la sesion "+s.getId());
                     s.invalidate();
+                    System.out.println(" invalidado");
                     sessionList.remove(s);
+                     System.out.println(" removido de la lista");
                     kill = true;
                     break;
                 }
