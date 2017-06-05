@@ -7,7 +7,6 @@ package com.avbravo.avbravoutils;
 // <editor-fold defaultstate="collapsed" desc="import">  
 
 import com.avbravo.avbravoutils.crypto.CryptoConverter;
-import com.avbravo.avbravoutils.crypto.Encriptador;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -37,10 +36,12 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import javax.faces.component.UIInput;
 import javax.faces.component.UISelectItem;
+import javax.faces.context.ExternalContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import org.primefaces.context.RequestContext;
-    // </editor-fold>
+// </editor-fold>
+
 /**
  *
  * @authoravbravo
@@ -49,6 +50,7 @@ public class JsfUtil implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(JsfUtil.class.getName());
 // <editor-fold defaultstate="collapsed" desc="getSelectItems"> 
+
     public static SelectItem[] getSelectItems(List<?> entities, boolean selectOne) {
         int size = selectOne ? entities.size() + 1 : entities.size();
         SelectItem[] items = new SelectItem[size];
@@ -63,6 +65,7 @@ public class JsfUtil implements Serializable {
         return items;
     }    // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="logout"> 
+
     public String logout() {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         if (session != null) {
@@ -71,15 +74,17 @@ public class JsfUtil implements Serializable {
         return "/index";
     }    // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="errorMessage"> 
+
     public static void errorMessage(Exception ex, String defaultMsg) {
         String msg = ex.getLocalizedMessage();
         if (msg != null && msg.length() > 0) {
-           errorMessage(msg);
+            errorMessage(msg);
         } else {
             errorMessage(defaultMsg);
         }
     }    // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="errorMessages"> 
+
     public static void errorMessages(List<String> messages) {
         for (String message : messages) {
             errorMessage(message);
@@ -87,6 +92,7 @@ public class JsfUtil implements Serializable {
         }
     }    // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="errorMessage(String msg)"> 
+
     public static void errorMessage(String msg) {
         FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                 msg, msg);
@@ -94,6 +100,7 @@ public class JsfUtil implements Serializable {
         LOG.warning(msg);
     }    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="testMessage"> 
     public static void testMessage(String msg) {
         FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                 msg, msg);
@@ -101,21 +108,25 @@ public class JsfUtil implements Serializable {
         LOG.warning(msg);
     }    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="successMessage"> 
     public static void successMessage(String msg) {
         FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg,
                 msg);
         FacesContext.getCurrentInstance().addMessage("successInfo", facesMsg);
     }    // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="warningMessage"> 
 
     public static void warningMessage(String msg) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, msg, ""));
         LOG.warning(msg);
     }    // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="fatalMessage"> 
 
     public static void fatalMessage(String msg) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, msg, ""));
         LOG.warning(msg);
     }    // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="getRequestParameter"> 
 
     public static String getRequestParameter(String key) {
         return FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get(key);
@@ -133,12 +144,14 @@ public class JsfUtil implements Serializable {
         RequestContext.getCurrentInstance().showMessageInDialog(message);
     }    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="warningDialog"> 
     public static void warningDialog(String titulo, String texto) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, titulo,
                 texto);
         RequestContext.getCurrentInstance().showMessageInDialog(message);
         LOG.warning(titulo + " " + texto);
     }    // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="fatalDialog"> 
 
     public static void fatalDialog(String titulo, String texto) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_FATAL, titulo,
@@ -146,6 +159,7 @@ public class JsfUtil implements Serializable {
         RequestContext.getCurrentInstance().showMessageInDialog(message);
         LOG.warning(titulo + " " + texto);
     }    // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="errorDialog"> 
 
     public static void errorDialog(String titulo, String texto) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -153,6 +167,7 @@ public class JsfUtil implements Serializable {
         RequestContext.getCurrentInstance().showMessageInDialog(message);
         LOG.warning(titulo + " " + texto);
     }    // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="converterDate"> 
 
     public static java.sql.Date converterDate(java.util.Date fecha) {
         try {
@@ -164,6 +179,7 @@ public class JsfUtil implements Serializable {
         }
         return null;
     }    // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="isDummySelectItem"> 
 
     public static boolean isDummySelectItem(UIComponent component, String value) {
         for (UIComponent children : component.getChildren()) {
@@ -206,6 +222,7 @@ public class JsfUtil implements Serializable {
         }
         return null;
     }    // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="md5"> 
 
     public static String md5(String clear) throws Exception {
         MessageDigest md = MessageDigest.getInstance("MD5");
@@ -225,6 +242,7 @@ public class JsfUtil implements Serializable {
         return h.toString();
     }    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="getUUID"> 
     /**
      * genera id
      *
@@ -235,7 +253,8 @@ public class JsfUtil implements Serializable {
         UUID uuid = UUID.randomUUID();
         return uuid.toString().toLowerCase();
 
-    }
+    }// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="getExtension"> 
 
     /**
      * getExtension()
@@ -250,7 +269,7 @@ public class JsfUtil implements Serializable {
             JsfUtil.errorMessage("getExtension() " + e.getLocalizedMessage());
         }
         return "";
-    }
+    }// </editor-fold>
 
     /*
 /*
@@ -282,7 +301,7 @@ public class JsfUtil implements Serializable {
             JsfUtil.errorMessage("copyFile() " + e.getLocalizedMessage());
         }
         return false;
-    }
+    }// </editor-fold>
 
     public static String getPathFotos() {
         try {
@@ -295,7 +314,7 @@ public class JsfUtil implements Serializable {
         }
         return null;
 
-    }
+    }// </editor-fold>
 
     /*
      devuelve el path 
@@ -312,7 +331,7 @@ public class JsfUtil implements Serializable {
         }
         return null;
 
-    }
+    }// </editor-fold>
 
     /**
      *
@@ -332,7 +351,7 @@ public class JsfUtil implements Serializable {
         }
         return null;
 
-    }
+    }// </editor-fold>
 
     public static Double redondear(Double n, Integer decimales) {
         Double r = 0.0;
@@ -359,7 +378,7 @@ public class JsfUtil implements Serializable {
             errorMessage("redondear() " + e.getLocalizedMessage());
         }
         return r;
-    }
+    }// </editor-fold>
 
     /**
      * Genera una serie de caracteres aleatorios
@@ -371,8 +390,8 @@ public class JsfUtil implements Serializable {
         UUID idUnique = UUID.randomUUID();
         strValue = idUnique.toString();
         return strValue.toUpperCase();
-    }
-
+    }// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="round"> 
     public static Double round(Double value) {
 
         if (value != null) {
@@ -389,14 +408,14 @@ public class JsfUtil implements Serializable {
         } else {
             return 1d;
         }
-    }
-
+    }// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="getFechaActual"> 
     public static java.util.Date getFechaActual() {
         LocalDateTime timePoint = LocalDateTime.now();
         LocalDate currentDate = LocalDate.now();
         java.util.Date date = java.sql.Date.valueOf(currentDate);
         return date;
-    }
+    }    // </editor-fold>
 
 //  public static java.util.Date getFechaActual() {
 //        java.util.Calendar ca = java.util.Calendar.getInstance();
@@ -408,13 +427,13 @@ public class JsfUtil implements Serializable {
         java.util.Calendar ca = java.util.Calendar.getInstance();
         java.sql.Date mydate = new java.sql.Date(ca.getTimeInMillis());
         return ca.get(Calendar.YEAR);
-    }
+    }// </editor-fold>
 
     public static Integer getMesActual() {
         java.util.Calendar ca = java.util.Calendar.getInstance();
         java.sql.Date mydate = new java.sql.Date(ca.getTimeInMillis());
         return ca.get(Calendar.MONTH);
-    }
+    }// </editor-fold>
 
     public static Integer getMesDeUnaFecha(Date date) {
         Calendar calendar = Calendar.getInstance();
@@ -424,7 +443,7 @@ public class JsfUtil implements Serializable {
         int mes = calendar.get(Calendar.MONTH) + 1;
         int dia = calendar.get(Calendar.DAY_OF_MONTH);
         return mes;
-    }
+    }// </editor-fold>
 
     public static Integer getAnioDeUnaFecha(Date date) {
         Calendar calendar = Calendar.getInstance();
@@ -434,7 +453,7 @@ public class JsfUtil implements Serializable {
         int mes = calendar.get(Calendar.MONTH) + 1;
         int dia = calendar.get(Calendar.DAY_OF_MONTH);
         return anio;
-    }
+    }// </editor-fold>
 
     public static Integer getDiaDeUnaFecha(Date date) {
         Calendar calendar = Calendar.getInstance();
@@ -444,13 +463,13 @@ public class JsfUtil implements Serializable {
         int mes = calendar.get(Calendar.MONTH) + 1;
         int dia = calendar.get(Calendar.DAY_OF_MONTH);
         return dia;
-    }
+    }// </editor-fold>
 
     public static Integer getDiaActual() {
         java.util.Calendar ca = java.util.Calendar.getInstance();
         java.sql.Date mydate = new java.sql.Date(ca.getTimeInMillis());
         return ca.get(Calendar.DATE);
-    }
+    }// </editor-fold>
 
     /**
      * devuelve la primera fecha del año
@@ -467,7 +486,7 @@ public class JsfUtil implements Serializable {
         Date date = java.sql.Date.valueOf(firstDay);
         return date;
 
-    }
+    }// </editor-fold>
 
     /**
      * devuelve la ultima fecha del año
@@ -484,7 +503,7 @@ public class JsfUtil implements Serializable {
         Date date = java.sql.Date.valueOf(firstDay);
         return date;
 
-    }
+    }// </editor-fold>
 
     /**
      *
@@ -505,20 +524,20 @@ public class JsfUtil implements Serializable {
         LocalDate firstDay = LocalDate.of(year, month, day);
         Date date = java.sql.Date.valueOf(firstDay);
         return date;
-    }
+    }// </editor-fold>
 
     public static String getISODate(Date date) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         return dateFormat.format(date);
-    }
+    }// </editor-fold>
 
     public static LocalTime getTiempo() {
         LocalTime now = LocalTime.now();
 
         return now;
 
-    }
+    }// </editor-fold>
 
     public static String printTiempo() {
         LocalTime now = LocalTime.now();
@@ -529,7 +548,7 @@ public class JsfUtil implements Serializable {
 
         return tiempo;
 
-    }
+    }// </editor-fold>
 
     public String letterToUpper(String texto) {
         try {
@@ -546,7 +565,7 @@ public class JsfUtil implements Serializable {
             System.out.println("letterToUpper() " + ex.getLocalizedMessage());
         }
         return texto;
-    }
+    }// </editor-fold>
 
     /**
      * ConvertirLetraMinuscula
@@ -571,12 +590,12 @@ public class JsfUtil implements Serializable {
             System.out.println("letterToLower() " + ex.getLocalizedMessage());
         }
         return texto;
-    }
+    }// </editor-fold>
 
     public static LocalTime getHour() {
 
         return LocalTime.now();
-    }
+    }// </editor-fold>
 
     public static Integer diasEntreFechas(Date fechaMayor, Date fechaMenor) {
         int d = 0;
@@ -590,7 +609,7 @@ public class JsfUtil implements Serializable {
         }
 
         return d;
-    }
+    }// </editor-fold>
 
     /*
     
@@ -606,7 +625,7 @@ public class JsfUtil implements Serializable {
         }
 
         return date;
-    }
+    }// </editor-fold>
 
     public static long getMilisegundos() {
         long milisegundos = 0;
@@ -617,7 +636,8 @@ public class JsfUtil implements Serializable {
             System.out.println("getMilisegundos() " + e.getLocalizedMessage());
         }
         return milisegundos;
-    }
+    }// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="getMilisegundosTranscurridos"> 
 
     public static long getMilisegundosTranscurridos(long t0, long t1) {
         long milisegundos = 0;
@@ -628,7 +648,8 @@ public class JsfUtil implements Serializable {
             System.out.println("getMilisegundos() " + e.getLocalizedMessage());
         }
         return milisegundos;
-    }
+    }// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="esImpar"> 
 
     public static Boolean esImpar(int iNumero) {
         if (iNumero % 2 != 0) {
@@ -636,7 +657,7 @@ public class JsfUtil implements Serializable {
         } else {
             return false;
         }
-    }
+    }// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="getIp">  
 
     /**
@@ -668,19 +689,19 @@ public class JsfUtil implements Serializable {
      * @param key : mykey
      * @return
      */
-    public static String encritpar(String texto) {
+    public static String encriptar(String texto) {
 
         try {
             CryptoConverter cryptoConverter = new CryptoConverter();
 
-           return cryptoConverter.convertToDatabaseColumn(texto);
+            return cryptoConverter.convertToDatabaseColumn(texto);
         } catch (Exception e) {
             errorMessage("encriptar() " + e.getLocalizedMessage());
         }
         return "";
     }// </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="desencritpar">  
 
+    // <editor-fold defaultstate="collapsed" desc="desencritpar">  
     /**
      * Encripta un texto en base a una llave
      *
@@ -689,48 +710,69 @@ public class JsfUtil implements Serializable {
      * @param key : mykey
      * @return
      */
-    public static String desencritpar(String textoencriptado) {
+    public static String desencriptar(String textoencriptado) {
         try {
-           CryptoConverter cryptoConverter = new CryptoConverter();
+            CryptoConverter cryptoConverter = new CryptoConverter();
 
-          return cryptoConverter.convertToEntityAttribute(textoencriptado);
+            return cryptoConverter.convertToEntityAttribute(textoencriptado);
         } catch (Exception e) {
             errorMessage("desencriptar() " + e.getLocalizedMessage());
         }
         return "";
     }// </editor-fold>
- 
-     // <editor-fold defaultstate="collapsed" desc="getSession">  
+
+    // <editor-fold defaultstate="collapsed" desc="getSession">  
     /**
      * devuelve Un objeto Session correspondiente a la sesion local
-     * @return 
+     *
+     * @return
      */
-    public static HttpSession getSession(){
+    public static HttpSession getSession() {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpSession session = request.getSession();
+        return session;
+    }// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="getSession">  
+    /**
+     * devuelve Un objeto Session correspondiente a la sesion local
+     *
+     * @return
+     */
+    public static Boolean addParametersUserNameToSession(String username) {
+        Boolean add = false;
+        try {
             HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
             HttpSession session = request.getSession();
-            return session;
-    }// </editor-fold>
-    
-     // <editor-fold defaultstate="collapsed" desc="getSession">  
-    /**
-     * devuelve Un objeto Session correspondiente a la sesion local
-     * @return 
-     */
-    public static Boolean addParametersUserNameToSession(String username){
-        Boolean add=false;
-        try {
-           HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-            HttpSession session = request.getSession();
-             session.setAttribute("username", username);
-             add=true;
+            session.setAttribute("username", username);
+            add = true;
         } catch (Exception e) {
-                 errorMessage("addParametersUserNameToSession() " + e.getLocalizedMessage());
+            errorMessage("addParametersUserNameToSession() " + e.getLocalizedMessage());
         }
-            
-            return add;
+
+        return add;
     }// </editor-fold>
-    
-    
-    
-    
+
+    // <editor-fold defaultstate="collapsed" desc="getBrowserName()">  
+    public static String getBrowserName() {
+    ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+    String userAgent = externalContext.getRequestHeaderMap().get("User-Agent");
+
+    if(userAgent.contains("MSIE")){ 
+        return "Internet Explorer";
+    }
+    if(userAgent.contains("Firefox")){ 
+        return "Firefox";
+    }
+    if(userAgent.contains("Chrome")){ 
+        return "Chrome";
+    }
+    if(userAgent.contains("Opera")){ 
+        return "Opera";
+    }
+    if(userAgent.contains("Safari")){ 
+        return "Safari";
+    }
+    return "Unknown";
+}// </editor-fold>
 }
