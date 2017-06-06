@@ -98,13 +98,9 @@ public class SessionListener implements HttpSessionListener {
     public void sessionCreated(HttpSessionEvent se) {
         HttpSession session = se.getSession();
         sessionList.add(session);
-//        if (maximosSegundosInactividad < 0) {
-//            System.out.println("----- es 0 asigno 2100");
-//            maximosSegundosInactividad = 2100;
-//        }
-//        session.setMaxInactiveInterval(maximosSegundosInactividad);
-        session.setMaxInactiveInterval(2100);
-        // System.out.println("id = " + session.getId());
+//        session.setMaxInactiveInterval(2100);
+        session.setMaxInactiveInterval(65);
+        
         session.setAttribute("id", session.getId());
         session.setAttribute("time", JsfUtil.getTiempo());
         session.setAttribute("ipcliente", JsfUtil.getIp());
@@ -115,12 +111,12 @@ public class SessionListener implements HttpSessionListener {
 
         System.out.println("===========================================");
         System.out.println("------Sesion Creada-------");
-        System.out.println("# " + numberOfSession);
-        System.out.println("Segundos para inactividad " + session.getMaxInactiveInterval());
-        System.out.println("id " + session.getId());
-        System.out.println("time " + session.getAttribute("time"));
-        System.out.println("ipcliente" + session.getAttribute("ipcliente"));
-        System.out.println("browser" + session.getAttribute("browser"));
+        System.out.println("......# " + numberOfSession);
+        System.out.println(".......Segundos para inactividad " + session.getMaxInactiveInterval());
+        System.out.println(".......id " + session.getId());
+        System.out.println(".......time " + session.getAttribute("time"));
+        System.out.println(".......ipcliente" + session.getAttribute("ipcliente"));
+        System.out.println(".......browser" + session.getAttribute("browser"));
         System.out.println("===========================================");
         JsfUtil.successMessage("Se creo una sesion " + session.getId());
 
@@ -130,35 +126,82 @@ public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
         HttpSession session = se.getSession();
-//        if (maximosSegundosInactividad < 0) {
-//            maximosSegundosInactividad = 2100;
-//        }
-   //     session.setMaxInactiveInterval(maximosSegundosInactividad);
-        session.setMaxInactiveInterval(30);
+        session.setMaxInactiveInterval(5);
 
         synchronized (this) {
             if (numberOfSession > 0) {
                 numberOfSession--;
             }
         }
-        usernameList.remove(session.getAttribute("username"));
-        sessionList.remove(se);
+        if(session.getAttribute("username")!=null){
+            String user =session.getAttribute("username").toString();
+            if(usernameList.contains(user)){
+                System.out.println(user + " !!! fue encontrado en la lista voy a quitarlo");
+                usernameList.remove(user);
+            }else{
+                System.out.println(user + " !!! no fue encontrado en la lista");
+            }
+            
+        }
+        
+       
         System.out.println("--------------------------------------------------------");
-        System.out.println("Session Destroyed " + numberOfSession);
-        System.out.println("username " + session.getAttribute("username"));
-        System.out.println("id: " + session.getAttribute("id"));
-        System.out.println("Segundos para inactividad " + session.getMaxInactiveInterval());
-        System.out.println("ipcliente: " + session.getAttribute("ipcliente"));
-        System.out.println("time of creation: " + session.getAttribute("time"));
-        System.out.println("browser: " + session.getAttribute("browser"));
+        System.out.println("Session Destroyed ");
+        System.out.println("........username " + session.getAttribute("username"));
+        System.out.println("........id: " + session.getAttribute("id"));
+        System.out.println("........Segundos para inactividad " + session.getMaxInactiveInterval());
+        System.out.println("........ipcliente: " + session.getAttribute("ipcliente"));
+        System.out.println("........time of creation: " + session.getAttribute("time"));
+        System.out.println("........browser: " + session.getAttribute("browser"));
         System.out.println("--------------------------------------------------------");
+        Boolean found =false;
+        for(HttpSession s:sessionList){
+            if(s.getId().equals(se.getSession().getId())){
+                 sessionList.remove(se);
+                 found = true;
+                  System.out.println("!!! se removio el session de sessionList");
+                 break;
+            }
+        }
+        if(!found){
+              System.out.println("!!! no encontre el session en sessionList");
+        }
+//        validateUsernameWithSession();
+      // printAll();
 //       JsfUtil.successMessage("Se destruyo la sesion "+se.getSession().getId());
     }// </editor-fold>
-
+private void printAll(){
+    try {
+        System.out.println("#######################################3");
+        System.out.println("---- printAll");
+        System.out.println("---- sessionList()");
+ 
+        for(HttpSession session:sessionList){
+//             System.out.println("--------------------------------------------------------");
+           System.out.println("........id: " + session.getAttribute("id")  +"  ........username " + session.getAttribute("username"));
+//        System.out.println("........id: " + session.getAttribute("id"));
+//        System.out.println("........Segundos para inactividad " + session.getMaxInactiveInterval());
+//        System.out.println("........ipcliente: " + session.getAttribute("ipcliente"));
+//        System.out.println("........time of creation: " + session.getAttribute("time"));
+//        System.out.println("........browser: " + session.getAttribute("browser"));
+//        System.out.println("--------------------------------------------------------");
+        }
+        
+        System.out.println("---- usernameeList()");
+        
+        for(String s:usernameList){
+            System.out.println("........username "+s);
+        }
+        System.out.println("============== FIN printAll()============");
+        
+    } catch (Exception e) {
+             JsfUtil.errorMessage("printAll() " + e.getLocalizedMessage());
+    }
+}
    
 // <editor-fold defaultstate="collapsed" desc="isUserLoged"> 
 
-    public static Boolean isUserLoged(String username) {
+    public static Boolean isUserLogged(String username) {
         Boolean found = false;
         try {
             if (usernameList.isEmpty()) {
@@ -186,11 +229,11 @@ public class SessionListener implements HttpSessionListener {
     public static Boolean addUsername(String username) {
         Boolean add = false;
         try {
-            if (isUserLoged(username)) {
+            if (isUserLogged(username)) {
                 return false;
             }
             usernameList.add(username);
-            System.out.println("---> Agregado a la sesion" + username);
+           // System.out.println("---> Agregado a la sesion" + username);
         } catch (Exception e) {
             JsfUtil.errorMessage("addUsername " + e.getLocalizedMessage());
         }
@@ -468,7 +511,7 @@ public class SessionListener implements HttpSessionListener {
                     System.out.println("run2: agregar a usernameToDelete");
  usernameToDelete.add(u);
                 }else{
-                    System.out.println("run3: "+u + " No fue encontrado en la lista de sesiones");
+                    System.out.println("run3: "+u + " Fue encontrado en la lista de sesiones");
                 }
             }
             //elimino los username que no existen
