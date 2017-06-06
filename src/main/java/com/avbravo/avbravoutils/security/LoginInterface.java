@@ -25,6 +25,13 @@ public interface LoginInterface {
     public String validateAllSessions();
     public String loadAllUser();
     
+    // <editor-fold defaultstate="collapsed" desc="addUsername"> 
+
+    default public Boolean addUsername(String username, HttpSession session){
+      return  SessionListener.addUsername(username, session);
+    }
+    // </editor-fold>
+    
   
     // <editor-fold defaultstate="collapsed" desc="irLogin"> 
       default public String irLogin() {
