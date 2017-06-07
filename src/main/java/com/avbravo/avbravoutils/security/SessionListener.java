@@ -30,25 +30,25 @@ public class SessionListener implements HttpSessionListener {
 //    private static int maximosSegundosInactividad = 2100;
 
     private static List<HttpSession> sessionList = new ArrayList<>();
-    private static List<PojoSession> pojoSessionList = new ArrayList<>();
+    private static List<BrowserSession> browserSessionList = new ArrayList<>();
 
     // <editor-fold defaultstate="collapsed" desc="get/set"> 
-    public static List<PojoSession> getPojoSessionList() {
-        return pojoSessionList;
+    public static List<BrowserSession> getBrowserSessionList() {
+        return browserSessionList;
     }
-    
-    public static void setPojoSessionList(List<PojoSession> pojoSessionList) {
-        SessionListener.pojoSessionList = pojoSessionList;
+
+    public static void setPojoSessionList(List<BrowserSession> browserSessionList) {
+        SessionListener.browserSessionList = browserSessionList;
     }
-    
+
     public static List<HttpSession> getSessionList() {
         return sessionList;
     }
-    
+
     public static void setSessionList(List<HttpSession> sessionList) {
         SessionListener.sessionList = sessionList;
     }
-    
+
     public static int getNumberOfSession() {
         return numberOfSession;
     }
@@ -64,11 +64,11 @@ public class SessionListener implements HttpSessionListener {
     public static void setNumberOfSession(int numberOfSession) {
         SessionListener.numberOfSession = numberOfSession;
     }
-    
+
     public static List<String> getUsernameList() {
         return usernameList;
     }
-    
+
     public static void setUsernameList(List<String> usernameList) {
         SessionListener.usernameList = usernameList;
     }
@@ -77,12 +77,12 @@ public class SessionListener implements HttpSessionListener {
 
         //   System.out.println("value is added ");
     }
-    
+
     public void attributeRemoved(HttpSessionBindingEvent arg0) {
         // System.out.println("value is removed");
 
     }
-    
+
     public void attributeReplaced(HttpSessionBindingEvent arg0) {
         //System.out.println("value has been replaced");
 
@@ -99,10 +99,10 @@ public class SessionListener implements HttpSessionListener {
     // <editor-fold defaultstate="collapsed" desc="inicializar"> 
     public static void inicializar() {
         sessionList = new ArrayList<>();
-        
+
         usernameList = new ArrayList<>();
-        pojoSessionList = new ArrayList<>();
-        numberOfSession=0;
+        browserSessionList = new ArrayList<>();
+        numberOfSession = 0;
     } // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="sessionCreated"> 
@@ -111,8 +111,8 @@ public class SessionListener implements HttpSessionListener {
         HttpSession session = se.getSession();
         sessionList.add(session);
 //        session.setMaxInactiveInterval(2100);
-        session.setMaxInactiveInterval(65);
-        
+        session.setMaxInactiveInterval(180);
+
         session.setAttribute("id", session.getId());
         LocalTime time = JsfUtil.getTiempo();
         session.setAttribute("time", time);
@@ -121,7 +121,7 @@ public class SessionListener implements HttpSessionListener {
         synchronized (this) {
             numberOfSession++;
         }
-        
+
         System.out.println("===========================================");
         System.out.println("------Sesion Creada-------");
         System.out.println("......# " + numberOfSession);
@@ -131,11 +131,11 @@ public class SessionListener implements HttpSessionListener {
         System.out.println(".......ipcliente" + session.getAttribute("ipcliente"));
         System.out.println(".......browser" + session.getAttribute("browser"));
         System.out.println("===========================================");
-        PojoSession pojoSession = new PojoSession(session.getId(), time, JsfUtil.getIp(), JsfUtil.getBrowserName(), "");
-        pojoSessionList.add(pojoSession);
-        
+        BrowserSession browserSession = new BrowserSession(session.getId(), time, JsfUtil.getIp(), JsfUtil.getBrowserName(), "", session);
+        browserSessionList.add(browserSession);
+
         JsfUtil.successMessage("Se creo una sesion " + session.getId());
-        
+
     }// </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="sessionDestroyed"> 
@@ -143,23 +143,13 @@ public class SessionListener implements HttpSessionListener {
     public void sessionDestroyed(HttpSessionEvent se) {
         HttpSession session = se.getSession();
         session.setMaxInactiveInterval(5);
-        
+
         synchronized (this) {
             if (numberOfSession > 0) {
                 numberOfSession--;
             }
         }
-        if (session.getAttribute("username") != null) {
-            String user = session.getAttribute("username").toString();
-            if (usernameList.contains(user)) {
-                System.out.println(user + " !!! fue encontrado en la lista voy a quitarlo");
-                usernameList.remove(user);
-            } else {
-                System.out.println(user + " !!! no fue encontrado en la lista");
-            }
-            
-        }
-        
+
         System.out.println("--------------------------------------------------------");
         System.out.println("Session Destroyed ");
         System.out.println("........username " + session.getAttribute("username"));
@@ -170,28 +160,81 @@ public class SessionListener implements HttpSessionListener {
         System.out.println("........browser: " + session.getAttribute("browser"));
         System.out.println("--------------------------------------------------------");
         Boolean found = false;
-        for (HttpSession s : sessionList) {
-            if (s.getId().equals(se.getSession().getId())) {
-                sessionList.remove(se);
-                found = true;
-                System.out.println("!!! se removio el session de sessionList");
-                break;
+
+        if (session.getAttribute("username") != null) {
+            String user = session.getAttribute("username").toString();
+            if (removeUsernameOfUserList(user)) {
+                System.out.println(user + " !!! fue encontrado en la lista voy a quitarlo");
+            } else {
+                System.out.println("!!!! no se quito del usersenameList");
             }
+
         }
-        if (!found) {
-            System.out.println("!!! no encontre el session en sessionList");
+        if (removeOfSessionList(se.getSession())) {
+            System.out.println("!!! se removio el session de sessionList");
+        } else {
+            System.out.println("!!! No se removio el session de sessionList");
         }
+
+        //Voy a renoverlo del browser
+        if (removeBrowserSession(session)) {
+            System.out.println("!!! quitandolo del browserSessionList");
+        } else {
+            System.out.println("!!! No se quitandolo del browserSessionList");
+        }
+
 //        validateUsernameWithSession();
         // printAll();
 //       JsfUtil.successMessage("Se destruyo la sesion "+se.getSession().getId());
     }// </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="removeBrowserSession"> 
+// </editor-fold>
+    private Boolean removeBrowserSession(HttpSession session) {
+        Boolean found = false;
+        try {
+
+            for (BrowserSession p : browserSessionList) {
+                if (p.getId().equals(session.getId())) {
+                    browserSessionList.remove(p);
+                    System.out.println("!!! quitandolo del browserSessionList");
+                    found = true;
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            JsfUtil.errorMessage("removeBrowserSession" + e.getLocalizedMessage());
+        }
+        return found;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="complete"> 
+    private Boolean removeOfSessionList(HttpSession session) {
+        Boolean found = false;
+        try {
+            for (HttpSession s : sessionList) {
+                if (s.getId().equals(session.getId())) {
+                    sessionList.remove(session);
+                    found = true;
+
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            JsfUtil.errorMessage("removeOfSessionList() " + e.getLocalizedMessage());
+        }
+        return found;
+    }
+// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="complete"> 
+// </editor-fold>
     private void printAll() {
         try {
             System.out.println("#######################################3");
             System.out.println("---- printAll");
             System.out.println("---- sessionList()");
-            
+
             for (HttpSession session : sessionList) {
 //             System.out.println("--------------------------------------------------------");
                 System.out.println("........id: " + session.getAttribute("id") + "  ........username " + session.getAttribute("username"));
@@ -202,14 +245,14 @@ public class SessionListener implements HttpSessionListener {
 //        System.out.println("........browser: " + session.getAttribute("browser"));
 //        System.out.println("--------------------------------------------------------");
             }
-            
+
             System.out.println("---- usernameeList()");
-            
+
             for (String s : usernameList) {
                 System.out.println("........username " + s);
             }
             System.out.println("============== FIN printAll()============");
-            
+
         } catch (Exception e) {
             JsfUtil.errorMessage("printAll() " + e.getLocalizedMessage());
         }
@@ -241,7 +284,7 @@ public class SessionListener implements HttpSessionListener {
      * @param username
      * @return
      */
-    public static Boolean addUsername(String username, HttpSession sesion) {
+    public static Boolean addUsername(String username, HttpSession session) {
         Boolean add = false;
         try {
             if (isUserLogged(username)) {
@@ -250,17 +293,25 @@ public class SessionListener implements HttpSessionListener {
             usernameList.add(username);
             Integer c = 0;
             //Actualizo en user name
-            for (HttpSession s : sessionList) {
-                if (s.getId().equals(sesion.getId())) {
-                    c = 0;
-                    for (PojoSession p : pojoSessionList) {
-                        if (p.getId().equals(s.getId())) {
-                            pojoSessionList.get(0).setUsername(username);
+//            for (HttpSession s : sessionList) {
+//                if (s.getId().equals(session.getId())) {
+//                    c = 0;
+//                    for (BrowserSession p : browserSessionList) {
+//                        if (p.getId().equals(s.getId())) {
+//                            browserSessionList.get(c).setUsername(username);
+//                        }
+//                        c++;
+//                    }
+//                }
+//            }
+             for (BrowserSession p : browserSessionList) {
+                        if (p.getId().equals(session.getId())) {
+                            browserSessionList.get(c).setUsername(username);
                         }
                         c++;
                     }
-                }
-            }
+            
+            
 
             // System.out.println("---> Agregado a la sesion" + username);
         } catch (Exception e) {
@@ -271,7 +322,7 @@ public class SessionListener implements HttpSessionListener {
 
     // <editor-fold defaultstate="collapsed" desc="getUsernameOnline"> 
     public static List<String> getUsernameOnline() {
-        
+
         return usernameList;
     }// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="killAllSesion()">  
@@ -312,13 +363,25 @@ public class SessionListener implements HttpSessionListener {
                     break;
                 }
             }
-            
+
             return kill;
         } catch (Exception e) {
             JsfUtil.errorMessage("killSesionById()" + e.getLocalizedMessage());
         }
         return kill;
     }// </editor-fold>
+    
+    
+    public static Boolean inactiveSession(BrowserSession browserSession){
+        try {
+            browserSession.session.invalidate();
+            browserSessionList.remove(browserSession);
+            return true;
+        } catch (Exception e) {
+             JsfUtil.errorMessage("inactivarSession() " + e.getLocalizedMessage());
+        }
+        return false;
+    }
     // <editor-fold defaultstate="collapsed" desc="killSesionByUsername">  
 
     /**
@@ -433,14 +496,14 @@ public class SessionListener implements HttpSessionListener {
         try {
             for (HttpSession s : sessionList) {
                 if (s.getAttribute("username") == null) {
-                    
+
                 } else {
                     if (s.getAttribute("username").equals(username)) {
                         found = true;
                         break;
                     }
                 }
-                
+
             }
         } catch (Exception e) {
             JsfUtil.errorMessage("usernameHaveSession()" + e.getLocalizedMessage());
@@ -461,14 +524,14 @@ public class SessionListener implements HttpSessionListener {
         try {
             for (HttpSession s : sessionList) {
                 if (s.getAttribute("username") == null) {
-                    
+
                 } else {
                     if (s.getAttribute("username").equals(username)) {
                         session = s;
                         break;
                     }
                 }
-                
+
             }
         } catch (Exception e) {
             JsfUtil.errorMessage("getSession()" + e.getLocalizedMessage());

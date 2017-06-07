@@ -6,28 +6,41 @@
 package com.avbravo.avbravoutils.security;
 
 import java.time.LocalTime;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author avbravo
  */
-public class PojoSession {
+public class BrowserSession {
     private String id;
         private LocalTime time; 
         private String ipcliente;
         private String browser;
         private String username;
+        HttpSession session;
 
-    public PojoSession() {
+    public BrowserSession() {
     }
 
-    public PojoSession(String id, LocalTime time, String ipcliente, String browser, String username) {
+    public BrowserSession(String id, LocalTime time, String ipcliente, String browser, String username, HttpSession session) {
         this.id = id;
         this.time = time;
         this.ipcliente = ipcliente;
         this.browser = browser;
         this.username = username;
+        this.session = session;
     }
+
+    public HttpSession getSession() {
+        return session;
+    }
+
+    public void setSession(HttpSession session) {
+        this.session = session;
+    }
+
+   
 
     public String getId() {
         return id;
