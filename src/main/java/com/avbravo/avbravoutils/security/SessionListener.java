@@ -96,7 +96,6 @@ public class SessionListener implements HttpSessionListener {
 
     //        session.setMaxInactiveInterval(2100);
         session.setMaxInactiveInterval(180);
-
         session.setAttribute("id", session.getId());
         LocalTime time = JsfUtil.getTiempo();
         session.setAttribute("time", time);
@@ -262,6 +261,9 @@ public class SessionListener implements HttpSessionListener {
     
     public static Boolean inactiveSession(BrowserSession browserSession){
         try {
+          if(browserSession.session ==null){
+              return true;
+          }
             browserSession.session.invalidate();
             browserSessionList.remove(browserSession);
             return true;

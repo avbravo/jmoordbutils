@@ -19,16 +19,16 @@ import javax.servlet.http.HttpSession;
  */
 public interface SessionInterface {
 
-    public String doLogin();
+//    public String doLogin();
+//
+//    public String doLogout();
 
-    public String doLogout();
+   // public String showAllSessions();
 
-    public String showAllSessions();
+   // public String killAllSessions();
+   // public void verifySesionLocal();
 
-    public String killAllSessions();
-    public void verifySesionLocal();
-
-    public String cancelSelectedSession(BrowserSession browserSesssion);
+   // public String cancelSelectedSession(BrowserSession browserSesssion);
 
     // <editor-fold defaultstate="collapsed" desc="addUsername"> 
     default public Boolean addUsername(String username, HttpSession session) {
@@ -66,18 +66,15 @@ public interface SessionInterface {
     }// </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="cancelAllSesion"> 
-    default public String cancelAllSesion() {
+    default public Boolean cancelAllSesion() {
         try {
-            if (SessionListener.cancelAllSesion()) {
-                JsfUtil.successMessage("Se eliminaron todas las sesiones");
-            } else {
-                JsfUtil.successMessage("(No) se eliminaron todas las sesiones");
-            }
+            return SessionListener.cancelAllSesion();
+           
 
         } catch (Exception e) {
             JsfUtil.errorMessage("killAllSesion() " + e.getLocalizedMessage());
         }
-        return "";
+        return false;
     }
 // </editor-fold>
 
