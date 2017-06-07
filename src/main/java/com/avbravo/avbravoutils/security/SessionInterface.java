@@ -26,10 +26,9 @@ public interface SessionInterface {
     public String showAllSessions();
 
     public String killAllSessions();
+    public void verifySesionLocal();
 
-    public String validateAllSessions();
-
-    public String loadAllUser();
+    public String cancelSelectedSession(BrowserSession browserSesssion);
 
     // <editor-fold defaultstate="collapsed" desc="addUsername"> 
     default public Boolean addUsername(String username, HttpSession session) {
@@ -60,48 +59,16 @@ public interface SessionInterface {
         }
         return path;
     }   // </editor-fold>
+
     // <editor-fold defaultstate="collapsed" desc="inactiveSession"> 
-
-
-    default public Boolean inactiveSession(BrowserSession browserSession){
+    default public Boolean inactiveSession(BrowserSession browserSession) {
         return SessionListener.inactiveSession(browserSession);
     }// </editor-fold>
-    
-    // <editor-fold defaultstate="collapsed" desc="killSesionByUserName"> 
 
-    default public Boolean killSesionByUserName(String usernameSelected) {
+    // <editor-fold defaultstate="collapsed" desc="cancelAllSesion"> 
+    default public String cancelAllSesion() {
         try {
-
-            return SessionListener.killSesionByUsername(usernameSelected);
-
-        } catch (Exception e) {
-            JsfUtil.errorMessage("killSessionByUserName() " + e.getLocalizedMessage());
-        }
-        return false;
-    }
-
-    // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="showUser"> 
-    default public List<String> _getAllUser() {
-        List<String> usernameList = new ArrayList<>();
-        try {
-            if (SessionListener.getUsernameList().isEmpty()) {
-                JsfUtil.warningMessage("No hay usuarios online registrados");
-                return usernameList;
-            }
-
-            usernameList = SessionListener.getUsernameOnline();
-        } catch (Exception e) {
-            JsfUtil.errorMessage("showUser() " + e.getLocalizedMessage());
-        }
-        return usernameList;
-    }
-
-// </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="killAllSesion"> 
-    default public String _killAllSesion() {
-        try {
-            if (SessionListener.killAllSesion()) {
+            if (SessionListener.cancelAllSesion()) {
                 JsfUtil.successMessage("Se eliminaron todas las sesiones");
             } else {
                 JsfUtil.successMessage("(No) se eliminaron todas las sesiones");
@@ -114,51 +81,14 @@ public interface SessionInterface {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="_showAllSession"> 
-    default public String _showAllSessions() {
-        try {
-            System.out.println("======================================");
-            System.out.println("Mostrando las sesiones");
-            for (HttpSession h : SessionListener.getSessionList()) {
-                if (h == null) {
-                    System.out.println("---->  sesion es null");
-                } else {
-                    System.out.println("------->id " + h.getId());
-
-                    JsfUtil.successMessage("id " + h.getId() + " username " + h.getAttribute("username"));
-
-                }
-
-            }
-
-            JsfUtil.successMessage("Sesiones mostradas");
-        } catch (Exception e) {
-            JsfUtil.errorMessage("showAllSession() " + e.getLocalizedMessage());
-        }
-        return "";
-    }
-// </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="validateAllUserInSesion()"> 
-
-    default public Boolean _validateAllSesion() {
-        try {
-            return SessionListener.validateUsernameWithSession();
-        } catch (Exception e) {
-            JsfUtil.errorMessage("validateUserInSesion() " + e.getLocalizedMessage());
-        }
-
-        return false;
-    }
-// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="isUserLogged"> 
-
     default public Boolean isUserLogged(String username) {
         return SessionListener.isUserLogged(username);
 
     }// </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="getBrowserSessionList"> 
-    default List<BrowserSession> getBrowserSessionList() {
+    // <editor-fold defaultstate="collapsed" desc="allBrowserSessionList()"> 
+    default List<BrowserSession> allBrowserSessionList() {
         return SessionListener.getBrowserSessionList();
     }// </editor-fold>
 
