@@ -20,14 +20,13 @@ import javax.mail.internet.MimeMessage;
  *
  * @author avbravo
  */
-@Named
-@RequestScoped
-public class EnviarEmail {
+
+public class ManagerEmail {
 
     /**
      * Creates a new instance of EnviarEmail
      */
-    public EnviarEmail() {
+    public ManagerEmail() {
     }
 
     public String enviar() {
@@ -67,18 +66,30 @@ public class EnviarEmail {
         }
         return null;
     }
-
-    public String enviar(String destino, String titulo, String mensaje) {
+/**
+ * 
+ * @param emaildestinatario
+ * @param titulo
+ * @param mensaje
+ * @param emailremitente
+ * @param passwordremitente
+ * @return 
+ */
+    public Boolean send(String emaildestinatario, String titulo, String mensaje,
+            String emailremitente, String passwordremitente) {
+        Boolean sending=false;
         try {
 
-            final String username = "myemail@gmail.com";
-            final String password = "mypassword";
-
+//            final String username = "avbravo@gmail.com";
+//            final String password = "javnet180denver$";
+            final String username = emailremitente;
+            final String password = passwordremitente;
             Properties props = new Properties();
             props.put("mail.smtp.auth", "true");
             props.put("mail.smtp.starttls.enable", "true");
             props.put("mail.smtp.host", "smtp.gmail.com");
             props.put("mail.smtp.port", "587");
+
 
             Session session = Session.getInstance(props,
                     new javax.mail.Authenticator() {
@@ -88,18 +99,19 @@ public class EnviarEmail {
             });
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(destino));
+            message.setFrom(new InternetAddress(emaildestinatario));
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(destino));
+                    InternetAddress.parse(emaildestinatario));
             message.setSubject(titulo);
             message.setText(mensaje);
 
             Transport.send(message);
-
+sending=true;
         } catch (Exception ex) {
-            JsfUtil.infoDialog("error", ex.getLocalizedMessage());
-            System.out.println("error " + ex.getLocalizedMessage());
+            JsfUtil.errorMessage("send() "+ ex.getLocalizedMessage());
+            System.out.println("send() " + ex.getLocalizedMessage());
         }
-        return null;
+        return sending;
     }
+   
 }

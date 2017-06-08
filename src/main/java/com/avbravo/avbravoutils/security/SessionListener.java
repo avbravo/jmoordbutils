@@ -29,7 +29,6 @@ public class SessionListener implements HttpSessionListener {
     private static List<BrowserSession> browserSessionList = new ArrayList<>();
 
     // <editor-fold defaultstate="collapsed" desc="get/set"> 
-
     public static List<BrowserSession> getBrowserSessionList() {
         return browserSessionList;
     }
@@ -37,9 +36,6 @@ public class SessionListener implements HttpSessionListener {
     public static void setBrowserSessionList(List<BrowserSession> browserSessionList) {
         SessionListener.browserSessionList = browserSessionList;
     }
-   
-
-  
 
     public static int getNumberOfSession() {
         return numberOfSession;
@@ -56,8 +52,6 @@ public class SessionListener implements HttpSessionListener {
     public static void setNumberOfSession(int numberOfSession) {
         SessionListener.numberOfSession = numberOfSession;
     }
-
-   
 
     public void attributeAdded(HttpSessionBindingEvent arg0) {
 
@@ -78,13 +72,13 @@ public class SessionListener implements HttpSessionListener {
     // <editor-fold defaultstate="collapsed" desc="SessionListener"> 
     public SessionListener() {
         System.out.println("call SessionListener a las " + JsfUtil.getTiempo());
-       
+
         numberOfSession = 0;
     }// </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="inicializar"> 
     public static void inicializar() {
-      
+
         browserSessionList = new ArrayList<>();
         numberOfSession = 0;
     } // </editor-fold>
@@ -94,8 +88,8 @@ public class SessionListener implements HttpSessionListener {
     public void sessionCreated(HttpSessionEvent se) {
         HttpSession session = se.getSession();
 
-           session.setMaxInactiveInterval(2100);
-     //   session.setMaxInactiveInterval(180);
+        session.setMaxInactiveInterval(2100);
+        //   session.setMaxInactiveInterval(180);
         session.setAttribute("id", session.getId());
         LocalTime time = JsfUtil.getTiempo();
         session.setAttribute("time", time);
@@ -107,15 +101,15 @@ public class SessionListener implements HttpSessionListener {
 
         System.out.println("===========================================");
         System.out.println("------Sesion Creada-------");
-        System.out.println("......# (" + numberOfSession+")");
+        System.out.println("......# (" + numberOfSession + ")");
         System.out.println(".......id " + session.getId());
         System.out.println(".......MaxInactiveInterval " + session.getMaxInactiveInterval());
-        
+
         System.out.println(".......time " + session.getAttribute("time"));
         System.out.println(".......ipcliente" + session.getAttribute("ipcliente"));
         System.out.println(".......browser" + session.getAttribute("browser"));
         System.out.println("===========================================");
-        BrowserSession browserSession = new BrowserSession(session.getId(), time, JsfUtil.getIp(), JsfUtil.getBrowserName(), "", session);
+        BrowserSession browserSession = new BrowserSession(session.getId(), time, JsfUtil.getIp(), JsfUtil.getBrowserName(), "", "", session);
         browserSessionList.add(browserSession);
 
         JsfUtil.successMessage("Se creo una sesion " + session.getId());
@@ -145,9 +139,6 @@ public class SessionListener implements HttpSessionListener {
         System.out.println("--------------------------------------------------------");
         Boolean found = false;
 
-       
-      
-
         //Voy a renoverlo del browser
         if (removeBrowserSession(session)) {
             System.out.println("!!! quitandolo del browserSessionList");
@@ -161,7 +152,6 @@ public class SessionListener implements HttpSessionListener {
     }// </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="removeBrowserSession"> 
-
     private Boolean removeBrowserSession(HttpSession session) {
         Boolean found = false;
         try {
@@ -180,21 +170,18 @@ public class SessionListener implements HttpSessionListener {
         return found;
     }// </editor-fold>
 
-   
-
-
 // <editor-fold defaultstate="collapsed" desc="isUserLoged"> 
     public static Boolean isUserLogged(String username) {
         Boolean found = false;
         try {
-            for(BrowserSession browserSession:browserSessionList){
-                if(browserSession.getUsername().equals(username)){
-                     found = true;
+            for (BrowserSession browserSession : browserSessionList) {
+                if (browserSession.getUsername().equals(username)) {
+                    found = true;
                     break;
                 }
-                       
+
             }
-         
+
         } catch (Exception e) {
             JsfUtil.errorMessage("isUserLoged " + e.getLocalizedMessage());
         }
@@ -208,23 +195,22 @@ public class SessionListener implements HttpSessionListener {
      * @param username
      * @return
      */
-    public static Boolean addUsername(String username, HttpSession session) {
+    public static Boolean addUsername(String username, HttpSession session, String token) {
         Boolean add = false;
         try {
             if (isUserLogged(username)) {
                 return false;
             }
-         
+
             Integer c = 0;
 
-             for (BrowserSession p : browserSessionList) {
-                        if (p.getId().equals(session.getId())) {
-                            browserSessionList.get(c).setUsername(username);
-                        }
-                        c++;
-                    }
-            
-            
+            for (BrowserSession p : browserSessionList) {
+                if (p.getId().equals(session.getId())) {
+                    browserSessionList.get(c).setUsername(username);
+                    browserSessionList.get(c).setToken(token);
+                }
+                c++;
+            }
 
             // System.out.println("---> Agregado a la sesion" + username);
         } catch (Exception e) {
@@ -233,10 +219,8 @@ public class SessionListener implements HttpSessionListener {
         return add;
     }// </editor-fold>
 
-  
     // <editor-fold defaultstate="collapsed" desc="killAllSesion()">  
 // <editor-fold defaultstate="collapsed" desc="killAllSesion">  
-
     /**
      * mata todas las sesiones
      *
@@ -244,11 +228,11 @@ public class SessionListener implements HttpSessionListener {
      */
     public static Boolean cancelAllSesion() {
         try {
-             for (BrowserSession browserSession : browserSessionList) {
-                
+            for (BrowserSession browserSession : browserSessionList) {
+
                 browserSession.getSession().invalidate();
-             }
-          
+            }
+
             inicializar();
             return true;
         } catch (Exception e) {
@@ -257,25 +241,49 @@ public class SessionListener implements HttpSessionListener {
         return false;
     }// </editor-fold>
 
-    
-    
-    
-    public static Boolean inactiveSession(BrowserSession browserSession){
+    // <editor-fold defaultstate="collapsed" desc="inactiveSession"> 
+    public static Boolean inactiveSession(BrowserSession browserSession) {
         try {
-          if(browserSession.session ==null){
-              return true;
-          }
+            if (browserSession.session == null) {
+                return true;
+            }
             browserSession.session.invalidate();
             browserSessionList.remove(browserSession);
             return true;
         } catch (Exception e) {
-             JsfUtil.errorMessage("inactivarSession() " + e.getLocalizedMessage());
+            JsfUtil.errorMessage("inactiveSession() " + e.getLocalizedMessage());
         }
         return false;
     }
-    
-// <editor-fold defaultstate="collapsed" desc="isUsernameHaveSession">  
+// </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="inactiveSessionByToken"> 
+   /**
+    * Elimina la sesion por el token es util cuando un usuario no 
+    * cierra su sesion y esta queda activa puede recibir un email con el token
+    * @param token
+    * @return 
+    */
+    public static Boolean inactiveSessionByToken(String token) {
+        try {
+            for (BrowserSession b : browserSessionList) {
+                if (b.session != null) {
+
+                    b.session.invalidate();
+                    browserSessionList.remove(b);
+                    return true;
+                }
+            }
+
+            return true;
+        } catch (Exception e) {
+            JsfUtil.errorMessage("inactiveSessionByToken() " + e.getLocalizedMessage());
+        }
+        return false;
+    }
+// </editor-fold>
+
+// <editor-fold defaultstate="collapsed" desc="isUsernameHaveSession">  
     /**
      * indica si tiene un session con ese username
      *
@@ -285,36 +293,35 @@ public class SessionListener implements HttpSessionListener {
     public static Boolean isUsernameHaveSession(String username) {
         Boolean found = false;
         try {
-             for (BrowserSession browserSession : browserSessionList) {
-                 if(username.equals(browserSession.getUsername())){
+            for (BrowserSession browserSession : browserSessionList) {
+                if (username.equals(browserSession.getUsername())) {
                     found = true;
-                        break;  
-                 }
-             }
-          
+                    break;
+                }
+            }
+
         } catch (Exception e) {
             JsfUtil.errorMessage("usernameHaveSession()" + e.getLocalizedMessage());
         }
         return found;
     }// </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="getSession">  
+    // <editor-fold defaultstate="collapsed" desc="getSesionOfUsername">  
     /**
      * devuelve el session de un username
      *
      * @param username
      * @return
      */
-    private static HttpSession getSesionOfUsername(String username) {
+    public static HttpSession getSesionOfUsername(String username) {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpSession session = request.getSession();
         try {
             for (BrowserSession browserSession : browserSessionList) {
-                 if(username.equals(browserSession.getUsername())){
-                     session = browserSession.getSession();
-                     break;
-                 }
-             
+                if (username.equals(browserSession.getUsername())) {
+                    session = browserSession.getSession();
+                    break;
+                }
 
             }
         } catch (Exception e) {
@@ -322,6 +329,6 @@ public class SessionListener implements HttpSessionListener {
         }
         return session;
     }// </editor-fold>
+   
 
-  
-}// </editor-fold>
+}

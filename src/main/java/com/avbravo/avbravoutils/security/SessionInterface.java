@@ -31,8 +31,8 @@ public interface SessionInterface {
    // public String cancelSelectedSession(BrowserSession browserSesssion);
 
     // <editor-fold defaultstate="collapsed" desc="addUsername"> 
-    default public Boolean addUsername(String username, HttpSession session) {
-        return SessionListener.addUsername(username, session);
+    default public Boolean addUsername(String username, HttpSession session,String token) {
+        return SessionListener.addUsername(username, session,token);
     } // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="irLogin"> 
@@ -88,5 +88,14 @@ public interface SessionInterface {
     default List<BrowserSession> allBrowserSessionList() {
         return SessionListener.getBrowserSessionList();
     }// </editor-fold>
-
+    // <editor-fold defaultstate="collapsed" desc="getSessionOfUsername">
+     default public HttpSession getSessionOfUsername(String username){
+        return SessionListener.getSesionOfUsername(username);
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="nombre_metodo"> 
+     default public  Boolean inactiveSessionByToken(String token){
+         return SessionListener.inactiveSessionByToken(token);
+     }
+// </editor-fold>
 }

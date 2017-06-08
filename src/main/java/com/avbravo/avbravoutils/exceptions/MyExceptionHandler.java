@@ -51,7 +51,7 @@ public class MyExceptionHandler extends ExceptionHandlerWrapper {
                     log.severe("ViewExpiredException occurred!");
                     fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An exception occurred",
                             "ViewExpiredException happened!"));
-                    fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "ViewExpiredException");
+                    fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "viewExpiredException");
                 }
                 finally {
                     i.remove();

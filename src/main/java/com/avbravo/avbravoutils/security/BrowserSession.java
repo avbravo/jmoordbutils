@@ -18,19 +18,32 @@ public class BrowserSession {
         private String ipcliente;
         private String browser;
         private String username;
+         private String token;
         HttpSession session;
+       
 
     public BrowserSession() {
     }
 
-    public BrowserSession(String id, LocalTime time, String ipcliente, String browser, String username, HttpSession session) {
+    public BrowserSession(String id, LocalTime time, String ipcliente, String browser, String username, String token, HttpSession session) {
         this.id = id;
         this.time = time;
         this.ipcliente = ipcliente;
         this.browser = browser;
         this.username = username;
+        this.token = token;
         this.session = session;
     }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+  
 
     public HttpSession getSession() {
         return session;
