@@ -4,7 +4,7 @@
 
     <groupId>com.avbravo</groupId>
     <artifactId>avbravoutils</artifactId>
-    <version>0.8.3.1</version>
+    <version>0.8.3.2</version>
     <packaging>ejb</packaging>
 
     <name>avbravoutils</name>

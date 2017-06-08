@@ -94,8 +94,8 @@ public class SessionListener implements HttpSessionListener {
     public void sessionCreated(HttpSessionEvent se) {
         HttpSession session = se.getSession();
 
-    //        session.setMaxInactiveInterval(2100);
-        session.setMaxInactiveInterval(180);
+           session.setMaxInactiveInterval(2100);
+     //   session.setMaxInactiveInterval(180);
         session.setAttribute("id", session.getId());
         LocalTime time = JsfUtil.getTiempo();
         session.setAttribute("time", time);
@@ -107,9 +107,10 @@ public class SessionListener implements HttpSessionListener {
 
         System.out.println("===========================================");
         System.out.println("------Sesion Creada-------");
-        System.out.println("......# " + numberOfSession);
-        System.out.println(".......Segundos para inactividad " + session.getMaxInactiveInterval());
+        System.out.println("......# (" + numberOfSession+")");
         System.out.println(".......id " + session.getId());
+        System.out.println(".......MaxInactiveInterval " + session.getMaxInactiveInterval());
+        
         System.out.println(".......time " + session.getAttribute("time"));
         System.out.println(".......ipcliente" + session.getAttribute("ipcliente"));
         System.out.println(".......browser" + session.getAttribute("browser"));
@@ -125,7 +126,7 @@ public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
         HttpSession session = se.getSession();
-        session.setMaxInactiveInterval(5);
+        session.setMaxInactiveInterval(15);
 
         synchronized (this) {
             if (numberOfSession > 0) {
