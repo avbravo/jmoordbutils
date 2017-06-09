@@ -165,4 +165,54 @@ sending=true;
         return sending;
     }// </editor-fold>
    
+    // <editor-fold defaultstate="collapsed" desc="send"> 
+
+    /**
+     * 
+     * @param emaildestinatario
+     * @param titulo
+     * @param mensaje
+     * @param emailremitente
+     * @param passwordremitente
+     * @param props
+     * @return 
+     */
+    public Boolean send(String emaildestinatario, String titulo, String mensaje,
+            String emailremitente, String passwordremitente,EmailSegurityProperties emailSegurityProperties) {
+        Boolean sending=false;
+        try {
+
+//            final String username = "avbravo@gmail.com";
+//            final String password = "javnet180denver$";
+            final String username = emailremitente;
+            final String password = passwordremitente;
+           
+  Properties props = new Properties();
+            props.put("mail.smtp.auth", emailSegurityProperties.getMailSmtpAuth());
+            props.put("mail.smtp.starttls.enable", emailSegurityProperties.getMailSmtpStarttlsEnable());
+            props.put("mail.smtp.host", emailSegurityProperties.getMailSmtpHost());
+            props.put("mail.smtp.port", emailSegurityProperties.getMailSmtpPort());
+            Session session = Session.getInstance(props,
+                    new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(username, password);
+                }
+            });
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(emaildestinatario));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(emaildestinatario));
+            message.setSubject(titulo);
+            message.setText(mensaje);
+
+            Transport.send(message);
+sending=true;
+        } catch (Exception ex) {
+            JsfUtil.errorMessage("send() "+ ex.getLocalizedMessage());
+            System.out.println("send() " + ex.getLocalizedMessage());
+        }
+        return sending;
+    }// </editor-fold>
+   
 }

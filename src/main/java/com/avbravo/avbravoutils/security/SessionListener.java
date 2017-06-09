@@ -89,7 +89,6 @@ public class SessionListener implements HttpSessionListener {
         HttpSession session = se.getSession();
 
         session.setMaxInactiveInterval(2100);
-        //   session.setMaxInactiveInterval(180);
         session.setAttribute("id", session.getId());
         LocalTime time = JsfUtil.getTiempo();
         session.setAttribute("time", time);

@@ -832,19 +832,19 @@ public class JsfUtil implements Serializable {
      *
      * @return
      */
-    public static Boolean addParametersUserNameToSession(String username) {
-        Boolean add = false;
-        try {
-            HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-            HttpSession session = request.getSession();
-            session.setAttribute("username", username);
-            add = true;
-        } catch (Exception e) {
-            errorMessage("addParametersUserNameToSession() " + e.getLocalizedMessage());
-        }
-        
-        return add;
-    }// </editor-fold>
+//    public static Boolean addParametersUserNameToSession(String username) {
+//        Boolean add = false;
+//        try {
+//            HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+//            HttpSession session = request.getSession();
+//            session.setAttribute("username", username);
+//            add = true;
+//        } catch (Exception e) {
+//            errorMessage("addParametersUserNameToSession() " + e.getLocalizedMessage());
+//        }
+//        
+//        return add;
+//    }// </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="getBrowserName()">  
     public static String getBrowserName() {
