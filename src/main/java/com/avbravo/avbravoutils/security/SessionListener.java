@@ -268,14 +268,16 @@ public class SessionListener implements HttpSessionListener {
         try {
             for (BrowserSession b : browserSessionList) {
                 if (b.session != null) {
-
-                    b.session.invalidate();
+                    if(b.getToken().equals(token)){
+                          b.session.invalidate();
                     browserSessionList.remove(b);
                     return true;
+                    }
+                  
                 }
             }
 
-            return true;
+            return false;
         } catch (Exception e) {
             JsfUtil.errorMessage("inactiveSessionByToken() " + e.getLocalizedMessage());
         }
