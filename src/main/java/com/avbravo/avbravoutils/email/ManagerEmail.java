@@ -28,6 +28,7 @@ public class ManagerEmail {
      */
     public ManagerEmail() {
     }
+// <editor-fold defaultstate="collapsed" desc="nenviar"> 
 
     public String enviar() {
         try {
@@ -65,7 +66,10 @@ public class ManagerEmail {
             System.out.println("error " + ex.getLocalizedMessage());
         }
         return null;
-    }
+    }// </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="send"> 
 /**
  * 
  * @param emaildestinatario
@@ -112,6 +116,53 @@ sending=true;
             System.out.println("send() " + ex.getLocalizedMessage());
         }
         return sending;
-    }
+    }// </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="send"> 
+
+    /**
+     * 
+     * @param emaildestinatario
+     * @param titulo
+     * @param mensaje
+     * @param emailremitente
+     * @param passwordremitente
+     * @param props
+     * @return 
+     */
+    public Boolean send(String emaildestinatario, String titulo, String mensaje,
+            String emailremitente, String passwordremitente,Properties props) {
+        Boolean sending=false;
+        try {
+
+//            final String username = "avbravo@gmail.com";
+//            final String password = "javnet180denver$";
+            final String username = emailremitente;
+            final String password = passwordremitente;
+           
+
+            Session session = Session.getInstance(props,
+                    new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(username, password);
+                }
+            });
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(emaildestinatario));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(emaildestinatario));
+            message.setSubject(titulo);
+            message.setText(mensaje);
+
+            Transport.send(message);
+sending=true;
+        } catch (Exception ex) {
+            JsfUtil.errorMessage("send() "+ ex.getLocalizedMessage());
+            System.out.println("send() " + ex.getLocalizedMessage());
+        }
+        return sending;
+    }// </editor-fold>
    
 }
