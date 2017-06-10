@@ -263,11 +263,11 @@ public class SessionListener implements HttpSessionListener {
     * @param token
     * @return 
     */
-    public static Boolean inactiveSessionByToken(String token) {
+    public static Boolean inactiveSessionByToken(String token,String username) {
         try {
             for (BrowserSession b : browserSessionList) {
                 if (b.session != null) {
-                    if(b.getToken().equals(token)){
+                    if(b.getToken().equals(token) && b.getUsername().equals(username)){
                           b.session.invalidate();
                     browserSessionList.remove(b);
                     return true;

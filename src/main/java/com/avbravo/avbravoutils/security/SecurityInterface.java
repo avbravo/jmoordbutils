@@ -92,8 +92,8 @@ public interface SecurityInterface {
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="inactiveSessionByToken"> 
 
-    default public Boolean inactiveSessionByToken(String token) {
-        return SessionListener.inactiveSessionByToken(token);
+    default public Boolean inactiveSessionByToken(String token, String username) {
+        return SessionListener.inactiveSessionByToken(token, username);
     }
 // </editor-fold>
 
@@ -108,7 +108,7 @@ public interface SecurityInterface {
                 String token = httpSession.getAttribute("token").toString();
                 if (mytoken.equals(token)) {
 
-                    if (inactiveSessionByToken(token)) {
+                    if (inactiveSessionByToken(token,username)) {
                         JsfUtil.successMessage("Se inactivo la sesion para el usuario." + username + "  Intente ingresar ahora");
 
                         return true;
@@ -140,7 +140,7 @@ public interface SecurityInterface {
                 JsfUtil.warningMessage("No se pudo localizar una sesion activa para el usuario " + username);
             }
         } catch (Exception e) {
-            JsfUtil.errorMessage("getMyToken() " + e.getLocalizedMessage());
+            JsfUtil.errorMessage("getTokenOfUsername() " + e.getLocalizedMessage());
         }
         return token;
     }
