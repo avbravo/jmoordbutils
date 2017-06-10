@@ -15,8 +15,7 @@ import javax.inject.Named;
  *
  * @authoravbravo
  */
-@Named
-@RequestScoped
+
 public class MonthUtils implements Serializable {
 
     private static final long serialVersionUID = 1L;
