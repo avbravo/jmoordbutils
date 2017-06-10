@@ -176,8 +176,36 @@ return usernameRecover;
             session.invalidate();
           return true;
         } catch (Exception e) {
-            JsfUtil.successMessage("invalidateMySession()() " + e.getLocalizedMessage());
+            JsfUtil.successMessage("invalidateMySession() " + e.getLocalizedMessage());
         }
         return false;
     }// </editor-fold>
+  
+    // <editor-fold defaultstate="collapsed" desc="saveUserInSession"> 
+  /**
+   * guarda los datos del usuario logeado en la sesion
+   * @return 
+   */
+  default public Boolean saveUserInSession(String username, Integer microsegundosParaInactividad){
+      try {
+           HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+                HttpSession session = request.getSession();
+//                JsfUtil.addParametersUserNameToSession("username");
+                session.setAttribute("username", username);
+                session.setMaxInactiveInterval(microsegundosParaInactividad);
+                String token = JsfUtil.getUUID();
+                token = token.substring(0, 6);
+
+                session.setAttribute("token", token);
+                //indicar el tiempo de la sesion predeterminado 2100segundos
+           
+              addUsername(username, session, token);
+           return true;
+      } catch (Exception e) {
+          JsfUtil.successMessage("saveUserInSession() " + e.getLocalizedMessage());
+      }
+      return false;
+  }
+  
+// </editor-fold>
 }

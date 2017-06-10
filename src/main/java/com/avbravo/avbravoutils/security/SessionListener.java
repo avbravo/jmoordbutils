@@ -98,16 +98,15 @@ public class SessionListener implements HttpSessionListener {
             numberOfSession++;
         }
 
-        System.out.println("===========================================");
-        System.out.println("------Sesion Creada-------");
-        System.out.println("......# (" + numberOfSession + ")");
-        System.out.println(".......id " + session.getId());
-        System.out.println(".......MaxInactiveInterval " + session.getMaxInactiveInterval());
-
-        System.out.println(".......time " + session.getAttribute("time"));
-        System.out.println(".......ipcliente" + session.getAttribute("ipcliente"));
-        System.out.println(".......browser" + session.getAttribute("browser"));
-        System.out.println("===========================================");
+//        System.out.println("===========================================");
+//        System.out.println("------Sesion Creada-------");
+//        System.out.println("......# (" + numberOfSession + ")");
+//        System.out.println(".......id " + session.getId());
+//        System.out.println(".......MaxInactiveInterval " + session.getMaxInactiveInterval());
+//        System.out.println(".......time " + session.getAttribute("time"));
+//        System.out.println(".......ipcliente" + session.getAttribute("ipcliente"));
+//        System.out.println(".......browser" + session.getAttribute("browser"));
+//        System.out.println("===========================================");
         BrowserSession browserSession = new BrowserSession(session.getId(), time, JsfUtil.getIp(), JsfUtil.getBrowserName(), "", "", session);
         browserSessionList.add(browserSession);
 
@@ -127,22 +126,22 @@ public class SessionListener implements HttpSessionListener {
             }
         }
 
-        System.out.println("--------------------------------------------------------");
-        System.out.println("Session Destroyed ");
-        System.out.println("........username " + session.getAttribute("username"));
-        System.out.println("........id: " + session.getAttribute("id"));
-        System.out.println("........Segundos para inactividad " + session.getMaxInactiveInterval());
-        System.out.println("........ipcliente: " + session.getAttribute("ipcliente"));
-        System.out.println("........time of creation: " + session.getAttribute("time"));
-        System.out.println("........browser: " + session.getAttribute("browser"));
-        System.out.println("--------------------------------------------------------");
+//        System.out.println("--------------------------------------------------------");
+//        System.out.println("Session Destroyed ");
+//        System.out.println("........username " + session.getAttribute("username"));
+//        System.out.println("........id: " + session.getAttribute("id"));
+//        System.out.println("........Segundos para inactividad " + session.getMaxInactiveInterval());
+//        System.out.println("........ipcliente: " + session.getAttribute("ipcliente"));
+//        System.out.println("........time of creation: " + session.getAttribute("time"));
+//        System.out.println("........browser: " + session.getAttribute("browser"));
+//        System.out.println("--------------------------------------------------------");
         Boolean found = false;
 
         //Voy a renoverlo del browser
         if (removeBrowserSession(session)) {
-            System.out.println("!!! quitandolo del browserSessionList");
+//            System.out.println("!!! quitandolo del browserSessionList");
         } else {
-            System.out.println("!!! No se quitandolo del browserSessionList");
+//            System.out.println("!!! No se quitandolo del browserSessionList");
         }
 
 //        validateUsernameWithSession();
@@ -158,7 +157,7 @@ public class SessionListener implements HttpSessionListener {
             for (BrowserSession p : browserSessionList) {
                 if (p.getId().equals(session.getId())) {
                     browserSessionList.remove(p);
-                    System.out.println("!!! quitandolo del browserSessionList");
+                  //  System.out.println("!!! quitandolo del browserSessionList");
                     found = true;
                     break;
                 }
