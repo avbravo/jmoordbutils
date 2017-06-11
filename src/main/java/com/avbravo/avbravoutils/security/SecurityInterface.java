@@ -190,9 +190,10 @@ return usernameRecover;
       try {
            HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
                 HttpSession session = request.getSession();
-//                JsfUtil.addParametersUserNameToSession("username");
+
                 session.setAttribute("username", username);
-                session.setMaxInactiveInterval(microsegundosParaInactividad);
+          
+             session.setMaxInactiveInterval(microsegundosParaInactividad);
                 String token = JsfUtil.getUUID();
                 token = token.substring(0, 6);
 
