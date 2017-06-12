@@ -633,7 +633,7 @@ public class JsfUtil implements Serializable {
         return date;
     }// </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="sumarMesaFecha"> 
+    // <editor-fold defaultstate="collapsed" desc="sumarMesaFecha(date,mes)"> 
 
     /**
      * suma a la fecha el numero de mes
@@ -673,6 +673,7 @@ public class JsfUtil implements Serializable {
     }
 // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="twoDigitString"> 
     private static String twoDigitString(int number) {
         
         if (number == 0) {
@@ -684,7 +685,7 @@ public class JsfUtil implements Serializable {
         }
         
         return String.valueOf(number);
-    }
+    }// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="getMilisegundos"> 
 
     public static long getMilisegundos() {
@@ -724,7 +725,6 @@ public class JsfUtil implements Serializable {
     }
 // </editor-fold>
     
-// <editor-fold defaultstate="collapsed" desc="milisegundosToMinutos"> 
 
     public static Integer milisegundosToMinutos(long milisegundos) {
         Integer minutes = 0;
