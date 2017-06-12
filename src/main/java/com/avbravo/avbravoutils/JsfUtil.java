@@ -25,9 +25,11 @@ import java.io.Serializable;
 import java.security.MessageDigest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -598,6 +600,8 @@ public class JsfUtil implements Serializable {
         
         return LocalTime.now();
     }// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="diasEntreFechas"> 
+
 
     public static Integer diasEntreFechas(Date fechaMayor, Date fechaMenor) {
         int d = 0;
@@ -629,6 +633,31 @@ public class JsfUtil implements Serializable {
         return date;
     }// </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="sumarMesaFecha"> 
+
+    /**
+     * suma a la fecha el numero de mes
+     * @param date
+     * @param mes 
+     */
+    public static Date sumarMesaFecha(Date date, Integer mes){
+         java.util.Date dateresult= new Date();
+        try {
+            System.out.println("llego a changeFecha()");
+            ZoneId defaultZoneId = ZoneId.systemDefault();
+           Instant instant = date.toInstant();
+            LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
+       
+            localDate =  localDate .plusMonths(3);
+            dateresult = java.sql.Date.valueOf(localDate);
+
+            
+        } catch (Exception e) {
+            errorMessage("sumarMesaFecha() "+e.getLocalizedMessage());
+        }
+        return dateresult;
+    }// </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="segundosToHoraString"> 
     public static String segundosToHoraString(Integer segundos) {
         String resultado = "";
@@ -694,7 +723,8 @@ public class JsfUtil implements Serializable {
         
     }
 // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="milisegundosToToMinutos"> 
+    
+// <editor-fold defaultstate="collapsed" desc="milisegundosToMinutos"> 
 
     public static Integer milisegundosToMinutos(long milisegundos) {
         Integer minutes = 0;
