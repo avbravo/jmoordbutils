@@ -8,6 +8,7 @@ package com.avbravo.avbravoutils.security;
 import com.avbravo.avbravoutils.JsfUtil;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -108,7 +109,7 @@ public interface SecurityInterface {
                 String token = httpSession.getAttribute("token").toString();
                 if (mytoken.equals(token)) {
 
-                    if (inactiveSessionByToken(token,username)) {
+                    if (inactiveSessionByToken(token, username)) {
                         JsfUtil.successMessage("Se inactivo la sesion para el usuario." + username + "  Intente ingresar ahora");
 
                         return true;
@@ -136,7 +137,7 @@ public interface SecurityInterface {
             HttpSession httpSession = getSessionOfUsername(username);
             if (httpSession != null) {
                 token = httpSession.getAttribute("token").toString();
-            }else{
+            } else {
                 JsfUtil.warningMessage("No se pudo localizar una sesion activa para el usuario " + username);
             }
         } catch (Exception e) {
@@ -145,15 +146,15 @@ public interface SecurityInterface {
         return token;
     }
 // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="getUsernameRecoveryOfSession"> 
-  default public String  getUsernameRecoveryOfSession() {
-      String usernameRecover = "";
+    default public String getUsernameRecoveryOfSession() {
+        String usernameRecover = "";
         try {
 
             HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
             HttpSession session = request.getSession();
-            if (session != null) {            
+            if (session != null) {
                 if (session.getAttribute("username") != null) {
                     usernameRecover = session.getAttribute("username").toString();
                 }//                
@@ -161,52 +162,103 @@ public interface SecurityInterface {
         } catch (Exception e) {
             JsfUtil.errorMessage("verifySesionLocal() " + e.getLocalizedMessage());
         }
-return usernameRecover;
+        return usernameRecover;
     }
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="invalidateMySession("> 
-/**
- * invalida la sesion actual
- * @return 
- */
-  default public Boolean  invalidateMySession() {
+
+    /**
+     * invalida la sesion actual
+     *
+     * @return
+     */
+    default public Boolean invalidateMySession() {
         try {
             HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
             HttpSession session = request.getSession();
             session.invalidate();
-          return true;
+            return true;
         } catch (Exception e) {
             JsfUtil.successMessage("invalidateMySession() " + e.getLocalizedMessage());
         }
         return false;
     }// </editor-fold>
-  
+
     // <editor-fold defaultstate="collapsed" desc="saveUserInSession"> 
-  /**
-   * guarda los datos del usuario logeado en la sesion
-   * @return 
-   */
-  default public Boolean saveUserInSession(String username, Integer microsegundosParaInactividad){
-      try {
-           HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-                HttpSession session = request.getSession();
+    /**
+     * guarda los datos del usuario logeado en la sesion
+     *
+     * @return
+     */
+    default public Boolean saveUserInSession(String username, Integer microsegundosParaInactividad) {
+        try {
+            HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            HttpSession session = request.getSession();
 
-                session.setAttribute("username", username);
-          
-             session.setMaxInactiveInterval(microsegundosParaInactividad);
-                String token = JsfUtil.getUUID();
-                token = token.substring(0, 6);
+            session.setAttribute("username", username);
 
-                session.setAttribute("token", token);
-                //indicar el tiempo de la sesion predeterminado 2100segundos
-           
-              addUsername(username, session, token);
-           return true;
-      } catch (Exception e) {
-          JsfUtil.successMessage("saveUserInSession() " + e.getLocalizedMessage());
-      }
-      return false;
-  }
-  
+            session.setMaxInactiveInterval(microsegundosParaInactividad);
+            String token = JsfUtil.getUUID();
+            token = token.substring(0, 6);
+
+            session.setAttribute("token", token);
+            //indicar el tiempo de la sesion predeterminado 2100segundos
+
+            addUsername(username, session, token);
+            return true;
+        } catch (Exception e) {
+            JsfUtil.successMessage("saveUserInSession() " + e.getLocalizedMessage());
+        }
+        return false;
+    }
+
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="nombre_metodo"> 
+    default public Date getDateTiemExpiration(HttpSession session) {
+        // Integer restante = 0;
+        Date expiry = new Date();
+        try {
+            //   Integer limite = JsfUtil.milisegundosToSegundos(session.getCreationTime()) + session.getMaxInactiveInterval();
+
+            expiry = new Date(session.getCreationTime() + session.getMaxInactiveInterval() * 1000);
+
+            // restante = inactivatePeriodo - JsfUtil.milisegundosToSegundos(milisegundos);
+        } catch (Exception e) {
+            JsfUtil.errorMessage("getDateTiemExpiration() " + e.getLocalizedMessage());
+        }
+        return expiry;
+    }// </e
+// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="getSecondsForInactivate"> 
+    default public Integer getSecondsForInactivate(HttpSession session) {
+        Integer restante = 0;
+
+        try {
+            Integer inactivatePeriodo = session.getMaxInactiveInterval();
+            Long milisegundos = session.getLastAccessedTime() - session.getCreationTime();
+            Integer limite = JsfUtil.milisegundosToSegundos(session.getCreationTime()) + session.getMaxInactiveInterval();
+
+            //  expiry = new Date(session.getCreationTime() + session.getMaxInactiveInterval() * 1000);
+            restante = inactivatePeriodo - JsfUtil.milisegundosToSegundos(milisegundos);
+        } catch (Exception e) {
+            JsfUtil.errorMessage("getSecondsForInactivate() " + e.getLocalizedMessage());
+        }
+        return restante;
+    }// <
+// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="getSecondsOfConnection"> 
+    default public Integer getMiliSecondsOfConnection(HttpSession session) {
+        Integer segundos = 0;
+        try {
+            Long diferences =  session.getLastAccessedTime() - session.getCreationTime();
+//            Long diferences = JsfUtil.getFechaActual().getTime()- session.getCreationTime();
+            return diferences.intValue();
+        } catch (Exception e) {
+            JsfUtil.errorMessage("getMiliSecondsOfConnection() " + e.getLocalizedMessage());
+        }
+        return segundos;
+    }
 // </editor-fold>
 }
