@@ -30,6 +30,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -616,6 +617,16 @@ public class JsfUtil implements Serializable {
         
         return d;
     }// </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="complete"> 
+    public static Long fechaActualEnMilisegundos(){
+        return ZonedDateTime.now().toInstant().toEpochMilli();
+    }
+   
+// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="sumarMesaFechaActual"> 
+
 
     /*
     

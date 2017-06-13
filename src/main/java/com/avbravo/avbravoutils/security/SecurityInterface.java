@@ -6,6 +6,7 @@
 package com.avbravo.avbravoutils.security;
 
 import com.avbravo.avbravoutils.JsfUtil;
+import java.time.ZonedDateTime;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -231,29 +232,40 @@ public interface SecurityInterface {
 // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="getSecondsForInactivate"> 
-    default public Integer getSecondsForInactivate(HttpSession session) {
-        Integer restante = 0;
+    default public Long getMilisegundosForInactivate(HttpSession session) {
+        
+       Integer resultado=0;
+
 
         try {
-            Integer inactivatePeriodo = session.getMaxInactiveInterval();
-            Long milisegundos = session.getLastAccessedTime() - session.getCreationTime();
-            Integer limite = JsfUtil.milisegundosToSegundos(session.getCreationTime()) + session.getMaxInactiveInterval();
+            
+           Long  inactivatePeriodo =session.getCreationTime() + ( session.getMaxInactiveInterval()/1000);
+          //  Long milisegundos = session.getLastAccessedTime() - session.getCreationTime();
+            Long actual = JsfUtil.fechaActualEnMilisegundos();
+        
+            if(inactivatePeriodo > actual){
+                System.out.println(" inactivatePeriodo "+ inactivatePeriodo + " actual" +actual);
+                return (inactivatePeriodo - actual);
+          
+            }else{
+                return resultado.longValue();
+            }
+        
 
-            //  expiry = new Date(session.getCreationTime() + session.getMaxInactiveInterval() * 1000);
-            restante = inactivatePeriodo - JsfUtil.milisegundosToSegundos(milisegundos);
         } catch (Exception e) {
             JsfUtil.errorMessage("getSecondsForInactivate() " + e.getLocalizedMessage());
         }
-        return restante;
+        return resultado.longValue();
     }// <
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="getSecondsOfConnection"> 
-    default public Integer getMiliSecondsOfConnection(HttpSession session) {
+    // <editor-fold defaultstate="collapsed" desc="miliSecondsOfConnection"> 
+    default public Integer miliSecondsOfConnection(HttpSession session) {
         Integer segundos = 0;
         try {
-            Long diferences =  session.getLastAccessedTime() - session.getCreationTime();
-//            Long diferences = JsfUtil.getFechaActual().getTime()- session.getCreationTime();
+//            Long diferences =  session.getLastAccessedTime() - session.getCreationTime();
+         Long diferences = JsfUtil.fechaActualEnMilisegundos()- session.getCreationTime();
+            
             return diferences.intValue();
         } catch (Exception e) {
             JsfUtil.errorMessage("getMiliSecondsOfConnection() " + e.getLocalizedMessage());
