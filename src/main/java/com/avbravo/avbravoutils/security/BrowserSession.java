@@ -20,12 +20,17 @@ public class BrowserSession {
         private String username;
          private String token;
         HttpSession session;
-       
+        private Integer maxSgundosParaInactividad;
 
-    public BrowserSession() {
+    public Integer getMaxSgundosParaInactividad() {
+        return maxSgundosParaInactividad;
     }
 
-    public BrowserSession(String id, LocalTime time, String ipcliente, String browser, String username, String token, HttpSession session) {
+    public void setMaxSgundosParaInactividad(Integer maxSgundosParaInactividad) {
+        this.maxSgundosParaInactividad = maxSgundosParaInactividad;
+    }
+
+    public BrowserSession(String id, LocalTime time, String ipcliente, String browser, String username, String token, HttpSession session, Integer maxSgundosParaInactividad) {
         this.id = id;
         this.time = time;
         this.ipcliente = ipcliente;
@@ -33,7 +38,17 @@ public class BrowserSession {
         this.username = username;
         this.token = token;
         this.session = session;
+        this.maxSgundosParaInactividad = maxSgundosParaInactividad;
     }
+       
+
+    public BrowserSession() {
+    }
+
+   
+
+   
+    
 
     public String getToken() {
         return token;

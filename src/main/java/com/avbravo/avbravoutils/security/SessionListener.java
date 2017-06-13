@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
@@ -55,18 +56,52 @@ public class SessionListener implements HttpSessionListener {
 
     public void attributeAdded(HttpSessionBindingEvent arg0) {
 
-        //   System.out.println("value is added ");
+        //    System.out.println("value is added ");
     }
 
     public void attributeRemoved(HttpSessionBindingEvent arg0) {
-        // System.out.println("value is removed");
+        try {
+
+            System.out.println("value is removed");
+
+        } catch (Exception e) {
+            JsfUtil.errorMessage("attributeRemoved() " + e.getLocalizedMessage());
+        }
 
     }
 
     public void attributeReplaced(HttpSessionBindingEvent arg0) {
-        //System.out.println("value has been replaced");
+//        try {
+
+            System.out.println("value has been replaced " + JsfUtil.getTiempo());
+
+//            System.out.println("getId() " + arg0.getSession().getId());
+//
+//
+//            Long consumidos = (JsfUtil.fechaActualEnMilisegundos() - arg0.getSession().getCreationTime()) / 1000;
+//            
+//            HttpSession httpSession = arg0.getSession();
+//            Integer nuevoMaximoInactividad = 0;
+//            for (BrowserSession b : browserSessionList) {
+//                if (b.getId().equals(httpSession.getId())) {
+//
+//                    nuevoMaximoInactividad = b.getMaxSgundosParaInactividad() + consumidos.intValue();
+//                    b.getSession().setMaxInactiveInterval(nuevoMaximoInactividad);
+//                    arg0.getSession().setMaxInactiveInterval(nuevoMaximoInactividad);
+//                    HttpSession session = arg0.getSession();
+//                    session.setMaxInactiveInterval(nuevoMaximoInactividad);
+//                    break;
+//                }
+//            }
+//
+//            System.out.println("++++++++++++++++++++++++++++++++");
+//
+//        } catch (Exception e) {
+//            JsfUtil.errorMessage("attributeReplaced() " + e.getLocalizedMessage());
+//        }
 
     }
+
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="SessionListener"> 
@@ -88,7 +123,7 @@ public class SessionListener implements HttpSessionListener {
     public void sessionCreated(HttpSessionEvent se) {
         HttpSession session = se.getSession();
 
-       session.setMaxInactiveInterval(2100);
+        session.setMaxInactiveInterval(2100);
         session.setAttribute("id", session.getId());
         LocalTime time = JsfUtil.getTiempo();
         session.setAttribute("time", time);
@@ -98,16 +133,8 @@ public class SessionListener implements HttpSessionListener {
             numberOfSession++;
         }
 
-//        System.out.println("===========================================");
-//        System.out.println("------Sesion Creada-------");
-//        System.out.println("......# (" + numberOfSession + ")");
-//        System.out.println(".......id " + session.getId());
-//        System.out.println(".......MaxInactiveInterval " + session.getMaxInactiveInterval());
-//        System.out.println(".......time " + session.getAttribute("time"));
-//        System.out.println(".......ipcliente" + session.getAttribute("ipcliente"));
-//        System.out.println(".......browser" + session.getAttribute("browser"));
-//        System.out.println("===========================================");
-        BrowserSession browserSession = new BrowserSession(session.getId(), time, JsfUtil.getIp(), JsfUtil.getBrowserName(), "", "", session);
+        //BrowserSession browserSession = new BrowserSession(session.getId(), time, JsfUtil.getIp(), JsfUtil.getBrowserName(), "", "", 0);
+        BrowserSession browserSession = new BrowserSession(session.getId(), time, JsfUtil.getIp(), JsfUtil.getBrowserName(), "", "", session, numberOfSession);
         browserSessionList.add(browserSession);
 
         JsfUtil.successMessage("Se creo una sesion " + session.getId());
@@ -126,15 +153,6 @@ public class SessionListener implements HttpSessionListener {
             }
         }
 
-//        System.out.println("--------------------------------------------------------");
-//        System.out.println("Session Destroyed ");
-//        System.out.println("........username " + session.getAttribute("username"));
-//        System.out.println("........id: " + session.getAttribute("id"));
-//        System.out.println("........Segundos para inactividad " + session.getMaxInactiveInterval());
-//        System.out.println("........ipcliente: " + session.getAttribute("ipcliente"));
-//        System.out.println("........time of creation: " + session.getAttribute("time"));
-//        System.out.println("........browser: " + session.getAttribute("browser"));
-//        System.out.println("--------------------------------------------------------");
         Boolean found = false;
 
         //Voy a renoverlo del browser
@@ -144,9 +162,6 @@ public class SessionListener implements HttpSessionListener {
 //            System.out.println("!!! No se quitandolo del browserSessionList");
         }
 
-//        validateUsernameWithSession();
-        // printAll();
-//       JsfUtil.successMessage("Se destruyo la sesion "+se.getSession().getId());
     }// </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="removeBrowserSession"> 
@@ -157,7 +172,7 @@ public class SessionListener implements HttpSessionListener {
             for (BrowserSession p : browserSessionList) {
                 if (p.getId().equals(session.getId())) {
                     browserSessionList.remove(p);
-                  //  System.out.println("!!! quitandolo del browserSessionList");
+                    //  System.out.println("!!! quitandolo del browserSessionList");
                     found = true;
                     break;
                 }
@@ -193,7 +208,7 @@ public class SessionListener implements HttpSessionListener {
      * @param username
      * @return
      */
-    public static Boolean addUsername(String username, HttpSession session, String token) {
+    public static Boolean addUsername(String username, HttpSession session, String token, Integer maxSegundosParaInactividad) {
         Boolean add = false;
         try {
             if (isUserLogged(username)) {
@@ -206,6 +221,7 @@ public class SessionListener implements HttpSessionListener {
                 if (p.getId().equals(session.getId())) {
                     browserSessionList.get(c).setUsername(username);
                     browserSessionList.get(c).setToken(token);
+                    browserSessionList.get(c).setMaxSgundosParaInactividad(maxSegundosParaInactividad);
                 }
                 c++;
             }
@@ -256,22 +272,23 @@ public class SessionListener implements HttpSessionListener {
 // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="inactiveSessionByToken"> 
-   /**
-    * Elimina la sesion por el token es util cuando un usuario no 
-    * cierra su sesion y esta queda activa puede recibir un email con el token
-    * @param token
-    * @return 
-    */
-    public static Boolean inactiveSessionByToken(String token,String username) {
+    /**
+     * Elimina la sesion por el token es util cuando un usuario no cierra su
+     * sesion y esta queda activa puede recibir un email con el token
+     *
+     * @param token
+     * @return
+     */
+    public static Boolean inactiveSessionByToken(String token, String username) {
         try {
             for (BrowserSession b : browserSessionList) {
                 if (b.session != null) {
-                    if(b.getToken().equals(token) && b.getUsername().equals(username)){
-                          b.session.invalidate();
-                    browserSessionList.remove(b);
-                    return true;
+                    if (b.getToken().equals(token) && b.getUsername().equals(username)) {
+                        b.session.invalidate();
+                        browserSessionList.remove(b);
+                        return true;
                     }
-                  
+
                 }
             }
 
@@ -329,6 +346,5 @@ public class SessionListener implements HttpSessionListener {
         }
         return session;
     }// </editor-fold>
-   
 
 }

@@ -30,8 +30,8 @@ public interface SecurityInterface {
     // public void verifySesionLocal();
     // public String cancelSelectedSession(BrowserSession browserSesssion);
     // <editor-fold defaultstate="collapsed" desc="addUsername"> 
-    default public Boolean addUsername(String username, HttpSession session, String token) {
-        return SessionListener.addUsername(username, session, token);
+    default public Boolean addUsername(String username, HttpSession session, String token,Integer maxSegundosParaInactividad) {
+        return SessionListener.addUsername(username, session, token,maxSegundosParaInactividad);
     } // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="irLogin"> 
@@ -191,21 +191,21 @@ public interface SecurityInterface {
      *
      * @return
      */
-    default public Boolean saveUserInSession(String username, Integer microsegundosParaInactividad) {
+    default public Boolean saveUserInSession(String username, Integer maxSegundosParaInactividad) {
         try {
             HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
             HttpSession session = request.getSession();
 
             session.setAttribute("username", username);
 
-            session.setMaxInactiveInterval(microsegundosParaInactividad);
+            session.setMaxInactiveInterval(maxSegundosParaInactividad);
             String token = JsfUtil.getUUID();
             token = token.substring(0, 6);
 
             session.setAttribute("token", token);
             //indicar el tiempo de la sesion predeterminado 2100segundos
 
-            addUsername(username, session, token);
+            addUsername(username, session, token,maxSegundosParaInactividad);
             return true;
         } catch (Exception e) {
             JsfUtil.successMessage("saveUserInSession() " + e.getLocalizedMessage());
