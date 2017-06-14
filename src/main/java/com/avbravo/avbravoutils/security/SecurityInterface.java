@@ -198,7 +198,7 @@ public interface SecurityInterface {
 
             session.setAttribute("username", username);
 
-            session.setMaxInactiveInterval(maxSegundosParaInactividad);
+        session.setMaxInactiveInterval(maxSegundosParaInactividad);
             String token = JsfUtil.getUUID();
             token = token.substring(0, 6);
 
