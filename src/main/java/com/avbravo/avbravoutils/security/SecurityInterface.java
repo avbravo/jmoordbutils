@@ -86,10 +86,10 @@ public interface SecurityInterface {
     default List<BrowserSession> allBrowserSessionList() {
         return SessionListener.getBrowserSessionList();
     }// </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="getSessionOfUsername">
+    // <editor-fold defaultstate="collapsed" desc="sessionOfUsername">
 
-    default public HttpSession getSessionOfUsername(String username) {
-        return SessionListener.getSesionOfUsername(username);
+    default public HttpSession sessionOfUsername(String username) {
+        return SessionListener.sesionOfUsername(username);
     }
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="inactiveSessionByToken"> 
@@ -99,12 +99,43 @@ public interface SecurityInterface {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="destroyWithToken"> 
-    default public Boolean destroyWithToken(String username, String mytoken) {
+    // <editor-fold defaultstate="collapsed" desc="inactiveSessionByUsername"> 
+        default public Boolean inactiveSessionByUsername( String username) {
+        return SessionListener.inactiveSessionByUsername( username);
+    }
+// </editor-fold>
+    
+    default public Boolean destroyByUsername(String username){
         Boolean destroyed = false;
         try {
 
-            HttpSession httpSession = getSessionOfUsername(username);
+            HttpSession httpSession = sessionOfUsername(username);
+
+            if (httpSession != null) {
+            
+
+                    if (inactiveSessionByUsername(username)) {
+                        JsfUtil.successMessage("Se inactivo la sesion para el usuario." + username + "  Intente ingresar ahora");
+
+                        return true;
+                    } else {
+                        JsfUtil.warningMessage("No se puede inactivar la session para el usuario "+username);
+                        return false;
+                    }
+               
+            }
+
+        } catch (Exception e) {
+            JsfUtil.errorMessage("destroyByUsername() " + e.getLocalizedMessage());
+        }
+        return false;
+    }
+    // <editor-fold defaultstate="collapsed" desc="destroyWithToken"> 
+    default public Boolean destroyByToken(String username, String mytoken) {
+        Boolean destroyed = false;
+        try {
+
+            HttpSession httpSession = sessionOfUsername(username);
 
             if (httpSession != null) {
                 String token = httpSession.getAttribute("token").toString();
@@ -131,11 +162,11 @@ public interface SecurityInterface {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="getTokenOfUsername"> 
-    default public String getTokenOfUsername(String username) {
+    // <editor-fold defaultstate="collapsed" desc="tokenOfUsername"> 
+    default public String tokenOfUsername(String username) {
         String token = "";
         try {
-            HttpSession httpSession = getSessionOfUsername(username);
+            HttpSession httpSession = sessionOfUsername(username);
             if (httpSession != null) {
                 token = httpSession.getAttribute("token").toString();
             } else {
@@ -148,8 +179,8 @@ public interface SecurityInterface {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="getUsernameRecoveryOfSession"> 
-    default public String getUsernameRecoveryOfSession() {
+    // <editor-fold defaultstate="collapsed" desc="usernameRecoveryOfSession"> 
+    default public String usernameRecoveryOfSession() {
         String usernameRecover = "";
         try {
 
@@ -231,8 +262,8 @@ public interface SecurityInterface {
     }// </e
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="getSecondsForInactivate"> 
-    default public Long getMilisegundosForInactivate(HttpSession session) {
+    // <editor-fold defaultstate="collapsed" desc="secondsForInactivate"> 
+    default public Long milisegundosForInactivate(HttpSession session) {
         
        Integer resultado=0;
 

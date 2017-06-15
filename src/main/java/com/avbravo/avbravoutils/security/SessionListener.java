@@ -272,13 +272,12 @@ public class SessionListener implements HttpSessionListener {
 // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="inactiveSessionByToken"> 
-    /**
-     * Elimina la sesion por el token es util cuando un usuario no cierra su
-     * sesion y esta queda activa puede recibir un email con el token
-     *
-     * @param token
-     * @return
-     */
+ /**
+  * inactiveSessionByToken
+  * @param token
+  * @param username
+  * @return 
+  */   
     public static Boolean inactiveSessionByToken(String token, String username) {
         try {
             for (BrowserSession b : browserSessionList) {
@@ -295,6 +294,33 @@ public class SessionListener implements HttpSessionListener {
             return false;
         } catch (Exception e) {
             JsfUtil.errorMessage("inactiveSessionByToken() " + e.getLocalizedMessage());
+        }
+        return false;
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="inactiveSessionByUsername"> 
+ /**
+  * inactiveSessionByToken
+  * @param token
+  * @param username
+  * @return 
+  */   
+    public static Boolean inactiveSessionByUsername( String username) {
+        try {
+            for (BrowserSession b : browserSessionList) {
+                if (b.session != null) {
+                    if (b.getUsername().equals(username)) {
+                        b.session.invalidate();
+                        browserSessionList.remove(b);
+                        return true;
+                    }
+
+                }
+            }
+
+            return false;
+        } catch (Exception e) {
+            JsfUtil.errorMessage("inactiveSessionByUsername() " + e.getLocalizedMessage());
         }
         return false;
     }
@@ -323,14 +349,14 @@ public class SessionListener implements HttpSessionListener {
         return found;
     }// </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="getSesionOfUsername">  
+    // <editor-fold defaultstate="collapsed" desc="sesionOfUsername">  
     /**
      * devuelve el session de un username
      *
      * @param username
      * @return
      */
-    public static HttpSession getSesionOfUsername(String username) {
+    public static HttpSession sesionOfUsername(String username) {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpSession session = request.getSession();
         try {
@@ -342,7 +368,7 @@ public class SessionListener implements HttpSessionListener {
 
             }
         } catch (Exception e) {
-            JsfUtil.errorMessage("getSession()" + e.getLocalizedMessage());
+            JsfUtil.errorMessage("sesionOfUsername()" + e.getLocalizedMessage());
         }
         return session;
     }// </editor-fold>
