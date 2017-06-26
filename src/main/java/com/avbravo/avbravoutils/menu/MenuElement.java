@@ -6,15 +6,15 @@
 package com.avbravo.avbravoutils.menu;
 
 import java.io.Serializable;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
+//import javax.enterprise.context.SessionScoped;
+//import javax.inject.Named;
 
 /**
  *
  * @authoravbravo
  */
-@Named
-@SessionScoped
+//@Named
+//@SessionScoped
 public class MenuElement implements Serializable{
 
     private static final long serialVersionUID = 1L;
