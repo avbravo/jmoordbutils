@@ -572,6 +572,7 @@ public class JsfUtil implements Serializable {
         return texto;
     }// </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="letterToLower"> 
     /**
      * ConvertirLetraMinuscula
      *
@@ -596,7 +597,7 @@ public class JsfUtil implements Serializable {
         }
         return texto;
     }// </editor-fold>
-
+// <editor-fold defaultstate="collapsed" desc="getHour"> 
     public static LocalTime getHour() {
         
         return LocalTime.now();
