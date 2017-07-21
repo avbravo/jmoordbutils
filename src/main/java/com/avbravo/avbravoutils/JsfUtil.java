@@ -7,6 +7,7 @@ package com.avbravo.avbravoutils;
 // <editor-fold defaultstate="collapsed" desc="import">  
 
 import com.avbravo.avbravoutils.crypto.CryptoConverter;
+import com.avbravo.avbravoutils.dates.FechaDiaUtils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -25,10 +26,12 @@ import java.io.Serializable;
 import java.security.MessageDigest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Month;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -488,6 +491,65 @@ public class JsfUtil implements Serializable {
     }
 // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="nombre_metodo"> 
+    /**
+     * Convierte un nombre de mes a un objeto Month Month month =
+     * JsfUtil.mesToMonth("Febrero); Devuelve un month.FEBRARY;
+     *
+     * @param mes
+     * @return
+     */
+    public static Month mesToMonth(String mes) {
+        mes = mes.toLowerCase();
+        Month month = Month.JANUARY;
+        try {
+            switch (mes) {
+                case "enero":
+                    month = Month.JANUARY;
+                    break;
+                case "febrero":
+                    month = Month.FEBRUARY;
+                    break;
+                case "marzo":
+                    month = Month.MARCH;
+                    break;
+                case "abril":
+                    month = Month.APRIL;
+                    break;
+                case "mayo":
+                    month = Month.MAY;
+                    break;
+                case "junio":
+                    month = Month.JUNE;
+                    break;
+                case "julio":
+                    month = Month.JULY;
+                    break;
+                case "agosto":
+                    month = Month.AUGUST;
+                    break;
+                case "septiembre":
+                    month = Month.SEPTEMBER;
+                    break;
+                case "octubre":
+                    month = Month.OCTOBER;
+                    break;
+                case "noviembre":
+                    month = Month.NOVEMBER;
+                    break;
+                case "diciembre":
+                    month = Month.DECEMBER;
+                    break;
+
+            }
+
+        } catch (Exception e) {
+            errorMessage("mesToMonth() " + e.getLocalizedMessage());
+        }
+        return month;
+    }
+// </editor-fold>
+
     // <editor-fold defaultstate="collapsed" desc="getMesDeUnaFecha"> 
     public static Integer getMesDeUnaFecha(Date date) {
         Calendar calendar = Calendar.getInstance();
@@ -532,7 +594,157 @@ public class JsfUtil implements Serializable {
     }
 // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="nombreDia"> 
+    public static String nameOfDay(LocalDate date) {
+        String nombre = "DOMINGO";
+        try {
+            DayOfWeek dia = date.getDayOfWeek();
+            dia.name();
+            switch (dia.name()) {
+                case "SATURDAY":
+                    nombre = "SABADO";
+                    break;
+                case "SUNDAY":
+                    nombre = "DOMINGO";
+                    break;
+                case "MONDAY":
+                    nombre = "LUNES";
+                    break;
+                case "TUESDAY":
+                    nombre = "MARTES";
+                    break;
+                case "WEDNESDAY":
+                    nombre = "MIERCOLES";
+                    break;
+                case "THURSDAY":
+                    nombre = "JUEVES";
+                    break;
+                case "FRIDAY":
+                    nombre = "VIERNES";
+                    break;
+
+            }
+
+        } catch (Exception e) {
+            errorMessage("nameOfDay() " + e.getLocalizedMessage());
+        }
+        return nombre;
+    }
+// </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="firstLeterOfDay"> 
+    /**
+     * devuelve la primera letra del dia
+     * @param date
+     * @return 
+     */
+    public static String firstLetterOfDay(LocalDate date) {
+        String letra ="";
+        try {
+            letra =nameOfDay(date);
+            if(letra.length()>1){
+                letra = letra.substring(0,1);
+            }
+            
+         } catch (Exception e) {
+            errorMessage("firsLetterOfDay() " + e.getLocalizedMessage());
+        }
+        return letra;
+    }
+// </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="letterDayOfMonth"> 
+    /**
+     * devuelve un List<String> correspondiente a las letras de cada dia del mes
+     * @param year
+     * @param mes
+     * @return 
+     */
+    public static List<String> letterDayOfMonth(Integer year, String mes){
+        List<String> letters = new ArrayList<>();
+        try {
+             LocalDate date;
+
+            Month month = mesToMonth(mes);
+
+            for (int i = 1; i <= month.maxLength(); i++) {
+                
+                date = LocalDate.of(year, month, i);
+                String letra = firstLetterOfDay(date);
+                letters.add(letra);
+                
+
+            }
+        } catch (Exception e) {
+              errorMessage("letterDayOfMonth() " + e.getLocalizedMessage());
+        }
+        return letters;
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="nameDayOfMonth"> 
+    /**
+     * devuelve un List<String> correspondiente a las letras de cada dia del mes
+     * @param year
+     * @param mes
+     * @return 
+     */
+    public static List<String> nameDayOfMonth(Integer year, String mes){
+        List<String> names = new ArrayList<>();
+        try {
+             LocalDate date;
+
+            Month month = mesToMonth(mes);
+
+            for (int i = 1; i <= month.maxLength(); i++) {
+                
+                date = LocalDate.of(year, month, i);
+                String name = nameOfDay(date);
+                names.add(name);
+                
+
+            }
+        } catch (Exception e) {
+              errorMessage("nameDayOfMonth() " + e.getLocalizedMessage());
+        }
+        return names;
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="nameDayOfMonth"> 
+    /**
+     * devuelve un List<String> correspondiente a las letras de cada dia del mes
+     * @param year
+     * @param mes
+     * @return 
+     */
+    public static List<FechaDiaUtils> nameOfDayOfDateOfMonth(Integer year, String mes){
+        List<FechaDiaUtils> fechaDiaUtilsList = new ArrayList<>();
+        try {
+             LocalDate date;
+
+            Month month = mesToMonth(mes);
+
+            for (int i = 1; i <= month.maxLength(); i++) {
+                
+                date = LocalDate.of(year, month, i);
+                String name = nameOfDay(date);
+                String letter = firstLetterOfDay(date);
+                FechaDiaUtils fechaDiaUtils = new FechaDiaUtils(date, letter, name);
+                fechaDiaUtilsList.add(fechaDiaUtils);
+                
+
+            }
+        } catch (Exception e) {
+              errorMessage("nameOfDayOfDateOfMonth() " + e.getLocalizedMessage());
+        }
+        return fechaDiaUtilsList;
+    }
+// </editor-fold>
+    
+    
+    
     // <editor-fold defaultstate="collapsed" desc="getPrimeraFechaAnio"> 
+
     /**
      * devuelve la primera fecha del año
      *
