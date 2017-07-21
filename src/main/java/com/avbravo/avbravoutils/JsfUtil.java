@@ -31,6 +31,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -50,7 +51,7 @@ import org.primefaces.context.RequestContext;
  * @authoravbravo
  */
 public class JsfUtil implements Serializable {
-    
+
     private static final Logger LOG = Logger.getLogger(JsfUtil.class.getName());
 // <editor-fold defaultstate="collapsed" desc="getSelectItems"> 
 
@@ -91,7 +92,7 @@ public class JsfUtil implements Serializable {
     public static void errorMessages(List<String> messages) {
         for (String message : messages) {
             errorMessage(message);
-            
+
         }
     }    // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="errorMessage(String msg)"> 
@@ -129,23 +130,28 @@ public class JsfUtil implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, msg, ""));
         LOG.warning(msg);
     }    // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="getRequestParameter"> 
 
+    // <editor-fold defaultstate="collapsed" desc="getRequestParameter"> 
     public static String getRequestParameter(String key) {
         return FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get(key);
-    }    // </editor-fold>
+    }
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="getObjectFromRequestParameter"> 
     public static Object getObjectFromRequestParameter(String requestParameterName,
             Converter converter, UIComponent component) {
         String theId = JsfUtil.getRequestParameter(requestParameterName);
         return converter.getAsObject(FacesContext.getCurrentInstance(), component, theId);
-    }    // </editor-fold>
+    }
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="infoDialog"> 
     public static void infoDialog(String titulo, String texto) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, titulo,
                 texto);
         RequestContext.getCurrentInstance().showMessageInDialog(message);
-    }    // </editor-fold>
+    }
+    // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="warningDialog"> 
     public static void warningDialog(String titulo, String texto) {
@@ -197,6 +203,7 @@ public class JsfUtil implements Serializable {
         return false;
     }    // </editor-fold>
 
+// <editor-fold defaultstate="collapsed" desc="getComponentMessages"> 
     public static String getComponentMessages(String clientComponent, String defaultMessage) {
         FacesContext fc = FacesContext.getCurrentInstance();
         UIComponent component = UIComponent.getCurrentComponent(fc).findComponent(clientComponent);
@@ -212,8 +219,10 @@ public class JsfUtil implements Serializable {
             }
         }
         return "";
-    }    // </editor-fold>
+    }
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="getRootCause"> 
     public static Throwable getRootCause(Throwable cause) {
         if (cause != null) {
             Throwable source = cause.getCause();
@@ -224,7 +233,8 @@ public class JsfUtil implements Serializable {
             }
         }
         return null;
-    }    // </editor-fold>
+    }
+    // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="md5"> 
 
     public static String md5(String clear) throws Exception {
@@ -252,13 +262,13 @@ public class JsfUtil implements Serializable {
      * @return returna un randomUUID automatico
      */
     public static String getUUID() {
-        
+
         UUID uuid = UUID.randomUUID();
         return uuid.toString().toLowerCase();
-        
-    }// </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="getExtension"> 
 
+    }// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="getExtension"> 
     /**
      * getExtension()
      *
@@ -272,9 +282,10 @@ public class JsfUtil implements Serializable {
             JsfUtil.errorMessage("getExtension() " + e.getLocalizedMessage());
         }
         return "";
-    }// </editor-fold>
+    }
+// </editor-fold>
 
-    /*
+    // <editor-fold defaultstate="collapsed" desc="copyFile">
 /*
      copia un archivo generalmente cuando se usa el fileupload
      fileName: nombre del archivo a copiar
@@ -287,37 +298,42 @@ public class JsfUtil implements Serializable {
 
             // write the inputStream to a FileOutputStream
             OutputStream out = new FileOutputStream(new File(destination + fileName));
-            
+
             int read = 0;
             byte[] bytes = new byte[1024];
-            
+
             while ((read = in.read(bytes)) != -1) {
                 out.write(bytes, 0, read);
             }
-            
+
             in.close();
             out.flush();
             out.close();
-            
+
             return true;
         } catch (IOException e) {
             JsfUtil.errorMessage("copyFile() " + e.getLocalizedMessage());
         }
         return false;
-    }// </editor-fold>
+    }
+// </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="getPathFotos">
     public static String getPathFotos() {
         try {
-            
+
             String path = getPath() + "resources/fotos/";
             return path;
         } catch (Exception e) {
-            
+
             errorMessage("getPathFotosPlagas() " + e.getLocalizedMessage());
         }
         return null;
-        
-    }// </editor-fold>
+
+    }
+// </editor-fold>
+
+// <editor-fold defaultstate="collapsed" desc="getPath"> 
 
     /*
      devuelve el path 
@@ -327,15 +343,16 @@ public class JsfUtil implements Serializable {
             ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance()
                     .getExternalContext().getContext();
             return ctx.getRealPath("/");
-            
+
         } catch (Exception e) {
-            
+
             errorMessage("getPath() " + e.getLocalizedMessage());
         }
         return null;
-        
+
     }// </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="getAddPathResources"> 
     /**
      *
      * @param folder forExample: getPathResources("/fotos/paises/");
@@ -343,28 +360,29 @@ public class JsfUtil implements Serializable {
      *
      */
     public static String getAddPathResources(String folder) {
-        
+
         try {
-            
+
             String path = getPath() + "resources" + folder;
             return path;
         } catch (Exception e) {
-            
+
             errorMessage("getAddPathResources() " + e.getLocalizedMessage());
         }
         return null;
-        
+
     }// </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="redondear">
     public static Double redondear(Double n, Integer decimales) {
         Double r = 0.0;
         try {
             switch (decimales) {
                 case 1:
                     r = (double) Math.round(n * 10) / 10;
-                    
+
                     break;
-                
+
                 case 2:
                     r = (double) Math.round(n * 100) / 100;
                     break;
@@ -375,7 +393,7 @@ public class JsfUtil implements Serializable {
                     r = (double) Math.round(n * 10000) / 10000;
                     break;
             }
-            
+
             return r;
         } catch (Exception e) {
             errorMessage("redondear() " + e.getLocalizedMessage());
@@ -383,6 +401,7 @@ public class JsfUtil implements Serializable {
         return r;
     }// </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="generateUniqueID">
     /**
      * Genera una serie de caracteres aleatorios
      *
@@ -397,7 +416,7 @@ public class JsfUtil implements Serializable {
 // <editor-fold defaultstate="collapsed" desc="round"> 
 
     public static Double round(Double value) {
-        
+
         if (value != null) {
             System.out.println("value: " + value);
             System.out.println("value to String: " + value.toString());
@@ -408,7 +427,7 @@ public class JsfUtil implements Serializable {
             } else {
                 return (long) (value * 1e2) / 1e2;
             }
-            
+
         } else {
             return 1d;
         }
@@ -428,54 +447,92 @@ public class JsfUtil implements Serializable {
 //        return new java.sql.Date(mydate.getTime());
 //
 //    }
+    // <editor-fold defaultstate="collapsed" desc="getAnioActual"> 
     public static Integer getAnioActual() {
         java.util.Calendar ca = java.util.Calendar.getInstance();
         java.sql.Date mydate = new java.sql.Date(ca.getTimeInMillis());
         return ca.get(Calendar.YEAR);
-    }// </editor-fold>
+    }
+// </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="getMesActual"> 
     public static Integer getMesActual() {
         java.util.Calendar ca = java.util.Calendar.getInstance();
         java.sql.Date mydate = new java.sql.Date(ca.getTimeInMillis());
         return ca.get(Calendar.MONTH);
-    }// </editor-fold>
+    }
+// </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="getNombreMes"> 
+    public static String getNombreMes(Integer numeromes) {
+        try {
+            String nombre = "";
+            List<String> listMeses = new ArrayList<>();
+            listMeses.add("Enero");
+            listMeses.add("Febrero");
+            listMeses.add("Marzo");
+            listMeses.add("Abril");
+            listMeses.add("Mayo");
+            listMeses.add("Junio");
+            listMeses.add("Julio");
+            listMeses.add("Agosto");
+            listMeses.add("Septiembre");
+            listMeses.add("Octubre");
+            listMeses.add("Noviembre");
+            listMeses.add("Diciembre");
+            return listMeses.get(numeromes);
+
+        } catch (Exception e) {
+        }
+        return "";
+    }
+// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="getMesDeUnaFecha"> 
     public static Integer getMesDeUnaFecha(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        
+
         int anio = calendar.get(Calendar.YEAR);
         int mes = calendar.get(Calendar.MONTH) + 1;
         int dia = calendar.get(Calendar.DAY_OF_MONTH);
         return mes;
-    }// </editor-fold>
+    }
+// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="getAnioDeUnaFecha"> 
 
     public static Integer getAnioDeUnaFecha(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        
+
         int anio = calendar.get(Calendar.YEAR);
         int mes = calendar.get(Calendar.MONTH) + 1;
         int dia = calendar.get(Calendar.DAY_OF_MONTH);
         return anio;
-    }// </editor-fold>
+    }
+// </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="getDiaDeUnaFecha"> 
     public static Integer getDiaDeUnaFecha(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        
+
         int anio = calendar.get(Calendar.YEAR);
         int mes = calendar.get(Calendar.MONTH) + 1;
         int dia = calendar.get(Calendar.DAY_OF_MONTH);
         return dia;
-    }// </editor-fold>
+    }
+// </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="getDiaActual"> 
     public static Integer getDiaActual() {
         java.util.Calendar ca = java.util.Calendar.getInstance();
         java.sql.Date mydate = new java.sql.Date(ca.getTimeInMillis());
         return ca.get(Calendar.DATE);
-    }// </editor-fold>
+    }
+// </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="getPrimeraFechaAnio"> 
     /**
      * devuelve la primera fecha del año
      *
@@ -487,12 +544,14 @@ public class JsfUtil implements Serializable {
         Integer month = 1;
         Integer day = 1;
         LocalDate firstDay = LocalDate.of(year, month, day);
-        
+
         Date date = java.sql.Date.valueOf(firstDay);
         return date;
-        
-    }// </editor-fold>
 
+    }
+// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="getUltimaFechaAnio"> 
     /**
      * devuelve la ultima fecha del año
      *
@@ -504,11 +563,13 @@ public class JsfUtil implements Serializable {
         Integer month = 12;
         Integer day = 31;
         LocalDate firstDay = LocalDate.of(year, month, day);
-        
+
         Date date = java.sql.Date.valueOf(firstDay);
         return date;
-        
-    }// </editor-fold>
+
+    }
+// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="getDateFirtsOfMonth"> 
 
     /**
      *
@@ -522,55 +583,66 @@ public class JsfUtil implements Serializable {
         Date date = java.sql.Date.valueOf(firstDay);
         return date;
     }
-    
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="getDateLastOfMonth"> 
     public static Date getDateLastOfMonth(Integer year, Integer month) {
         LocalDate now = LocalDate.now();//# 2015-11-23
         Integer day = 1;
         LocalDate firstDay = LocalDate.of(year, month, day);
         Date date = java.sql.Date.valueOf(firstDay);
         return date;
-    }// </editor-fold>
+    }
+// </editor-fold>
 
+// <editor-fold defaultstate="collapsed" desc="getISODate"> 
     public static String getISODate(Date date) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         return dateFormat.format(date);
-    }// </editor-fold>
+    }
+// </editor-fold>
 
+// <editor-fold defaultstate="collapsed" desc="getTiempo"> 
     public static LocalTime getTiempo() {
         LocalTime now = LocalTime.now();
-        
-        return now;
-        
-    }// </editor-fold>
 
+        return now;
+
+    }
+// </editor-fold>
+
+// <editor-fold defaultstate="collapsed" desc="printTiempo"> 
     public static String printTiempo() {
         LocalTime now = LocalTime.now();
         String tiempo = "";
-        
+
         tiempo = "En este momento son las %d horas con %d minutos y %d segundos\n" + now.getHour()
                 + now.getMinute() + now.getSecond();
-        
-        return tiempo;
-        
-    }// </editor-fold>
 
+        return tiempo;
+
+    }
+// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="letterToUpper"> 
     public String letterToUpper(String texto) {
         try {
-            
+
             texto = texto.trim();
             int largo = texto.length();
             if (largo <= 0) {
                 return texto;
             }
             String letra = texto.substring(0, 1);
-            
+
             texto = letra.toUpperCase() + texto.substring(1);
         } catch (Exception ex) {
             System.out.println("letterToUpper() " + ex.getLocalizedMessage());
         }
         return texto;
-    }// </editor-fold>
+    }
+// </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="letterToLower"> 
     /**
@@ -581,16 +653,16 @@ public class JsfUtil implements Serializable {
      * @return
      */
     public String letterToLower(String texto) {
-        
+
         try {
-            
+
             texto = texto.trim();
             int largo = texto.length();
             if (largo <= 0) {
                 return texto;
             }
             String letra = texto.substring(0, 1);
-            
+
             texto = letra.toLowerCase() + texto.substring(1);
         } catch (Exception ex) {
             System.out.println("letterToLower() " + ex.getLocalizedMessage());
@@ -598,37 +670,34 @@ public class JsfUtil implements Serializable {
         return texto;
     }// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="getHour"> 
+
     public static LocalTime getHour() {
-        
+
         return LocalTime.now();
     }// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="diasEntreFechas"> 
-
 
     public static Integer diasEntreFechas(Date fechaMayor, Date fechaMenor) {
         int d = 0;
         try {
             long diferenciaEn_ms = fechaMayor.getTime() - fechaMenor.getTime();
-            
+
             long dias = diferenciaEn_ms / (1000 * 60 * 60 * 24);
             d = (int) dias;
         } catch (Exception e) {
             System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
         }
-        
+
         return d;
     }// </editor-fold>
-    
-    
+
     // <editor-fold defaultstate="collapsed" desc="complete"> 
-    public static Long fechaActualEnMilisegundos(){
+    public static Long fechaActualEnMilisegundos() {
         return ZonedDateTime.now().toInstant().toEpochMilli();
     }
-   
+
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="sumarMesaFechaActual"> 
-
-
     /*
     
      */
@@ -637,39 +706,38 @@ public class JsfUtil implements Serializable {
         try {
             LocalDate localDate = LocalDate.now().plusMonths(mes);
             date = java.sql.Date.valueOf(localDate);
-            
+
         } catch (Exception e) {
             System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
         }
-        
+
         return date;
     }// </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="sumarMesaFecha(date,mes)"> 
-
     /**
      * suma a la fecha el numero de mes
+     *
      * @param date
-     * @param mes 
+     * @param mes
      */
-    public static Date sumarMesaFecha(Date date, Integer mes){
-         java.util.Date dateresult= new Date();
+    public static Date sumarMesaFecha(Date date, Integer mes) {
+        java.util.Date dateresult = new Date();
         try {
             System.out.println("llego a changeFecha()");
             ZoneId defaultZoneId = ZoneId.systemDefault();
-           Instant instant = date.toInstant();
+            Instant instant = date.toInstant();
             LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
-       
-            localDate =  localDate .plusMonths(3);
+
+            localDate = localDate.plusMonths(3);
             dateresult = java.sql.Date.valueOf(localDate);
 
-            
         } catch (Exception e) {
-            errorMessage("sumarMesaFecha() "+e.getLocalizedMessage());
+            errorMessage("sumarMesaFecha() " + e.getLocalizedMessage());
         }
         return dateresult;
     }// </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="segundosToHoraString"> 
     public static String segundosToHoraString(Integer segundos) {
         String resultado = "";
@@ -680,22 +748,22 @@ public class JsfUtil implements Serializable {
             resultado = twoDigitString(hours) + " : " + twoDigitString(minutes) + " : " + twoDigitString(segundos);
         } catch (Exception e) {
             errorMessage("segundosToHoraString() " + e.getLocalizedMessage());
-        }        
-        return resultado;        
+        }
+        return resultado;
     }
 // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="twoDigitString"> 
     private static String twoDigitString(int number) {
-        
+
         if (number == 0) {
             return "00";
         }
-        
+
         if (number / 10 == 0) {
             return "0" + number;
         }
-        
+
         return String.valueOf(number);
     }// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="getMilisegundos"> 
@@ -704,7 +772,7 @@ public class JsfUtil implements Serializable {
         long milisegundos = 0;
         try {
             milisegundos = System.nanoTime();
-            
+
         } catch (Exception e) {
             System.out.println("getMilisegundos() " + e.getLocalizedMessage());
         }
@@ -716,7 +784,7 @@ public class JsfUtil implements Serializable {
         long milisegundos = 0;
         try {
             milisegundos = TimeUnit.NANOSECONDS.toMillis(t1 - t0);
-            
+
         } catch (Exception e) {
             errorMessage("getMilisegundos() " + e.getLocalizedMessage());
             System.out.println("getMilisegundos() " + e.getLocalizedMessage());
@@ -733,11 +801,10 @@ public class JsfUtil implements Serializable {
             errorMessage("miliseguntosToSegundos() " + e.getLocalizedMessage());
         }
         return seconds;
-        
     }
 // </editor-fold>
-    
 
+// <editor-fold defaultstate="collapsed" desc="milisegundosToMinutos"> 
     public static Integer milisegundosToMinutos(long milisegundos) {
         Integer minutes = 0;
         try {
@@ -746,8 +813,9 @@ public class JsfUtil implements Serializable {
             errorMessage("miliseguntosToMinutos() " + e.getLocalizedMessage());
         }
         return minutes;
-        
+
     }
+// </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="milisegundosToHoras"> 
     public static Integer milisegundosToHoras(long milisegundos) {
@@ -758,11 +826,10 @@ public class JsfUtil implements Serializable {
             errorMessage("miliseguntosToMinutos() " + e.getLocalizedMessage());
         }
         return hours;
-        
     }
 // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="milisegundosToHoras"> 
 
+    // <editor-fold defaultstate="collapsed" desc="milisegundosToTiempoString"> 
     /**
      * devuelve el tiempo de los milisegundos en el formato hh:mm:ss
      * milisegundos 1222 devuelve; 1:2:23
@@ -770,21 +837,19 @@ public class JsfUtil implements Serializable {
      * @param milisegundos
      * @return
      */
-    
-   
     public static String milisegundosToTiempoString(long milisegundos) {
         String tiempoString = "";
-        
+
         try {
-            
+
             tiempoString = milisegundosToHoras(milisegundos) + " : "
                     + milisegundosToMinutos(milisegundos) + " : " + milisegundosToSegundos(milisegundos);
-            
+
         } catch (Exception e) {
             errorMessage("milisegundosToTiempoString() " + e.getLocalizedMessage());
         }
         return tiempoString;
-        
+
     }
 // </editor-fold>
 
@@ -810,7 +875,7 @@ public class JsfUtil implements Serializable {
             String ipAddress = request.getHeader("X-FORWARDED-FOR");
             if (ipAddress == null) {
                 ipAddress = request.getRemoteAddr();
-                
+
             }
             myip = ipAddress;
         } catch (Exception e) {
@@ -828,10 +893,10 @@ public class JsfUtil implements Serializable {
      * @return
      */
     public static String encriptar(String texto) {
-        
+
         try {
             CryptoConverter cryptoConverter = new CryptoConverter();
-            
+
             return cryptoConverter.convertToDatabaseColumn(texto);
         } catch (Exception e) {
             errorMessage("encriptar() " + e.getLocalizedMessage());
@@ -851,7 +916,7 @@ public class JsfUtil implements Serializable {
     public static String desencriptar(String textoencriptado) {
         try {
             CryptoConverter cryptoConverter = new CryptoConverter();
-            
+
             return cryptoConverter.convertToEntityAttribute(textoencriptado);
         } catch (Exception e) {
             errorMessage("desencriptar() " + e.getLocalizedMessage());
@@ -890,25 +955,24 @@ public class JsfUtil implements Serializable {
 //        
 //        return add;
 //    }// </editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="getBrowserName()">  
     public static String getBrowserName() {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         String userAgent = externalContext.getRequestHeaderMap().get("User-Agent");
-        
-        if (userAgent.contains("MSIE")) {            
+
+        if (userAgent.contains("MSIE")) {
             return "Internet Explorer";
         }
-        if (userAgent.contains("Firefox")) {            
+        if (userAgent.contains("Firefox")) {
             return "Firefox";
         }
-        if (userAgent.contains("Chrome")) {            
+        if (userAgent.contains("Chrome")) {
             return "Chrome";
         }
-        if (userAgent.contains("Opera")) {            
+        if (userAgent.contains("Opera")) {
             return "Opera";
         }
-        if (userAgent.contains("Safari")) {            
+        if (userAgent.contains("Safari")) {
             return "Safari";
         }
         return "Unknown";
