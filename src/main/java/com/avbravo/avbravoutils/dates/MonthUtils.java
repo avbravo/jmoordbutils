@@ -49,7 +49,7 @@ private List<String> listMeses = new ArrayList<>();
         Integer i = -1;
         for (String l : listMeses) {
             i++;
-            if (l.equals(mes)) {
+            if (l.toLowerCase().equals(mes.toLowerCase())) {
                 return i +1;
             } 
         }

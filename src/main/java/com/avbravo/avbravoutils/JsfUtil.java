@@ -8,6 +8,7 @@ package com.avbravo.avbravoutils;
 
 import com.avbravo.avbravoutils.crypto.CryptoConverter;
 import com.avbravo.avbravoutils.dates.FechaDiaUtils;
+import com.avbravo.avbravoutils.dates.MonthUtils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -450,6 +451,50 @@ public class JsfUtil implements Serializable {
 //        return new java.sql.Date(mydate.getTime());
 //
 //    }
+    // <editor-fold defaultstate="collapsed" desc="numberDayOfMonth"> 
+    public static Integer numberDayOfMonth(Integer anio, String mes){
+        Integer dias=0;
+        try {
+            MonthUtils m = new MonthUtils();
+      
+            dias = numberDayOfMonth(anio, m.numeroMes(mes));
+        } catch (Exception e) {
+            errorMessage("numberDayOfMonth() "+e.getLocalizedMessage());
+        }
+        return dias;
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="numberDayOfMonth"> 
+    public static Integer numberDayOfMonth(Integer anio, Integer mes){
+        Integer dias=0;
+        try {
+            switch (mes) {
+            case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+              dias = 31;
+                break;
+            case 4: case 6: case 9: case 11:
+                dias = 30;
+                break;
+            case 2:
+                if((anio%4==0 && dias%100!=0) || anio%400==0){
+                    dias = 29;
+                }
+                else{
+                    dias = 28;
+                }
+                break;
+            default:
+                System.out.println("\nEl mes " + mes + " es incorrecto.");
+                break;
+        }
+ 
+       
+        } catch (Exception e) {
+            errorMessage("numberDayOfMonth() "+e.getLocalizedMessage());
+        }
+        return dias;
+    }
+// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="getAnioActual"> 
     public static Integer getAnioActual() {
         java.util.Calendar ca = java.util.Calendar.getInstance();
@@ -491,7 +536,7 @@ public class JsfUtil implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="nombre_metodo"> 
+    // <editor-fold defaultstate="collapsed" desc="mesToMonth"> 
     /**
      * Convierte un nombre de mes a un objeto Month Month month =
      * JsfUtil.mesToMonth("Febrero); Devuelve un month.FEBRARY;
