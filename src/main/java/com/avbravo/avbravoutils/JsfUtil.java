@@ -768,8 +768,9 @@ public class JsfUtil implements Serializable {
              LocalDate date;
 
             Month month = mesToMonth(mes);
-
-            for (int i = 1; i <= month.maxLength(); i++) {
+Integer numeroDias = numberDayOfMonth(year, mes);
+            //for (int i = 1; i <= month.maxLength(); i++) {
+            for (int i = 1; i <= numeroDias ; i++) {
                 
                 date = LocalDate.of(year, month, i);
                 String name = nameOfDay(date);
