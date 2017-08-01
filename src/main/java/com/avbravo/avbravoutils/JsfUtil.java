@@ -511,6 +511,18 @@ public class JsfUtil implements Serializable {
     }
 // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="numberOfMonth"> 
+    public static Integer convertMonthNameToNumber(String mes){
+        Integer number=0;
+        try {
+            MonthUtils m = new MonthUtils();
+      
+            number =  m.numeroMes(mes);
+        } catch (Exception e) {
+        }
+        return number;
+    }
+  
     // <editor-fold defaultstate="collapsed" desc="getNombreMes"> 
     public static String getNombreMes(Integer numeromes) {
         try {
