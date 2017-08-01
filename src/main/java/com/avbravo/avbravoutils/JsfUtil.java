@@ -843,6 +843,15 @@ Integer numeroDias = numberDayOfMonth(year, mes);
     }
     // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="integerToDate"> 
+    public static Date integerToDate(Integer year, Integer month, Integer day) {
+      
+      
+        LocalDate firstDay = LocalDate.of(year, month, day);
+        Date date = java.sql.Date.valueOf(firstDay);
+        return date;
+    }
+// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="getDateLastOfMonth"> 
     public static Date getDateLastOfMonth(Integer year, Integer month) {
         LocalDate now = LocalDate.now();//# 2015-11-23
