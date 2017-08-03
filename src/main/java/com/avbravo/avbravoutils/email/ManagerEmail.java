@@ -32,7 +32,10 @@ public class ManagerEmail {
 
     public String enviar() {
         try {
-
+//username: info@centraldemotores.com
+//password:CM2017chitre@
+//smtp: smtpout.secureserver.net
+//port:587
             final String username = "myemail@gmail.com";
             final String password = "azuero2015nasa";
 
@@ -136,8 +139,7 @@ sending=true;
         Boolean sending=false;
         try {
 
-//            final String username = "avbravo@gmail.com";
-//            final String password = "javnet180denver$";
+
             final String username = emailremitente;
             final String password = passwordremitente;
            
