@@ -54,7 +54,7 @@ import org.primefaces.context.RequestContext;
  *
  * @authoravbravo
  */
-public class JsfUtil implements Serializable {
+public class JsfUtil implements Serializable{
 
     private static final Logger LOG = Logger.getLogger(JsfUtil.class.getName());
 // <editor-fold defaultstate="collapsed" desc="getSelectItems"> 
@@ -523,6 +523,37 @@ public class JsfUtil implements Serializable {
         return number;
     }
   
+    public static String dateFormatToString(Date fecha, String format){
+        String dateformat="";
+        try {
+         //     SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
+              SimpleDateFormat sdf = new SimpleDateFormat(format);
+dateformat = sdf.format(fecha);
+        } catch (Exception e) {
+        }
+        return dateformat;
+    }
+    // <editor-fold defaultstate="collapsed" desc="metodo"> 
+    /**
+     * busca una fecha si esta entre fechas
+     * @param fechaToSearch
+     * @param fechainicio
+     * @param fechafin
+     * @return 
+     */
+    public static Boolean dateBetween(Date fechaToSearch,Date fechainicio, Date fechafin){
+        try {
+//            Date fechainiciot = converterDate(fechainicio);
+//                    Date fechafint = converterDate(fechafin);
+if( fechaToSearch.equals(fechainicio) || fechaToSearch.equals(fechafin) || (fechaToSearch.after(fechainicio) && fechaToSearch.before(fechafin) )){
+    return true;
+}
+        } catch (Exception e) {
+        }
+        return false;
+    }
+    
+    // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="getNombreMes"> 
     public static String getNombreMes(Integer numeromes) {
         try {
