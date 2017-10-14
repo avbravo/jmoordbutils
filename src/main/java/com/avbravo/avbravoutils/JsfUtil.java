@@ -1290,7 +1290,7 @@ Integer numeroDias = numberDayOfMonth(year, mes);
     
     
      // <editor-fold defaultstate="collapsed" desc="getListaNombresPaises"> 
-    public List<String> getListaNombresPaises(){
+    public static List<String> getListaNombresPaises(){
         List<String> listPaises = new ArrayList<>();
         try {
             
