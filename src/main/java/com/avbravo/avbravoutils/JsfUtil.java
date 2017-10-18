@@ -54,7 +54,7 @@ import org.primefaces.context.RequestContext;
  *
  * @authoravbravo
  */
-public class JsfUtil implements Serializable{
+public class JsfUtil implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(JsfUtil.class.getName());
 // <editor-fold defaultstate="collapsed" desc="getSelectItems"> 
@@ -452,50 +452,59 @@ public class JsfUtil implements Serializable{
 //
 //    }
     // <editor-fold defaultstate="collapsed" desc="numberDayOfMonth"> 
-    public static Integer numberDayOfMonth(Integer anio, String mes){
-        Integer dias=0;
+    public static Integer numberDayOfMonth(Integer anio, String mes) {
+        Integer dias = 0;
         try {
             MonthUtils m = new MonthUtils();
-      
+
             dias = numberDayOfMonth(anio, m.numeroMes(mes));
         } catch (Exception e) {
-            errorMessage("numberDayOfMonth() "+e.getLocalizedMessage());
+            errorMessage("numberDayOfMonth() " + e.getLocalizedMessage());
         }
         return dias;
     }
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="numberDayOfMonth"> 
-    public static Integer numberDayOfMonth(Integer anio, Integer mes){
-        Integer dias=0;
+
+    public static Integer numberDayOfMonth(Integer anio, Integer mes) {
+        Integer dias = 0;
         try {
             switch (mes) {
-            case 1: case 3: case 5: case 7: case 8: case 10: case 12:
-              dias = 31;
-                break;
-            case 4: case 6: case 9: case 11:
-                dias = 30;
-                break;
-            case 2:
-                if((anio%4==0 && dias%100!=0) || anio%400==0){
-                    dias = 29;
-                }
-                else{
-                    dias = 28;
-                }
-                break;
-            default:
-                System.out.println("\nEl mes " + mes + " es incorrecto.");
-                break;
-        }
- 
-       
+                case 1:
+                case 3:
+                case 5:
+                case 7:
+                case 8:
+                case 10:
+                case 12:
+                    dias = 31;
+                    break;
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+                    dias = 30;
+                    break;
+                case 2:
+                    if ((anio % 4 == 0 && dias % 100 != 0) || anio % 400 == 0) {
+                        dias = 29;
+                    } else {
+                        dias = 28;
+                    }
+                    break;
+                default:
+                    System.out.println("\nEl mes " + mes + " es incorrecto.");
+                    break;
+            }
+
         } catch (Exception e) {
-            errorMessage("numberDayOfMonth() "+e.getLocalizedMessage());
+            errorMessage("numberDayOfMonth() " + e.getLocalizedMessage());
         }
         return dias;
     }
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="getAnioActual"> 
+
     public static Integer getAnioActual() {
         java.util.Calendar ca = java.util.Calendar.getInstance();
         java.sql.Date mydate = new java.sql.Date(ca.getTimeInMillis());
@@ -511,48 +520,58 @@ public class JsfUtil implements Serializable{
     }
 // </editor-fold>
 
+    public static Date getFechaHoraActual() {
+        LocalDateTime ahora = LocalDateTime.now();
+        Date date2 = Date.from(ahora.atZone(ZoneId.systemDefault()).toInstant());
+        return date2;
+    }
+
     // <editor-fold defaultstate="collapsed" desc="numberOfMonth"> 
-    public static Integer convertMonthNameToNumber(String mes){
-        Integer number=0;
+    public static Integer convertMonthNameToNumber(String mes) {
+        Integer number = 0;
         try {
             MonthUtils m = new MonthUtils();
-      
-            number =  m.numeroMes(mes);
+
+            number = m.numeroMes(mes);
         } catch (Exception e) {
         }
         return number;
-    }
-  
-    public static String dateFormatToString(Date fecha, String format){
-        String dateformat="";
+    }// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="dateFormatToString"> 
+
+    public static String dateFormatToString(Date fecha, String format) {
+        String dateformat = "";
         try {
-         //     SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
-              SimpleDateFormat sdf = new SimpleDateFormat(format);
-dateformat = sdf.format(fecha);
+            //     SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat(format);
+            dateformat = sdf.format(fecha);
         } catch (Exception e) {
         }
         return dateformat;
     }
+
+    // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="metodo"> 
     /**
      * busca una fecha si esta entre fechas
+     *
      * @param fechaToSearch
      * @param fechainicio
      * @param fechafin
-     * @return 
+     * @return
      */
-    public static Boolean dateBetween(Date fechaToSearch,Date fechainicio, Date fechafin){
+    public static Boolean dateBetween(Date fechaToSearch, Date fechainicio, Date fechafin) {
         try {
 //            Date fechainiciot = converterDate(fechainicio);
 //                    Date fechafint = converterDate(fechafin);
-if( fechaToSearch.equals(fechainicio) || fechaToSearch.equals(fechafin) || (fechaToSearch.after(fechainicio) && fechaToSearch.before(fechafin) )){
-    return true;
-}
+            if (fechaToSearch.equals(fechainicio) || fechaToSearch.equals(fechafin) || (fechaToSearch.after(fechainicio) && fechaToSearch.before(fechafin))) {
+                return true;
+            }
         } catch (Exception e) {
         }
         return false;
     }
-    
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="getNombreMes"> 
     public static String getNombreMes(Integer numeromes) {
@@ -719,121 +738,120 @@ if( fechaToSearch.equals(fechainicio) || fechaToSearch.equals(fechafin) || (fech
         return nombre;
     }
 // </editor-fold>
-    
-    
+
     // <editor-fold defaultstate="collapsed" desc="firstLeterOfDay"> 
     /**
      * devuelve la primera letra del dia
+     *
      * @param date
-     * @return 
+     * @return
      */
     public static String firstLetterOfDay(LocalDate date) {
-        String letra ="";
+        String letra = "";
         try {
-            letra =nameOfDay(date);
-            if(letra.length()>1){
-                letra = letra.substring(0,1);
+            letra = nameOfDay(date);
+            if (letra.length() > 1) {
+                letra = letra.substring(0, 1);
             }
-            
-         } catch (Exception e) {
+
+        } catch (Exception e) {
             errorMessage("firsLetterOfDay() " + e.getLocalizedMessage());
         }
         return letra;
     }
 // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="letterDayOfMonth"> 
     /**
      * devuelve un List<String> correspondiente a las letras de cada dia del mes
+     *
      * @param year
      * @param mes
-     * @return 
+     * @return
      */
-    public static List<String> letterDayOfMonth(Integer year, String mes){
+    public static List<String> letterDayOfMonth(Integer year, String mes) {
         List<String> letters = new ArrayList<>();
         try {
-             LocalDate date;
+            LocalDate date;
 
             Month month = mesToMonth(mes);
 
             for (int i = 1; i <= month.maxLength(); i++) {
-                
+
                 date = LocalDate.of(year, month, i);
                 String letra = firstLetterOfDay(date);
                 letters.add(letra);
-                
 
             }
         } catch (Exception e) {
-              errorMessage("letterDayOfMonth() " + e.getLocalizedMessage());
+            errorMessage("letterDayOfMonth() " + e.getLocalizedMessage());
         }
         return letters;
     }
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="nameDayOfMonth"> 
+
     /**
      * devuelve un List<String> correspondiente a las letras de cada dia del mes
+     *
      * @param year
      * @param mes
-     * @return 
+     * @return
      */
-    public static List<String> nameDayOfMonth(Integer year, String mes){
+    public static List<String> nameDayOfMonth(Integer year, String mes) {
         List<String> names = new ArrayList<>();
         try {
-             LocalDate date;
+            LocalDate date;
 
             Month month = mesToMonth(mes);
 
             for (int i = 1; i <= month.maxLength(); i++) {
-                
+
                 date = LocalDate.of(year, month, i);
                 String name = nameOfDay(date);
                 names.add(name);
-                
 
             }
         } catch (Exception e) {
-              errorMessage("nameDayOfMonth() " + e.getLocalizedMessage());
+            errorMessage("nameDayOfMonth() " + e.getLocalizedMessage());
         }
         return names;
     }
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="nameDayOfMonth"> 
+
     /**
      * devuelve un List<String> correspondiente a las letras de cada dia del mes
+     *
      * @param year
      * @param mes
-     * @return 
+     * @return
      */
-    public static List<FechaDiaUtils> nameOfDayOfDateOfMonth(Integer year, String mes){
+    public static List<FechaDiaUtils> nameOfDayOfDateOfMonth(Integer year, String mes) {
         List<FechaDiaUtils> fechaDiaUtilsList = new ArrayList<>();
         try {
-             LocalDate date;
+            LocalDate date;
 
             Month month = mesToMonth(mes);
-Integer numeroDias = numberDayOfMonth(year, mes);
+            Integer numeroDias = numberDayOfMonth(year, mes);
             //for (int i = 1; i <= month.maxLength(); i++) {
-            for (int i = 1; i <= numeroDias ; i++) {
-                
+            for (int i = 1; i <= numeroDias; i++) {
+
                 date = LocalDate.of(year, month, i);
                 String name = nameOfDay(date);
                 String letter = firstLetterOfDay(date);
                 FechaDiaUtils fechaDiaUtils = new FechaDiaUtils(date, letter, name);
                 fechaDiaUtilsList.add(fechaDiaUtils);
-                
 
             }
         } catch (Exception e) {
-              errorMessage("nameOfDayOfDateOfMonth() " + e.getLocalizedMessage());
+            errorMessage("nameOfDayOfDateOfMonth() " + e.getLocalizedMessage());
         }
         return fechaDiaUtilsList;
     }
 // </editor-fold>
-    
-    
-    
-    // <editor-fold defaultstate="collapsed" desc="getPrimeraFechaAnio"> 
 
+    // <editor-fold defaultstate="collapsed" desc="getPrimeraFechaAnio"> 
     /**
      * devuelve la primera fecha del año
      *
@@ -888,14 +906,14 @@ Integer numeroDias = numberDayOfMonth(year, mes);
 
     // <editor-fold defaultstate="collapsed" desc="integerToDate"> 
     public static Date integerToDate(Integer year, Integer month, Integer day) {
-      
-      
+
         LocalDate firstDay = LocalDate.of(year, month, day);
         Date date = java.sql.Date.valueOf(firstDay);
         return date;
     }
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="getDateLastOfMonth"> 
+
     public static Date getDateLastOfMonth(Integer year, Integer month) {
         LocalDate now = LocalDate.now();//# 2015-11-23
         Integer day = 1;
@@ -1287,263 +1305,261 @@ Integer numeroDias = numberDayOfMonth(year, mes);
         }
         return "Unknown";
     }// </editor-fold>
-    
-    
-     // <editor-fold defaultstate="collapsed" desc="getListaNombresPaises"> 
-    public static List<String> getListaNombresPaises(){
+
+    // <editor-fold defaultstate="collapsed" desc="getListaNombresPaises"> 
+    public static List<String> getListaNombresPaises() {
         List<String> listPaises = new ArrayList<>();
         try {
-            
-listPaises.add("Afganistán");
-listPaises.add("Albania");
-listPaises.add("Alemania");
-listPaises.add("Algeria");
-listPaises.add("Andorra");
-listPaises.add("Angola");
-listPaises.add("Anguila");
-listPaises.add("Antártida");
-listPaises.add("Antigua y Barbuda");
-listPaises.add("Antillas Neerlandesas");
-listPaises.add("Arabia Saudita");
-listPaises.add("Argentina");
-listPaises.add("Armenia");
-listPaises.add("Aruba");
-listPaises.add("Australia");
-listPaises.add("Austria");
-listPaises.add("Azerbayán");
-listPaises.add("Bélgica");
-listPaises.add("Bahamas");
-listPaises.add("Bahrein");
-listPaises.add("Bangladesh");
-listPaises.add("Barbados");
-listPaises.add("Belice");
-listPaises.add("Benín");
-listPaises.add("Bhután");
-listPaises.add("Bielorrusia");
-listPaises.add("Birmania");
-listPaises.add("Bolivia");
-listPaises.add("Bosnia y Herzegovina");
-listPaises.add("Botsuana");
-listPaises.add("Brasil");
-listPaises.add("Brunéi");
-listPaises.add("Bulgaria");
-listPaises.add("Burkina Faso");
-listPaises.add("Burundi");
-listPaises.add("Cabo Verde");
-listPaises.add("Camboya");
-listPaises.add("Camerún");
-listPaises.add("Canadá");
-listPaises.add("Chad");
-listPaises.add("Chile");
-listPaises.add("China");
-listPaises.add("Chipre");
-listPaises.add("Ciudad del Vaticano");
-listPaises.add("Colombia");
-listPaises.add("Comoras");
-listPaises.add("Congo");
-listPaises.add("Corea del Norte");
-listPaises.add("Corea del Sur");
-listPaises.add("Costa de Marfil");
-listPaises.add("Costa Rica");
-listPaises.add("Croacia");
-listPaises.add("Cuba");
-listPaises.add("Dinamarca");
-listPaises.add("Dominica");
-listPaises.add("Ecuador");
-listPaises.add("Egipto");
-listPaises.add("El Salvador");
-listPaises.add("Emiratos Árabes Unidos");
-listPaises.add("Eritrea");
-listPaises.add("Eslovaquia");
-listPaises.add("Eslovenia");
-listPaises.add("España");
-listPaises.add("Estados Unidos de América");
-listPaises.add("Estonia");
-listPaises.add("Etiopía");
-listPaises.add("Filipinas");
-listPaises.add("Finlandia");
-listPaises.add("Fiyi");
-listPaises.add("Francia");
-listPaises.add("Gabón");
-listPaises.add("Gambia");
-listPaises.add("Georgia");
-listPaises.add("Ghana");
-listPaises.add("Gibraltar");
-listPaises.add("Granada");
-listPaises.add("Grecia");
-listPaises.add("Groenlandia");
-listPaises.add("Guadalupe");
-listPaises.add("Guam");
-listPaises.add("Guatemala");
-listPaises.add("Guayana Francesa");
-listPaises.add("Guernsey");
-listPaises.add("Guinea");
-listPaises.add("Guinea Ecuatorial");
-listPaises.add("Guinea-Bissau");
-listPaises.add("Guyana");
-listPaises.add("Haití");
-listPaises.add("Honduras");
-listPaises.add("Hong kong");
-listPaises.add("Hungría");
-listPaises.add("India");
-listPaises.add("Indonesia");
-listPaises.add("Irán");
-listPaises.add("Irak");
-listPaises.add("Irlanda");
-listPaises.add("Isla Bouvet");
-listPaises.add("Isla de Man");
-listPaises.add("Isla de Navidad");
-listPaises.add("Isla Norfolk");
-listPaises.add("Islandia");
-listPaises.add("Islas Bermudas");
-listPaises.add("Islas Caimán");
-listPaises.add("Islas Cocos (Keeling)");
-listPaises.add("Islas Cook");
-listPaises.add("Islas de Åland");
-listPaises.add("Islas Feroe");
-listPaises.add("Islas Georgias del Sur y Sandwich del Sur");
-listPaises.add("Islas Heard y McDonald");
-listPaises.add("Islas Maldivas");
-listPaises.add("Islas Malvinas");
-listPaises.add("Islas Marianas del Norte");
-listPaises.add("Islas Marshall");
-listPaises.add("Islas Pitcairn");
-listPaises.add("Islas Salomón");
-listPaises.add("Islas Turcas y Caicos");
-listPaises.add("Islas Ultramarinas Menores de Estados Unidos");
-listPaises.add("Islas Vírgenes Británicas");
-listPaises.add("Islas Vírgenes de los Estados Unidos");
-listPaises.add("Israel");
-listPaises.add("Italia");
-listPaises.add("Jamaica");
-listPaises.add("Japón");
-listPaises.add("Jersey");
-listPaises.add("Jordania");
-listPaises.add("Kazajistán");
-listPaises.add("Kenia");
-listPaises.add("Kirgizstán");
-listPaises.add("Kiribati");
-listPaises.add("Kuwait");
-listPaises.add("Líbano");
-listPaises.add("Laos");
-listPaises.add("Lesoto");
-listPaises.add("Letonia");
-listPaises.add("Liberia");
-listPaises.add("Libia");
-listPaises.add("Liechtenstein");
-listPaises.add("Lituania");
-listPaises.add("Luxemburgo");
-listPaises.add("México");
-listPaises.add("Mónaco");
-listPaises.add("Macao");
-listPaises.add("Macedônia");
-listPaises.add("Madagascar");
-listPaises.add("Malasia");
-listPaises.add("Malawi");
-listPaises.add("Mali");
-listPaises.add("Malta");
-listPaises.add("Marruecos");
-listPaises.add("Martinica");
-listPaises.add("Mauricio");
-listPaises.add("Mauritania");
-listPaises.add("Mayotte");
-listPaises.add("Micronesia");
-listPaises.add("Moldavia");
-listPaises.add("Mongolia");
-listPaises.add("Montenegro");
-listPaises.add("Montserrat");
-listPaises.add("Mozambique");
-listPaises.add("Namibia");
-listPaises.add("Nauru");
-listPaises.add("Nepal");
-listPaises.add("Nicaragua");
-listPaises.add("Niger");
-listPaises.add("Nigeria");
-listPaises.add("Niue");
-listPaises.add("Noruega");
-listPaises.add("Nueva Caledonia");
-listPaises.add("Nueva Zelanda");
-listPaises.add("Omán");
-listPaises.add("Países Bajos");
-listPaises.add("Pakistán");
-listPaises.add("Palau");
-listPaises.add("Palestina");
-listPaises.add("Panamá");
-listPaises.add("Papúa Nueva Guinea");
-listPaises.add("Paraguay");
-listPaises.add("Perú");
-listPaises.add("Polinesia Francesa");
-listPaises.add("Polonia");
-listPaises.add("Portugal");
-listPaises.add("Puerto Rico");
-listPaises.add("Qatar");
-listPaises.add("Reino Unido");
-listPaises.add("República Centroafricana");
-listPaises.add("República Checa");
-listPaises.add("República Dominicana");
-listPaises.add("Reunión");
-listPaises.add("Ruanda");
-listPaises.add("Rumanía");
-listPaises.add("Rusia");
-listPaises.add("Sahara Occidental");
-listPaises.add("Samoa");
-listPaises.add("Samoa Americana");
-listPaises.add("San Bartolomé");
-listPaises.add("San Cristóbal y Nieves");
-listPaises.add("San Marino");
-listPaises.add("San Martín (Francia)");
-listPaises.add("San Pedro y Miquelón");
-listPaises.add("San Vicente y las Granadinas");
-listPaises.add("Santa Elena");
-listPaises.add("Santa Lucía");
-listPaises.add("Santo Tomé y Príncipe");
-listPaises.add("Senegal");
-listPaises.add("Serbia");
-listPaises.add("Seychelles");
-listPaises.add("Sierra Leona");
-listPaises.add("Singapur");
-listPaises.add("Siria");
-listPaises.add("Somalia");
-listPaises.add("Sri lanka");
-listPaises.add("Sudáfrica");
-listPaises.add("Sudán");
-listPaises.add("Suecia");
-listPaises.add("Suiza");
-listPaises.add("Surinám");
-listPaises.add("Svalbard y Jan Mayen");
-listPaises.add("Swazilandia");
-listPaises.add("Tadjikistán");
-listPaises.add("Tailandia");
-listPaises.add("Taiwán");
-listPaises.add("Tanzania");
-listPaises.add("Territorio Británico del Océano Índico");
-listPaises.add("Territorios Australes y Antárticas Franceses");
-listPaises.add("Timor Oriental");
-listPaises.add("Togo");
-listPaises.add("Tokelau");
-listPaises.add("Tonga");
-listPaises.add("Trinidad y Tobago");
-listPaises.add("Tunez");
-listPaises.add("Turkmenistán");
-listPaises.add("Turquía");
-listPaises.add("Tuvalu");
-listPaises.add("Ucrania");
-listPaises.add("Uganda");
-listPaises.add("Uruguay");
-listPaises.add("Uzbekistán");
-listPaises.add("Vanuatu");
-listPaises.add("Venezuela");
-listPaises.add("Vietnam");
-listPaises.add("Wallis y Futuna");
-listPaises.add("Yemen");
-listPaises.add("Yibuti");
-listPaises.add("Zambia");
-listPaises.add("Zimbabue");
+
+            listPaises.add("Afganistán");
+            listPaises.add("Albania");
+            listPaises.add("Alemania");
+            listPaises.add("Algeria");
+            listPaises.add("Andorra");
+            listPaises.add("Angola");
+            listPaises.add("Anguila");
+            listPaises.add("Antártida");
+            listPaises.add("Antigua y Barbuda");
+            listPaises.add("Antillas Neerlandesas");
+            listPaises.add("Arabia Saudita");
+            listPaises.add("Argentina");
+            listPaises.add("Armenia");
+            listPaises.add("Aruba");
+            listPaises.add("Australia");
+            listPaises.add("Austria");
+            listPaises.add("Azerbayán");
+            listPaises.add("Bélgica");
+            listPaises.add("Bahamas");
+            listPaises.add("Bahrein");
+            listPaises.add("Bangladesh");
+            listPaises.add("Barbados");
+            listPaises.add("Belice");
+            listPaises.add("Benín");
+            listPaises.add("Bhután");
+            listPaises.add("Bielorrusia");
+            listPaises.add("Birmania");
+            listPaises.add("Bolivia");
+            listPaises.add("Bosnia y Herzegovina");
+            listPaises.add("Botsuana");
+            listPaises.add("Brasil");
+            listPaises.add("Brunéi");
+            listPaises.add("Bulgaria");
+            listPaises.add("Burkina Faso");
+            listPaises.add("Burundi");
+            listPaises.add("Cabo Verde");
+            listPaises.add("Camboya");
+            listPaises.add("Camerún");
+            listPaises.add("Canadá");
+            listPaises.add("Chad");
+            listPaises.add("Chile");
+            listPaises.add("China");
+            listPaises.add("Chipre");
+            listPaises.add("Ciudad del Vaticano");
+            listPaises.add("Colombia");
+            listPaises.add("Comoras");
+            listPaises.add("Congo");
+            listPaises.add("Corea del Norte");
+            listPaises.add("Corea del Sur");
+            listPaises.add("Costa de Marfil");
+            listPaises.add("Costa Rica");
+            listPaises.add("Croacia");
+            listPaises.add("Cuba");
+            listPaises.add("Dinamarca");
+            listPaises.add("Dominica");
+            listPaises.add("Ecuador");
+            listPaises.add("Egipto");
+            listPaises.add("El Salvador");
+            listPaises.add("Emiratos Árabes Unidos");
+            listPaises.add("Eritrea");
+            listPaises.add("Eslovaquia");
+            listPaises.add("Eslovenia");
+            listPaises.add("España");
+            listPaises.add("Estados Unidos de América");
+            listPaises.add("Estonia");
+            listPaises.add("Etiopía");
+            listPaises.add("Filipinas");
+            listPaises.add("Finlandia");
+            listPaises.add("Fiyi");
+            listPaises.add("Francia");
+            listPaises.add("Gabón");
+            listPaises.add("Gambia");
+            listPaises.add("Georgia");
+            listPaises.add("Ghana");
+            listPaises.add("Gibraltar");
+            listPaises.add("Granada");
+            listPaises.add("Grecia");
+            listPaises.add("Groenlandia");
+            listPaises.add("Guadalupe");
+            listPaises.add("Guam");
+            listPaises.add("Guatemala");
+            listPaises.add("Guayana Francesa");
+            listPaises.add("Guernsey");
+            listPaises.add("Guinea");
+            listPaises.add("Guinea Ecuatorial");
+            listPaises.add("Guinea-Bissau");
+            listPaises.add("Guyana");
+            listPaises.add("Haití");
+            listPaises.add("Honduras");
+            listPaises.add("Hong kong");
+            listPaises.add("Hungría");
+            listPaises.add("India");
+            listPaises.add("Indonesia");
+            listPaises.add("Irán");
+            listPaises.add("Irak");
+            listPaises.add("Irlanda");
+            listPaises.add("Isla Bouvet");
+            listPaises.add("Isla de Man");
+            listPaises.add("Isla de Navidad");
+            listPaises.add("Isla Norfolk");
+            listPaises.add("Islandia");
+            listPaises.add("Islas Bermudas");
+            listPaises.add("Islas Caimán");
+            listPaises.add("Islas Cocos (Keeling)");
+            listPaises.add("Islas Cook");
+            listPaises.add("Islas de Åland");
+            listPaises.add("Islas Feroe");
+            listPaises.add("Islas Georgias del Sur y Sandwich del Sur");
+            listPaises.add("Islas Heard y McDonald");
+            listPaises.add("Islas Maldivas");
+            listPaises.add("Islas Malvinas");
+            listPaises.add("Islas Marianas del Norte");
+            listPaises.add("Islas Marshall");
+            listPaises.add("Islas Pitcairn");
+            listPaises.add("Islas Salomón");
+            listPaises.add("Islas Turcas y Caicos");
+            listPaises.add("Islas Ultramarinas Menores de Estados Unidos");
+            listPaises.add("Islas Vírgenes Británicas");
+            listPaises.add("Islas Vírgenes de los Estados Unidos");
+            listPaises.add("Israel");
+            listPaises.add("Italia");
+            listPaises.add("Jamaica");
+            listPaises.add("Japón");
+            listPaises.add("Jersey");
+            listPaises.add("Jordania");
+            listPaises.add("Kazajistán");
+            listPaises.add("Kenia");
+            listPaises.add("Kirgizstán");
+            listPaises.add("Kiribati");
+            listPaises.add("Kuwait");
+            listPaises.add("Líbano");
+            listPaises.add("Laos");
+            listPaises.add("Lesoto");
+            listPaises.add("Letonia");
+            listPaises.add("Liberia");
+            listPaises.add("Libia");
+            listPaises.add("Liechtenstein");
+            listPaises.add("Lituania");
+            listPaises.add("Luxemburgo");
+            listPaises.add("México");
+            listPaises.add("Mónaco");
+            listPaises.add("Macao");
+            listPaises.add("Macedônia");
+            listPaises.add("Madagascar");
+            listPaises.add("Malasia");
+            listPaises.add("Malawi");
+            listPaises.add("Mali");
+            listPaises.add("Malta");
+            listPaises.add("Marruecos");
+            listPaises.add("Martinica");
+            listPaises.add("Mauricio");
+            listPaises.add("Mauritania");
+            listPaises.add("Mayotte");
+            listPaises.add("Micronesia");
+            listPaises.add("Moldavia");
+            listPaises.add("Mongolia");
+            listPaises.add("Montenegro");
+            listPaises.add("Montserrat");
+            listPaises.add("Mozambique");
+            listPaises.add("Namibia");
+            listPaises.add("Nauru");
+            listPaises.add("Nepal");
+            listPaises.add("Nicaragua");
+            listPaises.add("Niger");
+            listPaises.add("Nigeria");
+            listPaises.add("Niue");
+            listPaises.add("Noruega");
+            listPaises.add("Nueva Caledonia");
+            listPaises.add("Nueva Zelanda");
+            listPaises.add("Omán");
+            listPaises.add("Países Bajos");
+            listPaises.add("Pakistán");
+            listPaises.add("Palau");
+            listPaises.add("Palestina");
+            listPaises.add("Panamá");
+            listPaises.add("Papúa Nueva Guinea");
+            listPaises.add("Paraguay");
+            listPaises.add("Perú");
+            listPaises.add("Polinesia Francesa");
+            listPaises.add("Polonia");
+            listPaises.add("Portugal");
+            listPaises.add("Puerto Rico");
+            listPaises.add("Qatar");
+            listPaises.add("Reino Unido");
+            listPaises.add("República Centroafricana");
+            listPaises.add("República Checa");
+            listPaises.add("República Dominicana");
+            listPaises.add("Reunión");
+            listPaises.add("Ruanda");
+            listPaises.add("Rumanía");
+            listPaises.add("Rusia");
+            listPaises.add("Sahara Occidental");
+            listPaises.add("Samoa");
+            listPaises.add("Samoa Americana");
+            listPaises.add("San Bartolomé");
+            listPaises.add("San Cristóbal y Nieves");
+            listPaises.add("San Marino");
+            listPaises.add("San Martín (Francia)");
+            listPaises.add("San Pedro y Miquelón");
+            listPaises.add("San Vicente y las Granadinas");
+            listPaises.add("Santa Elena");
+            listPaises.add("Santa Lucía");
+            listPaises.add("Santo Tomé y Príncipe");
+            listPaises.add("Senegal");
+            listPaises.add("Serbia");
+            listPaises.add("Seychelles");
+            listPaises.add("Sierra Leona");
+            listPaises.add("Singapur");
+            listPaises.add("Siria");
+            listPaises.add("Somalia");
+            listPaises.add("Sri lanka");
+            listPaises.add("Sudáfrica");
+            listPaises.add("Sudán");
+            listPaises.add("Suecia");
+            listPaises.add("Suiza");
+            listPaises.add("Surinám");
+            listPaises.add("Svalbard y Jan Mayen");
+            listPaises.add("Swazilandia");
+            listPaises.add("Tadjikistán");
+            listPaises.add("Tailandia");
+            listPaises.add("Taiwán");
+            listPaises.add("Tanzania");
+            listPaises.add("Territorio Británico del Océano Índico");
+            listPaises.add("Territorios Australes y Antárticas Franceses");
+            listPaises.add("Timor Oriental");
+            listPaises.add("Togo");
+            listPaises.add("Tokelau");
+            listPaises.add("Tonga");
+            listPaises.add("Trinidad y Tobago");
+            listPaises.add("Tunez");
+            listPaises.add("Turkmenistán");
+            listPaises.add("Turquía");
+            listPaises.add("Tuvalu");
+            listPaises.add("Ucrania");
+            listPaises.add("Uganda");
+            listPaises.add("Uruguay");
+            listPaises.add("Uzbekistán");
+            listPaises.add("Vanuatu");
+            listPaises.add("Venezuela");
+            listPaises.add("Vietnam");
+            listPaises.add("Wallis y Futuna");
+            listPaises.add("Yemen");
+            listPaises.add("Yibuti");
+            listPaises.add("Zambia");
+            listPaises.add("Zimbabue");
         } catch (Exception e) {
         }
         return listPaises;
     }
-    
+
     // </editor-fold>
-    
 }
