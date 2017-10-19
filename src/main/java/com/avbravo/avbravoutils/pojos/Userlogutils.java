@@ -11,15 +11,15 @@ import java.util.Date;
  *
  * @author avbravo
  */
-public class UserLogUtils {
+public class Userlogutils {
     private String username;
     private Date datetime;
     private String description;
 
-    public UserLogUtils() {
+    public Userlogutils() {
     }
 
-    public UserLogUtils(String username, Date datetime, String description) {
+    public Userlogutils(String username, Date datetime, String description) {
         this.username = username;
         this.datetime = datetime;
         this.description = description;
