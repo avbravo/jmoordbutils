@@ -268,7 +268,31 @@ public class JsfUtil implements Serializable {
     public static String getUUID() {
 
         UUID uuid = UUID.randomUUID();
+        return uuid.toString();
+
+    }// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="getUUIDMinusculas()"> 
+    /**
+     * genera id
+     *
+     * @return returna un randomUUID automatico
+     */
+    public static String getUUIDMinusculas() {
+
+        UUID uuid = UUID.randomUUID();
         return uuid.toString().toLowerCase();
+
+    }// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="getUUIDMinusculas()"> 
+    /**
+     * genera id
+     *
+     * @return returna un randomUUID automatico
+     */
+    public static String getUUIDMayusculas() {
+
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString().toUpperCase();
 
     }// </editor-fold>
 
