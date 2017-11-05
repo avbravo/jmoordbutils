@@ -1586,4 +1586,27 @@ public class JsfUtil implements Serializable {
     }
 
     // </editor-fold>
+       // <editor-fold defaultstate="collapsed" desc="generarCodigoDigitos"> 
+     public static String generarCodigoDigitos(Integer n, Integer digitos){
+          String t =String.valueOf(n);
+        try {
+           if(t.length() >= digitos){
+               return t;
+           }else{
+               Integer dif = digitos - t.length();
+               String c="";
+               for(int i=0;i<dif;i++){
+                   c+="0";
+               }
+               t =c.trim()+t.trim();
+           }
+
+           
+        } catch (Exception e) {
+             errorMessage("generarCodigoDigitos() " + e.getLocalizedMessage());
+        }
+        
+            return t.trim();
+    }
+    // </editor-fold>
 }
