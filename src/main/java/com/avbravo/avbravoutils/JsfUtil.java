@@ -1609,4 +1609,34 @@ public class JsfUtil implements Serializable {
             return t.trim();
     }
     // </editor-fold>
+       // <editor-fold defaultstate="collapsed" desc="generarCodigoDigitos"> 
+     public static Integer getEntero(Double n){
+          Integer value=0;
+        try {
+          String str=String.valueOf(n);
+          value = Integer.parseInt(str.substring(0, str.indexOf('.')));
+
+           
+        } catch (Exception e) {
+             errorMessage("getEntero() " + e.getLocalizedMessage());
+        }
+        
+            return value;
+    }
+    // </editor-fold>
+       // <editor-fold defaultstate="collapsed" desc="getDecimal"> 
+     public static Integer getDecimal(Double n){
+          Integer value=0;
+        try {
+          String str =String.valueOf(n);
+       value = Integer.parseInt(str.substring(str.indexOf('.') + 1));
+
+           
+        } catch (Exception e) {
+             errorMessage("getDecimal() " + e.getLocalizedMessage());
+        }
+        
+            return value;
+    }
+    // </editor-fold>
 }
