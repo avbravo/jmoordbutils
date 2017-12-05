@@ -40,6 +40,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.Random;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import javax.faces.component.UIInput;
@@ -272,6 +273,7 @@ public class JsfUtil implements Serializable {
 
     }// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="getUUIDMinusculas()"> 
+
     /**
      * genera id
      *
@@ -284,6 +286,7 @@ public class JsfUtil implements Serializable {
 
     }// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="getUUIDMinusculas()"> 
+
     /**
      * genera id
      *
@@ -1586,57 +1589,70 @@ public class JsfUtil implements Serializable {
     }
 
     // </editor-fold>
-       // <editor-fold defaultstate="collapsed" desc="generarCodigoDigitos"> 
-     public static String generarCodigoDigitos(Integer n, Integer digitos){
-          String t =String.valueOf(n);
+    // <editor-fold defaultstate="collapsed" desc="generarCodigoDigitos">
+    /**
+     *
+     * @param n
+     * @param digitos
+     * @return
+     */
+    public static String generarCodigoDigitos(Integer n, Integer digitos) {
+        String t = String.valueOf(n);
         try {
-           if(t.length() >= digitos){
-               return t;
-           }else{
-               Integer dif = digitos - t.length();
-               String c="";
-               for(int i=0;i<dif;i++){
-                   c+="0";
-               }
-               t =c.trim()+t.trim();
-           }
+            if (t.length() >= digitos) {
+                return t;
+            } else {
+                Integer dif = digitos - t.length();
+                String c = "";
+                for (int i = 0; i < dif; i++) {
+                    c += "0";
+                }
+                t = c.trim() + t.trim();
+            }
 
-           
         } catch (Exception e) {
-             errorMessage("generarCodigoDigitos() " + e.getLocalizedMessage());
+            errorMessage("generarCodigoDigitos() " + e.getLocalizedMessage());
         }
-        
-            return t.trim();
+
+        return t.trim();
     }
     // </editor-fold>
-       // <editor-fold defaultstate="collapsed" desc="generarCodigoDigitos"> 
-     public static Integer getEntero(Double n){
-          Integer value=0;
+    // <editor-fold defaultstate="collapsed" desc="generarCodigoDigitos"> 
+    public static Integer getEntero(Double n) {
+        Integer value = 0;
         try {
-          String str=String.valueOf(n);
-          value = Integer.parseInt(str.substring(0, str.indexOf('.')));
+            String str = String.valueOf(n);
+            value = Integer.parseInt(str.substring(0, str.indexOf('.')));
 
-           
         } catch (Exception e) {
-             errorMessage("getEntero() " + e.getLocalizedMessage());
+            errorMessage("getEntero() " + e.getLocalizedMessage());
         }
-        
-            return value;
+
+        return value;
     }
     // </editor-fold>
-       // <editor-fold defaultstate="collapsed" desc="getDecimal"> 
-     public static Integer getDecimal(Double n){
-          Integer value=0;
+    // <editor-fold defaultstate="collapsed" desc="getDecimal"> 
+    public static Integer getDecimal(Double n) {
+        Integer value = 0;
         try {
-          String str =String.valueOf(n);
-       value = Integer.parseInt(str.substring(str.indexOf('.') + 1));
+            String str = String.valueOf(n);
+            value = Integer.parseInt(str.substring(str.indexOf('.') + 1));
 
-           
         } catch (Exception e) {
-             errorMessage("getDecimal() " + e.getLocalizedMessage());
+            errorMessage("getDecimal() " + e.getLocalizedMessage());
         }
-        
-            return value;
+
+        return value;
+    }
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="getRandomNumber"> 
+    public static Integer getRandomNumber(int min, int max) {
+        if (min >= max) {
+            throw new IllegalArgumentException("max must be greater than min");
+        }
+
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
     }
     // </editor-fold>
 }
