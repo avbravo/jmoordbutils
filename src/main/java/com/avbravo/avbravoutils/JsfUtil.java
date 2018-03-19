@@ -1663,7 +1663,7 @@ public class JsfUtil implements Serializable {
      * @param mes
      * @return
      */
-    private String getMesAnterior(String mes) {
+    public static  String getMesAnterior(String mes) {
         String mesanterior = "";
         try {
             switch (mes.toLowerCase()) {
