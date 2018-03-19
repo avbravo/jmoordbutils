@@ -1655,4 +1655,59 @@ public class JsfUtil implements Serializable {
         return r.nextInt((max - min) + 1) + min;
     }
     // </editor-fold>
+    
+        // <editor-fold defaultstate="collapsed" desc="mesAnterior()"> 
+     /**
+     * devuelve el nombre del mes anterior
+     *
+     * @param mes
+     * @return
+     */
+    private String getMesAnterior(String mes) {
+        String mesanterior = "";
+        try {
+            switch (mes.toLowerCase()) {
+                case "enero":
+                    mesanterior = "diciembre";
+                    break;
+
+                case "febrero":
+                    mesanterior = "enero";
+                    break;
+                case "marzo":
+                    mesanterior = "febrero";
+                    break;
+                case "abril":
+                    mesanterior = "marzo";
+                    break;
+                case "mayo":
+                    mesanterior = "abril";
+                    break;
+                case "junio":
+                    mesanterior = "mayo";
+                    break;
+                case "julio":
+                    mesanterior = "junio";
+                    break;
+                case "agosto":
+                    mesanterior = "julio";
+                    break;
+                case "septiembre":
+                    mesanterior = "agosto";
+                    break;
+                case "octubre":
+                    mesanterior = "septiembre";
+                    break;
+                case "noviembre":
+                    mesanterior = "octubre";
+                    break;
+                case "diciembre":
+                    mesanterior = "noviembre";
+                    break;
+            }
+        } catch (Exception e) {
+            JsfUtil.errorMessage("mesAnterior() " + e.getLocalizedMessage());
+        }
+        return mesanterior;
+    }    // </editor-fold>
 }
