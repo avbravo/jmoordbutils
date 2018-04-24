@@ -546,12 +546,13 @@ public class JsfUtil implements Serializable {
         return ca.get(Calendar.MONTH);
     }
 // </editor-fold>
-
+// <editor-fold defaultstate="collapsed" desc="getFechaHoraActual()"> 
     public static Date getFechaHoraActual() {
         LocalDateTime ahora = LocalDateTime.now();
         Date date2 = Date.from(ahora.atZone(ZoneId.systemDefault()).toInstant());
         return date2;
     }
+    // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="numberOfMonth"> 
     public static Integer convertMonthNameToNumber(String mes) {
@@ -1710,4 +1711,19 @@ public class JsfUtil implements Serializable {
         }
         return mesanterior;
     }    // </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="isVacio(String texto)()"> 
+    /**
+     * return true si es null empty equals("")
+     * @param texto
+     * @return 
+     */
+    public Boolean isVacio(String texto){
+        if(texto == null || texto.equals("") || texto.isEmpty()){
+           return true;
+        }else{
+            return false;
+        }
+    }// </editor-fold>
 }
