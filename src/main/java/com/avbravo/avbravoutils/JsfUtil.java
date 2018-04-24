@@ -1719,7 +1719,7 @@ public class JsfUtil implements Serializable {
      * @param texto
      * @return 
      */
-    public Boolean isVacio(String texto){
+    public static Boolean isVacio(String texto){
         if(texto == null || texto.equals("") || texto.isEmpty()){
            return true;
         }else{
