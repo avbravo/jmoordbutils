@@ -1728,4 +1728,17 @@ public class JsfUtil implements Serializable {
             return false;
         }
     }// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="isVacio(String texto)()"> 
+    /**
+     * return true si es null empty equals("")
+     * @param texto
+     * @return 
+     */
+    public static Boolean isVacio(Integer texto){
+        if(texto == null || texto.equals("") ){
+           return true;
+        }else{
+            return false;
+        }
+    }// </editor-fold>
 }
