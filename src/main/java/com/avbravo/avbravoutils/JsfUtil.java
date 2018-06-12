@@ -435,6 +435,47 @@ public class JsfUtil implements Serializable {
         }
         return r;
     }// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="redondear">
+    public static Double redondearEnteroSuperior(Double n) {
+        Double r = 0.0;
+        try {
+           
+           
+            return Math.ceil(n);
+        } catch (Exception e) {
+            errorMessage("redondearEnteroSuperior() " + e.getLocalizedMessage());
+        }
+        return r;
+    }// </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="redondear">
+    public static Double redondearEnteroInferior(Double n) {
+        Double r = 0.0;
+        try {
+           
+           
+            return Math.floor(n);
+        } catch (Exception e) {
+            errorMessage("redondearEnteroInferior() " + e.getLocalizedMessage());
+        }
+        return r;
+    }// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="redondear">
+    public static Long redondearMasCercano(Double n) {
+        Double r = 0.0;
+        try {
+           
+           
+            return Math.round(n);
+        } catch (Exception e) {
+            errorMessage("redondearEnteroInferior() " + e.getLocalizedMessage());
+        }
+        return r.longValue();
+    }// </editor-fold>
+    
+    
+    
+    
 
     // <editor-fold defaultstate="collapsed" desc="generateUniqueID">
     /**
@@ -1732,7 +1773,7 @@ public class JsfUtil implements Serializable {
             return false;
         }
     }// </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="isVacio(String texto)()"> 
+    // <editor-fold defaultstate="collapsed" desc="isVacio(Integer texto)"> 
     /**
      * return true si es null empty equals("")
      * @param texto
