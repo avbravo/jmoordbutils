@@ -48,6 +48,7 @@ import javax.faces.component.UISelectItem;
 import javax.faces.context.ExternalContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import org.primefaces.context.RequestContext;
 // </editor-fold>
 
@@ -409,6 +410,9 @@ public class JsfUtil implements Serializable {
         Double r = 0.0;
         try {
             switch (decimales) {
+                case 0:
+                     r =Math.floor(n);
+                     break;
                 case 1:
                     r = (double) Math.round(n * 10) / 10;
 
@@ -1741,4 +1745,18 @@ public class JsfUtil implements Serializable {
             return false;
         }
     }// </editor-fold>
+    
+     // <editor-fold defaultstate="collapsed" desc="createJasper">  
+    private Boolean createJasper(String reportSource, String pathJasper) {
+        try {
+
+            JasperCompileManager.compileReportToFile(reportSource, pathJasper);
+
+            return true;
+        } catch (Exception e) {
+
+           errorMessage("createJasper() " + e.getLocalizedMessage());
+        }
+        return false;
+    }// </editor-fold> 
 }
