@@ -1767,6 +1767,7 @@ public class JsfUtil implements Serializable {
      * @return 
      */
     public static Boolean isVacio(String texto){
+        texto= texto.trim();
         if(texto == null || texto.equals("") || texto.isEmpty()){
            return true;
         }else{
