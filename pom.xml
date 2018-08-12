@@ -4,7 +4,7 @@
 
     <groupId>com.avbravo</groupId>
     <artifactId>avbravoutils</artifactId>
-    <version>0.25.6</version>
+    <version>0.26</version>
     <packaging>ejb</packaging>
 
     <name>avbravoutils</name>
@@ -45,7 +45,7 @@
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>7.0</version>
+            <version>8.0</version>
             <scope>provided</scope>
         </dependency>
          <dependency>
@@ -83,7 +83,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-ejb-plugin</artifactId>
-                <version>2.3</version>
+                <version>2.5.1</version>
                 <configuration>
                     <ejbVersion>3.1</ejbVersion>
                 </configuration>
