@@ -4,7 +4,7 @@
 
     <groupId>com.avbravo</groupId>
     <artifactId>avbravoutils</artifactId>
-    <version>0.27</version>
+    <version>0.27.1</version>
     <packaging>ejb</packaging>
 
     <name>avbravoutils</name>
@@ -80,7 +80,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.8.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -92,7 +92,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-ejb-plugin</artifactId>
-                <version>2.5.1</version>
+                <version>3.0.1</version>
                 <configuration>
                     <ejbVersion>3.1</ejbVersion>
                 </configuration>
@@ -100,7 +100,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.6</version>
+                <version>3.1.1</version>
                 <executions>
                     <execution>
                         <phase>validate</phase>
