@@ -1801,4 +1801,20 @@ public class JsfUtil implements Serializable {
         }
         return false;
     }// </editor-fold> 
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="primercaracter()">
+    public static  String primerCaracter(String texto) {
+        try {
+            if (texto.length() > 0) {
+                return texto.trim().substring(0, 1).toUpperCase();
+            }
+
+        } catch (Exception e) {
+            JsfUtil.errorMessage("primerCaracter() " + e.getLocalizedMessage());
+        }
+        return texto;
+    }
+
+    // </editor-fold>
 }
