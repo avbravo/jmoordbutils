@@ -15,6 +15,8 @@ public class Userlogutils {
     private String username;
     private Date datetime;
     private String description;
+    
+    
 
     public Userlogutils() {
     }
