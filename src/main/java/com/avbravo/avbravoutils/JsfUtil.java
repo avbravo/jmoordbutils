@@ -43,6 +43,8 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.faces.component.UIInput;
 import javax.faces.component.UISelectItem;
 import javax.faces.context.ExternalContext;
@@ -58,12 +60,16 @@ import org.primefaces.context.RequestContext;
  */
 public class JsfUtil implements Serializable {
 
-    
-    
-    
     private static final Logger LOG = Logger.getLogger(JsfUtil.class.getName());
-// <editor-fold defaultstate="collapsed" desc="getSelectItems"> 
+    private static final String EMAIL_REGEX = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";
 
+    // static Pattern object, since pattern is fixed
+    private static Pattern pattern;
+
+    // non-static Matcher object because it's created from the input String
+    private static Matcher matcher;
+
+// <editor-fold defaultstate="collapsed" desc="getSelectItems"> 
     public static SelectItem[] getSelectItems(List<?> entities, boolean selectOne) {
         int size = selectOne ? entities.size() + 1 : entities.size();
         SelectItem[] items = new SelectItem[size];
@@ -414,8 +420,8 @@ public class JsfUtil implements Serializable {
         try {
             switch (decimales) {
                 case 0:
-                     r =Math.floor(n);
-                     break;
+                    r = Math.floor(n);
+                    break;
                 case 1:
                     r = (double) Math.round(n * 10) / 10;
 
@@ -439,24 +445,23 @@ public class JsfUtil implements Serializable {
         return r;
     }// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="redondear">
+
     public static Double redondearEnteroSuperior(Double n) {
         Double r = 0.0;
         try {
-           
-           
+
             return Math.ceil(n);
         } catch (Exception e) {
             errorMessage("redondearEnteroSuperior() " + e.getLocalizedMessage());
         }
         return r;
     }// </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="redondear">
     public static Double redondearEnteroInferior(Double n) {
         Double r = 0.0;
         try {
-           
-           
+
             return Math.floor(n);
         } catch (Exception e) {
             errorMessage("redondearEnteroInferior() " + e.getLocalizedMessage());
@@ -464,21 +469,17 @@ public class JsfUtil implements Serializable {
         return r;
     }// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="redondear">
+
     public static Long redondearMasCercano(Double n) {
         Double r = 0.0;
         try {
-           
-           
+
             return Math.round(n);
         } catch (Exception e) {
             errorMessage("redondearEnteroInferior() " + e.getLocalizedMessage());
         }
         return r.longValue();
     }// </editor-fold>
-    
-    
-    
-    
 
     // <editor-fold defaultstate="collapsed" desc="generateUniqueID">
     /**
@@ -595,6 +596,7 @@ public class JsfUtil implements Serializable {
     }
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="getFechaHoraActual()"> 
+
     public static Date getFechaHoraActual() {
         LocalDateTime ahora = LocalDateTime.now();
         Date date2 = Date.from(ahora.atZone(ZoneId.systemDefault()).toInstant());
@@ -1665,6 +1667,7 @@ public class JsfUtil implements Serializable {
 
         return t.trim();
     }
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="generarCodigoDigitos"> 
     public static Integer getEntero(Double n) {
@@ -1679,6 +1682,7 @@ public class JsfUtil implements Serializable {
 
         return value;
     }
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="getDecimal"> 
     public static Integer getDecimal(Double n) {
@@ -1693,6 +1697,7 @@ public class JsfUtil implements Serializable {
 
         return value;
     }
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="getRandomNumber"> 
     public static Integer getRandomNumber(int min, int max) {
@@ -1704,15 +1709,15 @@ public class JsfUtil implements Serializable {
         return r.nextInt((max - min) + 1) + min;
     }
     // </editor-fold>
-    
-        // <editor-fold defaultstate="collapsed" desc="mesAnterior()"> 
-     /**
+
+    // <editor-fold defaultstate="collapsed" desc="mesAnterior()"> 
+    /**
      * devuelve el nombre del mes anterior
      *
      * @param mes
      * @return
      */
-    public static  String getMesAnterior(String mes) {
+    public static String getMesAnterior(String mes) {
         String mesanterior = "";
         try {
             switch (mes.toLowerCase()) {
@@ -1759,39 +1764,39 @@ public class JsfUtil implements Serializable {
         }
         return mesanterior;
     }    // </editor-fold>
-    
-    
-    
-    
+
     // <editor-fold defaultstate="collapsed" desc="isVacio(String texto)()"> 
     /**
      * return true si es null empty equals("")
+     *
      * @param texto
-     * @return 
+     * @return
      */
-    public static Boolean isVacio(String texto){
-        texto= texto.trim();
-        if(texto == null || texto.equals("") || texto.isEmpty()){
-           return true;
-        }else{
+    public static Boolean isVacio(String texto) {
+        texto = texto.trim();
+        if (texto == null || texto.equals("") || texto.isEmpty()) {
+            return true;
+        } else {
             return false;
         }
     }// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="isVacio(Integer texto)"> 
+
     /**
      * return true si es null empty equals("")
+     *
      * @param texto
-     * @return 
+     * @return
      */
-    public static Boolean isVacio(Integer texto){
-        if(texto == null || texto.equals("") ){
-           return true;
-        }else{
+    public static Boolean isVacio(Integer texto) {
+        if (texto == null || texto.equals("")) {
+            return true;
+        } else {
             return false;
         }
     }// </editor-fold>
-    
-     // <editor-fold defaultstate="collapsed" desc="createJasper">  
+
+    // <editor-fold defaultstate="collapsed" desc="createJasper">  
     private Boolean createJasper(String reportSource, String pathJasper) {
         try {
 
@@ -1800,14 +1805,13 @@ public class JsfUtil implements Serializable {
             return true;
         } catch (Exception e) {
 
-           errorMessage("createJasper() " + e.getLocalizedMessage());
+            errorMessage("createJasper() " + e.getLocalizedMessage());
         }
         return false;
     }// </editor-fold> 
-    
-    
+
     // <editor-fold defaultstate="collapsed" desc="primercaracter()">
-    public static  String primerCaracter(String texto) {
+    public static String primerCaracter(String texto) {
         try {
             if (texto.length() > 0) {
                 return texto.trim().substring(0, 1).toUpperCase();
@@ -1820,4 +1824,10 @@ public class JsfUtil implements Serializable {
     }
 
     // </editor-fold>
+    public static Boolean emailValidate(String email) {
+        pattern = Pattern.compile(EMAIL_REGEX, Pattern.CASE_INSENSITIVE);
+        matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
 }
