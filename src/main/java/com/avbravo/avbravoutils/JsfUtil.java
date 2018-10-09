@@ -1096,6 +1096,52 @@ public class JsfUtil implements Serializable {
 
         return d;
     }// </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="fechaMenor(Date date1, Date date2)">
+    
+    public static Boolean fechaMenor(Date date1, Date date2){
+        Boolean esmenor=false;
+        try {
+            if(date1.compareTo(date2)<0){
+                esmenor=true;
+            }
+        } catch (Exception e) {
+            errorDialog("error", "fechaMenor() "+e.getLocalizedMessage());
+        }
+        return esmenor;
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="fechaMayor(Date date1, Date date2)">
+    
+    public static Boolean fechaMayor(Date date1, Date date2){
+        Boolean esmenor=false;
+        try {
+            if(date1.compareTo(date2)>0){
+                esmenor=true;
+            }
+        } catch (Exception e) {
+            errorDialog("error", "fechaMayor() "+e.getLocalizedMessage());
+        }
+        return esmenor;
+    }
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="fechaIgual(Date date1, Date date2)">
+    
+    public static Boolean fechaIgual(Date date1, Date date2){
+        Boolean esmenor=false;
+        try {
+            if(date1.compareTo(date2)==0){
+                esmenor=true;
+            }
+        } catch (Exception e) {
+            errorDialog("error", "fechaIgual() "+e.getLocalizedMessage());
+        }
+        return esmenor;
+    }
+    // </editor-fold>
+    
+    
 
     // <editor-fold defaultstate="collapsed" desc="complete"> 
     public static Long fechaActualEnMilisegundos() {
