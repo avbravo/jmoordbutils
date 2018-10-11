@@ -770,6 +770,24 @@ public class JsfUtil implements Serializable {
         return dia;
     }
 // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="getHoraDeUnaFecha(Date date)"> 
+    public static Integer getHoraDeUnaFecha(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        int hora= calendar.get(Calendar.HOUR_OF_DAY);
+        return hora;
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="getDiaDeUnaFecha"> 
+    public static Integer getMinutosDeUnaFecha(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        int minuto= calendar.get(Calendar.MINUTE);
+        return minuto;
+    }
+// </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="getDiaActual"> 
     public static Integer getDiaActual() {
