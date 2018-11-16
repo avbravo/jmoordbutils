@@ -1888,10 +1888,37 @@ public class JsfUtil implements Serializable {
     }
 
     // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="emailValidate(String email)">
+    
     public static Boolean emailValidate(String email) {
         pattern = Pattern.compile(EMAIL_REGEX, Pattern.CASE_INSENSITIVE);
         matcher = pattern.matcher(email);
         return matcher.matches();
-    }
+    }// </editor-fold>
 
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="nameOfClassAndMethod()">
+ 
+      public static String nameOfClassAndMethod() {
+    final StackTraceElement e = Thread.currentThread().getStackTrace()[2];
+    final String s = e.getClassName();
+    return s.substring(s.lastIndexOf('.') + 1, s.length()) + "." + e.getMethodName();
+}// </editor-fold>
+      // <editor-fold defaultstate="collapsed" desc="nameOfClass()">
+
+   public static String nameOfClass() {
+    final StackTraceElement e = Thread.currentThread().getStackTrace()[2];
+    final String s = e.getClassName();
+    return s.substring(s.lastIndexOf('.') + 1, s.length()) ;
+}    // </editor-fold>
+   
+    // <editor-fold defaultstate="collapsed" desc="nameOfClass()">
+
+   public static String nameOfMethod() {
+    final StackTraceElement e = Thread.currentThread().getStackTrace()[2];
+    final String s = e.getClassName();
+    return  e.getMethodName();
+}
 }
