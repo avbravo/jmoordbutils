@@ -960,8 +960,8 @@ public class DateUtil implements Serializable {
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="numeroMes(String mes)">
 
-    public Integer numeroMes(String mes) {
-        List<String> listMeses = Arrays.asList("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+    public static Integer numeroMes(String mes) {
+        List<String> listMeses = Arrays.asList("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre");
         Integer i = -1;
         for (String l : listMeses) {
             i++;
