@@ -191,7 +191,7 @@ public class DateUtil implements Serializable {
     public static Integer getMesActual() {
         java.util.Calendar ca = java.util.Calendar.getInstance();
         java.sql.Date mydate = new java.sql.Date(ca.getTimeInMillis());
-        return ca.get(Calendar.MONTH);
+        return ca.get(Calendar.MONTH)+1;
     }
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="getFechaHoraActual()"> 
