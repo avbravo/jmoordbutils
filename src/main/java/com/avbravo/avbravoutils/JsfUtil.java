@@ -1065,11 +1065,7 @@ public class JsfUtil implements Serializable {
      */
     public static Boolean isVacio(String texto) {
         texto = texto.trim();
-        if (texto == null || texto.equals("") || texto.isEmpty()) {
-            return true;
-        } else {
-            return false;
-        }
+        return texto == null || texto.equals("") || texto.isEmpty();
     }// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="isVacio(Integer texto)"> 
 
@@ -1080,12 +1076,43 @@ public class JsfUtil implements Serializable {
      * @return
      */
     public static Boolean isVacio(Integer texto) {
-        if (texto == null || texto.equals("")) {
-            return true;
-        } else {
-            return false;
-        }
+        return texto == null || texto.equals("");
     }// </editor-fold>
+   
+    // <editor-fold defaultstate="collapsed" desc="isVacio(Integer texto)"> 
+    /**
+     * return true si es null empty equals("")
+     *
+     * @param texto
+     * @return
+     */
+    public static Boolean isVacio(Double texto) {
+        return texto == null || texto.equals("");
+    }// </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Boolean isNegativo(Double texto)"> 
+    /**
+     * return true si es null empty equals("")
+     *
+     * @param texto
+     * @return
+     */
+    public static Boolean isNegativo(Double numero) {
+        return numero == null || numero.equals("") || numero <0;
+    }// </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Boolean isNegativo(Double texto)"> 
+    /**
+     * return true si es null empty equals("")
+     *
+     * @param texto
+     * @return
+     */
+    public static Boolean isNegativo(Integer numero) {
+        return numero == null || numero.equals("") || numero <0;
+    }// </editor-fold>
+    
+    
 
     // <editor-fold defaultstate="collapsed" desc="createJasper">  
     private Boolean createJasper(String reportSource, String pathJasper) {
@@ -1148,4 +1175,5 @@ public class JsfUtil implements Serializable {
     final String s = e.getClassName();
     return  e.getMethodName();
 }
+   // </editor-fold>
 }
