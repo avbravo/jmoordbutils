@@ -982,7 +982,7 @@ public class DateUtil implements Serializable {
      * @param mes
      * @return
      */
-    public static Boolean isValidCierreMensual(Integer anioselected, String messelected,ResourceBundle rs) {
+    public static Boolean isValidCierreMensual(Integer anioselected, String messelected, Integer diaminimo,ResourceBundle rs) {
         try {
           
             if (anioselected <= 0) {
@@ -1012,7 +1012,7 @@ public class DateUtil implements Serializable {
                 JsfUtil.warningMessage(rs.getString("warning.mesacerrarmayoractual"));
                 return false;
             }
-            if (numeromesseleccionado.equals(mesactual) && diaactual < 25) {
+            if (numeromesseleccionado.equals(mesactual) && diaactual < diaminimo) {
                 JsfUtil.warningMessage(rs.getString("warning.estacerrandoelmesmuypronto"));
                 return false;
             }
