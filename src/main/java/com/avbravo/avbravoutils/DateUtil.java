@@ -982,9 +982,9 @@ public class DateUtil implements Serializable {
      * @param mes
      * @return
      */
-    public static Boolean isValidCierreMensual(Integer anioselected, String messelected, Integer diaminimo,ResourceBundle rs) {
+    public static Boolean isValidCierreMensual(Integer anioselected, String messelected, Integer diaminimo, ResourceBundle rs) {
         try {
-          
+
             if (anioselected <= 0) {
                 JsfUtil.warningMessage(rs.getString("warning.anionegativo"));
                 return false;
@@ -1018,11 +1018,56 @@ public class DateUtil implements Serializable {
             }
             return true;
         } catch (Exception e) {
+            JsfUtil.warningMessage("isValidCierreMensual" + e.getLocalizedMessage());
         }
         return false;
     }
 
 // </editor-fold>
-   
+    // <editor-fold defaultstate="collapsed" desc="Boolean isValidCierreMensual(Integer anioselected, String messelected, Integer diaminimo,ResourceBundle rs)">
+    /**
+     *
+     * @param mes
+     * @return
+     */
+    public static String isValidCierreMensual(Integer anioselected, String messelected, Integer diaminimo) {
+        try {
 
+            if (anioselected <= 0) {
+                return "warning.anionegativo";
+
+            }
+            if (anioselected > DateUtil.getAnioActual()) {
+                return "warning.anomayorqueactual";
+
+            }
+
+            Integer anio = DateUtil.getAnioActual() - anioselected;
+            if (anio.intValue() > 1) {
+                return "warning.aniomuyantiguo";
+            }
+            if (anio.intValue() == 1 && !messelected.toLowerCase().equals("diciembre")) {
+                return "warning.debecerrardiciembredelañoanterior";
+            }
+            Integer diaactual = DateUtil.getDiaActual();
+            Integer mesactual = DateUtil.getMesActual();
+            //Esto pasarlo a avbravoutils
+            Integer numeromesseleccionado = DateUtil.numeroMes(messelected);
+
+            if (numeromesseleccionado > mesactual) {
+                return "warning.mesacerrarmayoractual";
+
+            }
+            if (numeromesseleccionado.equals(mesactual) && diaactual < diaminimo) {
+                return "warning.estacerrandoelmesmuypronto";
+
+            }
+            return "";
+        } catch (Exception e) {
+            JsfUtil.warningMessage("isValidCierreMensual" + e.getLocalizedMessage());
+        }
+        return "";
+    }
+
+// </editor-fold>
 }
