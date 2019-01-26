@@ -27,12 +27,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.faces.context.FacesContext;
 // </editor-fold>
 
 /**
@@ -111,10 +114,10 @@ public class DateUtil implements Serializable {
                     dias = 30;
                     break;
                 case 2:
-                    if(isBisiesto(anio)){
-                        dias=29;
-                    }else{
-                        dias=28;
+                    if (isBisiesto(anio)) {
+                        dias = 29;
+                    } else {
+                        dias = 28;
                     }
 //                    if ((anio % 4 == 0 && dias % 100 != 0) || anio % 400 == 0) {
 //                        dias = 29;
@@ -191,7 +194,7 @@ public class DateUtil implements Serializable {
     public static Integer getMesActual() {
         java.util.Calendar ca = java.util.Calendar.getInstance();
         java.sql.Date mydate = new java.sql.Date(ca.getTimeInMillis());
-        return ca.get(Calendar.MONTH)+1;
+        return ca.get(Calendar.MONTH) + 1;
     }
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="getFechaHoraActual()"> 
@@ -600,7 +603,7 @@ public class DateUtil implements Serializable {
     public static Date getDateLastOfMonth(Integer year, Integer month) {
         LocalDate now = LocalDate.now();//# 2015-11-23
         Integer day = numberDayOfMonth(year, month);
-       
+
         LocalDate firstDay = LocalDate.of(year, month, day);
         Date date = java.sql.Date.valueOf(firstDay);
         return date;
@@ -611,14 +614,12 @@ public class DateUtil implements Serializable {
     public static Date ultimoDiaDelMesEnFecha(Integer year, Integer month) {
         LocalDate now = LocalDate.now();//# 2015-11-23
         Integer day = numberDayOfMonth(year, month);
-       
+
         LocalDate firstDay = LocalDate.of(year, month, day);
         Date date = java.sql.Date.valueOf(firstDay);
         return date;
     }
 // </editor-fold>
-    
-    
 
 // <editor-fold defaultstate="collapsed" desc="getISODate"> 
     public static String getISODate(Date date) {
@@ -974,5 +975,54 @@ public class DateUtil implements Serializable {
 
     }
 // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="metodo()">
+    /**
+     *
+     * @param mes
+     * @return
+     */
+    public static Boolean isValidCierreMensual(Integer anioselected, String messelected,ResourceBundle rs) {
+        try {
+          
+            if (anioselected <= 0) {
+                JsfUtil.warningMessage(rs.getString("warning.anionegativo"));
+                return false;
+            }
+            if (anioselected > DateUtil.getAnioActual()) {
+                JsfUtil.warningMessage(rs.getString("warning.anomayorqueactual"));
+                return false;
+            }
+
+            Integer anio = DateUtil.getAnioActual() - anioselected;
+            if (anio.intValue() > 1) {
+                JsfUtil.warningMessage(rs.getString("warning.aniomuyantiguo"));
+                return false;
+            }
+            if (anio.intValue() == 1 && !messelected.toLowerCase().equals("diciembre")) {
+                JsfUtil.warningMessage(rs.getString("warning.debecerrardiciembredelañoanterior"));
+                return false;
+            }
+            Integer diaactual = DateUtil.getDiaActual();
+            Integer mesactual = DateUtil.getMesActual();
+            //Esto pasarlo a avbravoutils
+            Integer numeromesseleccionado = DateUtil.numeroMes(messelected);
+
+            if (numeromesseleccionado > mesactual) {
+                JsfUtil.warningMessage(rs.getString("warning.mesacerrarmayoractual"));
+                return false;
+            }
+            if (numeromesseleccionado.equals(mesactual) && diaactual < 25) {
+                JsfUtil.warningMessage(rs.getString("warning.estacerrandoelmesmuypronto"));
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
+// </editor-fold>
+   
 
 }
