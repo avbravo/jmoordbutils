@@ -1024,7 +1024,7 @@ public class DateUtil implements Serializable {
     }
 
 // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Boolean isValidCierreMensual(Integer anioselected, String messelected, Integer diaminimo,ResourceBundle rs)">
+    // <editor-fold defaultstate="collapsed" desc="String isValidCierreMensual(Integer anioselected, String messelected, Integer diaminimo)">
     /**
      *
      * @param mes
