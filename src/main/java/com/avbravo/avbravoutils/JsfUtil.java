@@ -1168,7 +1168,7 @@ public class JsfUtil implements Serializable {
     return s.substring(s.lastIndexOf('.') + 1, s.length()) ;
 }    // </editor-fold>
    
-    // <editor-fold defaultstate="collapsed" desc="nameOfClass()">
+    // <editor-fold defaultstate="collapsed" desc="nameOfMethod(">
 
    public static String nameOfMethod() {
     final StackTraceElement e = Thread.currentThread().getStackTrace()[2];
