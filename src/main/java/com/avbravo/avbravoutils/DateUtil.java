@@ -348,6 +348,25 @@ public class DateUtil implements Serializable {
         return mes;
     }
 // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="getMesDeUnaFechaStartEneroWith1(Date date)"> 
+
+    public static Integer getMesDeUnaFechaStartEneroWith1(Date date) {
+        int mes = 0;
+        try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+
+            int anio = calendar.get(Calendar.YEAR);
+            mes = calendar.get(Calendar.MONTH) + 1;
+            int dia = calendar.get(Calendar.DAY_OF_MONTH);
+            return mes;
+        } catch (Exception e) {
+            errorDialog("error", "getMesDeUnaFechaStartEneroWith1() " + e.getLocalizedMessage());
+        }
+        return 0;
+
+    }
+// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="getAnioDeUnaFecha"> 
 
     public static Integer getAnioDeUnaFecha(Date date) {
@@ -960,11 +979,13 @@ public class DateUtil implements Serializable {
     }
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="numeroMes(String mes)">
-/**
- * Devuelve el numero de mes iniciando enero= 0 hasta diciembre= 11
- * @param mes
- * @return 
- */
+
+    /**
+     * Devuelve el numero de mes iniciando enero= 0 hasta diciembre= 11
+     *
+     * @param mes
+     * @return
+     */
     public static Integer numeroMes(String mes) {
         List<String> listMeses = Arrays.asList("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre");
         Integer i = -1;
@@ -980,18 +1001,20 @@ public class DateUtil implements Serializable {
     }
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="numeroMesStartEneroWith1(String mes)">
-/**
- * devuelve el numero de mes iniciando enero en 1 y diciembre en 12
- * @param mes
- * @return 
- */
+
+    /**
+     * devuelve el numero de mes iniciando enero en 1 y diciembre en 12
+     *
+     * @param mes
+     * @return
+     */
     public static Integer numeroMesStartEneroWith1(String mes) {
         List<String> listMeses = Arrays.asList("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre");
         Integer i = -1;
         for (String l : listMeses) {
             i++;
             if (l.toLowerCase().equals(mes.toLowerCase())) {
-                return i+1;
+                return i + 1;
             }
         }
 
