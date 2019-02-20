@@ -1149,11 +1149,12 @@ public class DateUtil implements Serializable {
      * @param hour
      * @return 
      */
- public static Date setHourToDate(Date date,Integer hour) {
+ public static Date setHourToDate(Date date,Integer hour, Integer minutes) {
 
      Calendar calendar = Calendar.getInstance();
 calendar.setTime(date);
 calendar.add(Calendar.HOUR_OF_DAY, hour);
+calendar.add(Calendar.MINUTE, minutes);
 return calendar.getTime();
  }
     // </editor-fold>
