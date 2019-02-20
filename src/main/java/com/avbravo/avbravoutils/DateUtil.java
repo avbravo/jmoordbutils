@@ -639,6 +639,28 @@ public class DateUtil implements Serializable {
         return date;
     }
 // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="Date ultimoDiaDelMesEnFecha(Integer year, Integer month)"> 
+
+    public static Date fechaConHora0(Date date) {
+        
+         Calendar calendar = Calendar.getInstance();
+    calendar.setTime(date);
+    calendar.add(Calendar.HOUR_OF_DAY, 0);
+    return calendar.getTime();
+//        Calendar ahoraCal = Calendar.getInstance();
+//System.out.println(ahoraCal.getClass());
+//ahoraCal.set(2004,1,7);
+//System.out.println(ahoraCal.getTime());
+//ahoraCal.set(2004,1,7,7,0,0);
+//System.out.println(ahoraCal.getTime());
+//        LocalDate now = LocalDate.now();//# 2015-11-23
+//        Integer day = numberDayOfMonth(year, month);
+//
+//        LocalDate firstDay = LocalDate.of(year, month, day);
+//        Date date2 = java.sql.Date.valueOf(firstDay);
+//        return date2;
+    }
+// </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="getISODate"> 
     public static String getISODate(Date date) {
@@ -1117,4 +1139,23 @@ public class DateUtil implements Serializable {
     }
 
 // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Date setHourToDate(Date date,Integer hour)">
+    /**
+     * asigna la hora a la fecha que se le pase
+     * Hora minima: 0
+     * Hora maxima: 23
+     * @param date
+     * @param hour
+     * @return 
+     */
+     public static Date setHourToDate(Date date,Integer hour) {
+        
+         Calendar calendar = Calendar.getInstance();
+    calendar.setTime(date);
+    calendar.add(Calendar.HOUR_OF_DAY, hour);
+    return calendar.getTime();
+     }
+    // </editor-fold>
+    
 }
