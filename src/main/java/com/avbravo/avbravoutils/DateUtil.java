@@ -457,8 +457,8 @@ public class DateUtil implements Serializable {
         return nombre;
     }
 // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="nameOfDay()"> 
-    public static String nameOfDay(Date date) {
+    // <editor-fold defaultstate="collapsed" desc="nameOfDayOfJavaDate(Date date)"> 
+    public static String nameOfDayOfJavaDate(Date date) {
         String nombre="";
        try{
            nameOfDay(convertirJavaDateToLocalDate(date));
