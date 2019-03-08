@@ -1159,4 +1159,12 @@ return calendar.getTime();
  }
     // </editor-fold>
     
+    // <editor-fold defaultstate="collapsed" desc="LocalDate convertirJavaDateToLocalDate(Date dateToConvert)">
+public static LocalDate convertirJavaDateToLocalDate(Date dateToConvert) {
+    return dateToConvert.toInstant()
+      .atZone(ZoneId.systemDefault())
+      .toLocalDate();
+}
+ 
+    // </editor-fold>
 }
