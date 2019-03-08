@@ -420,7 +420,7 @@ public class DateUtil implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="nombreDia"> 
+    // <editor-fold defaultstate="collapsed" desc="nameOfDay()"> 
     public static String nameOfDay(LocalDate date) {
         String nombre = "DOMINGO";
         try {
@@ -451,6 +451,17 @@ public class DateUtil implements Serializable {
 
             }
 
+        } catch (Exception e) {
+            errorMessage("nameOfDay() " + e.getLocalizedMessage());
+        }
+        return nombre;
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="nameOfDay()"> 
+    public static String nameOfDay(Date date) {
+        String nombre="";
+       try{
+           nameOfDay(convertirJavaDateToLocalDate(date));
         } catch (Exception e) {
             errorMessage("nameOfDay() " + e.getLocalizedMessage());
         }
