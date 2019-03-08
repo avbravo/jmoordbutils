@@ -458,10 +458,13 @@ public class DateUtil implements Serializable {
     }
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="nameOfDayOfJavaDate(Date date)"> 
-    public static String nameOfDayOfJavaDate(Date date) {
+    public static String nameOfDay(Date date) {
         String nombre="";
        try{
-           nameOfDay(convertirJavaDateToLocalDate(date));
+      LocalDate localDate=     date.toInstant()
+      .atZone(ZoneId.systemDefault())
+      .toLocalDate();
+        nombre=   nameOfDay(localDate);
         } catch (Exception e) {
             errorMessage("nameOfDay() " + e.getLocalizedMessage());
         }
