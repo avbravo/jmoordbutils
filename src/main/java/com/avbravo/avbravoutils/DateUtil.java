@@ -60,6 +60,13 @@ public class DateUtil implements Serializable {
         java.util.Date date = java.sql.Date.valueOf(currentDate);
         return date;
     }    // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="fechaActual"> 
+    public static java.util.Date fechaActual() {
+        LocalDateTime timePoint = LocalDateTime.now();
+        LocalDate currentDate = LocalDate.now();
+        java.util.Date date = java.sql.Date.valueOf(currentDate);
+        return date;
+    }    // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="isBisiesto(Integer anio)">
     public static Boolean isBisiesto(Integer anio) {
@@ -189,6 +196,14 @@ public class DateUtil implements Serializable {
         return ca.get(Calendar.YEAR);
     }
 // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="anioActual"> 
+
+    public static Integer anioActual() {
+        java.util.Calendar ca = java.util.Calendar.getInstance();
+        java.sql.Date mydate = new java.sql.Date(ca.getTimeInMillis());
+        return ca.get(Calendar.YEAR);
+    }
+// </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="getMesActual"> 
     public static Integer getMesActual() {
@@ -197,9 +212,24 @@ public class DateUtil implements Serializable {
         return ca.get(Calendar.MONTH) + 1;
     }
 // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="mesActual"> 
+    public static Integer mesActual() {
+        java.util.Calendar ca = java.util.Calendar.getInstance();
+        java.sql.Date mydate = new java.sql.Date(ca.getTimeInMillis());
+        return ca.get(Calendar.MONTH) + 1;
+    }
+// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="getFechaHoraActual()"> 
 
     public static Date getFechaHoraActual() {
+        LocalDateTime ahora = LocalDateTime.now();
+        Date date2 = Date.from(ahora.atZone(ZoneId.systemDefault()).toInstant());
+        return date2;
+    }
+    // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="fechaHoraActual()"> 
+
+    public static Date fechaHoraActual() {
         LocalDateTime ahora = LocalDateTime.now();
         Date date2 = Date.from(ahora.atZone(ZoneId.systemDefault()).toInstant());
         return date2;
@@ -255,6 +285,30 @@ public class DateUtil implements Serializable {
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="getNombreMes"> 
     public static String getNombreMes(Integer numeromes) {
+        try {
+            String nombre = "";
+            List<String> listMeses = new ArrayList<>();
+            listMeses.add("Enero");
+            listMeses.add("Febrero");
+            listMeses.add("Marzo");
+            listMeses.add("Abril");
+            listMeses.add("Mayo");
+            listMeses.add("Junio");
+            listMeses.add("Julio");
+            listMeses.add("Agosto");
+            listMeses.add("Septiembre");
+            listMeses.add("Octubre");
+            listMeses.add("Noviembre");
+            listMeses.add("Diciembre");
+            return listMeses.get(numeromes);
+
+        } catch (Exception e) {
+        }
+        return "";
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc=nombreMes"> 
+    public static String nombreMes(Integer numeromes) {
         try {
             String nombre = "";
             List<String> listMeses = new ArrayList<>();
@@ -348,9 +402,39 @@ public class DateUtil implements Serializable {
         return mes;
     }
 // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="mesDeUnaFecha"> 
+    public static Integer mesDeUnaFecha(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        int anio = calendar.get(Calendar.YEAR);
+        int mes = calendar.get(Calendar.MONTH) + 1;
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+        return mes;
+    }
+// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="getMesDeUnaFechaStartEneroWith1(Date date)"> 
 
     public static Integer getMesDeUnaFechaStartEneroWith1(Date date) {
+        int mes = 0;
+        try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+
+            int anio = calendar.get(Calendar.YEAR);
+            mes = calendar.get(Calendar.MONTH) + 1;
+            int dia = calendar.get(Calendar.DAY_OF_MONTH);
+            return mes;
+        } catch (Exception e) {
+            errorDialog("error", "getMesDeUnaFechaStartEneroWith1() " + e.getLocalizedMessage());
+        }
+        return 0;
+
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="mesDeUnaFechaStartEneroWith1(Date date)"> 
+
+    public static Integer mesDeUnaFechaStartEneroWith1(Date date) {
         int mes = 0;
         try {
             Calendar calendar = Calendar.getInstance();
@@ -379,9 +463,32 @@ public class DateUtil implements Serializable {
         return anio;
     }
 // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="anioDeUnaFecha"> 
+
+    public static Integer anioDeUnaFecha(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        int anio = calendar.get(Calendar.YEAR);
+        int mes = calendar.get(Calendar.MONTH) + 1;
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+        return anio;
+    }
+// </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="getDiaDeUnaFecha"> 
     public static Integer getDiaDeUnaFecha(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        int anio = calendar.get(Calendar.YEAR);
+        int mes = calendar.get(Calendar.MONTH) + 1;
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+        return dia;
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="diaDeUnaFecha"> 
+    public static Integer diaDeUnaFecha(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
 
@@ -401,9 +508,58 @@ public class DateUtil implements Serializable {
         return hora;
     }
 // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="getDiaDeUnaFecha"> 
+    // <editor-fold defaultstate="collapsed" desc="horaDeUnaFecha(Date date)"> 
+
+    public static Integer horaDeUnaFecha(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        int hora = calendar.get(Calendar.HOUR_OF_DAY);
+        return hora;
+    }
+// </editor-fold>
+    
+     // <editor-fold defaultstate="collapsed" desc="horaMinutoAMPMDeUnaFecha(Date date)(Date date)"> 
+
+    public static String horaMinutoAMPMDeUnaFecha(Date date) {
+       
+        int hora = horaDeUnaFecha(date);
+        int minutos = minutosDeUnaFecha(date);
+        String time12h="AM";
+        if(hora > 12){
+            hora = hora -12;
+            time12h="PM";
+        }
+        return hora+":"+minutos+time12h;
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="horaDeUnaFechaFormato12(Date date)"> 
+
+    public static Integer horaDeUnaFechaFormato12H(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        int hora = calendar.get(Calendar.HOUR_OF_DAY);
+        if(hora > 12){
+            hora = hora -12;
+        }
+        return hora;
+    }
+// </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="getMinutosDeUnaFecha"> 
 
     public static Integer getMinutosDeUnaFecha(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        int minuto = calendar.get(Calendar.MINUTE);
+        return minuto;
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="minutosDeUnaFecha"> 
+
+    public static Integer minutosDeUnaFecha(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
 
@@ -414,6 +570,13 @@ public class DateUtil implements Serializable {
 
     // <editor-fold defaultstate="collapsed" desc="getDiaActual"> 
     public static Integer getDiaActual() {
+        java.util.Calendar ca = java.util.Calendar.getInstance();
+        java.sql.Date mydate = new java.sql.Date(ca.getTimeInMillis());
+        return ca.get(Calendar.DATE);
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="diaActual"> 
+    public static Integer diaActual() {
         java.util.Calendar ca = java.util.Calendar.getInstance();
         java.sql.Date mydate = new java.sql.Date(ca.getTimeInMillis());
         return ca.get(Calendar.DATE);
@@ -457,7 +620,7 @@ public class DateUtil implements Serializable {
         return nombre;
     }
 // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="nameOfDayOfJavaDate(Date date)"> 
+    // <editor-fold defaultstate="collapsed" desc="nameOfDay(Date date)"> 
     public static String nameOfDay(Date date) {
         String nombre="";
        try{
@@ -573,6 +736,24 @@ public class DateUtil implements Serializable {
 
     }
 // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="primeraFechaAnio"> 
+    /**
+     * devuelve la primera fecha del año
+     *
+     * @return
+     */
+    public static Date primeraFechaAnio() {
+        LocalDate now = LocalDate.now();//# 2015-11-23
+        Integer year = now.getYear();
+        Integer month = 1;
+        Integer day = 1;
+        LocalDate firstDay = LocalDate.of(year, month, day);
+
+        Date date = java.sql.Date.valueOf(firstDay);
+        return date;
+
+    }
+// </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="getUltimaFechaAnio"> 
     /**
@@ -592,6 +773,24 @@ public class DateUtil implements Serializable {
 
     }
 // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="getUltimaFechaAnio"> 
+    /**
+     * devuelve la ultima fecha del año
+     *
+     * @return
+     */
+    public static Date ultimaFechaAnio() {
+        LocalDate now = LocalDate.now();//# 2015-11-23
+        Integer year = now.getYear();
+        Integer month = 12;
+        Integer day = 31;
+        LocalDate firstDay = LocalDate.of(year, month, day);
+
+        Date date = java.sql.Date.valueOf(firstDay);
+        return date;
+
+    }
+// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="getDateFirtsOfMonth"> 
 
     /**
@@ -600,6 +799,21 @@ public class DateUtil implements Serializable {
      * @return devuelve una fecha correspondiente al primer dia de ese mes
      */
     public static Date getDateFirtsOfMonth(Integer year, Integer month) {
+        LocalDate now = LocalDate.now();//# 2015-11-23
+        Integer day = 1;
+        LocalDate firstDay = LocalDate.of(year, month, day);
+        Date date = java.sql.Date.valueOf(firstDay);
+        return date;
+    }
+    // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="dateFirtsOfMonth"> 
+
+    /**
+     *
+     * @param month
+     * @return devuelve una fecha correspondiente al primer dia de ese mes
+     */
+    public static Date dateFirtsOfMonth(Integer year, Integer month) {
         LocalDate now = LocalDate.now();//# 2015-11-23
         Integer day = 1;
         LocalDate firstDay = LocalDate.of(year, month, day);
@@ -634,6 +848,17 @@ public class DateUtil implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="getDateLastOfMonth"> 
 
     public static Date getDateLastOfMonth(Integer year, Integer month) {
+        LocalDate now = LocalDate.now();//# 2015-11-23
+        Integer day = numberDayOfMonth(year, month);
+
+        LocalDate firstDay = LocalDate.of(year, month, day);
+        Date date = java.sql.Date.valueOf(firstDay);
+        return date;
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="dateLastOfMonth(Integer year, Integer month)"> 
+
+    public static Date dateLastOfMonth(Integer year, Integer month) {
         LocalDate now = LocalDate.now();//# 2015-11-23
         Integer day = numberDayOfMonth(year, month);
 
@@ -683,9 +908,24 @@ public class DateUtil implements Serializable {
         return dateFormat.format(date);
     }
 // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="getISODate"> 
+    public static String iSODate(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return dateFormat.format(date);
+    }
+// </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="getTiempo"> 
     public static LocalTime getTiempo() {
+        LocalTime now = LocalTime.now();
+
+        return now;
+
+    }
+// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="tiempo"> 
+    public static LocalTime tiempo() {
         LocalTime now = LocalTime.now();
 
         return now;
@@ -708,6 +948,11 @@ public class DateUtil implements Serializable {
 
 // <editor-fold defaultstate="collapsed" desc="getHour"> 
     public static LocalTime getHour() {
+
+        return LocalTime.now();
+    }// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="hour"> 
+    public static LocalTime hour() {
 
         return LocalTime.now();
     }// </editor-fold>
@@ -933,6 +1178,60 @@ public class DateUtil implements Serializable {
      * @return
      */
     public static String getMesAnterior(String mes) {
+        String mesanterior = "";
+        try {
+            switch (mes.toLowerCase()) {
+                case "enero":
+                    mesanterior = "diciembre";
+                    break;
+
+                case "febrero":
+                    mesanterior = "enero";
+                    break;
+                case "marzo":
+                    mesanterior = "febrero";
+                    break;
+                case "abril":
+                    mesanterior = "marzo";
+                    break;
+                case "mayo":
+                    mesanterior = "abril";
+                    break;
+                case "junio":
+                    mesanterior = "mayo";
+                    break;
+                case "julio":
+                    mesanterior = "junio";
+                    break;
+                case "agosto":
+                    mesanterior = "julio";
+                    break;
+                case "septiembre":
+                    mesanterior = "agosto";
+                    break;
+                case "octubre":
+                    mesanterior = "septiembre";
+                    break;
+                case "noviembre":
+                    mesanterior = "octubre";
+                    break;
+                case "diciembre":
+                    mesanterior = "noviembre";
+                    break;
+            }
+        } catch (Exception e) {
+            errorMessage("mesAnterior() " + e.getLocalizedMessage());
+        }
+        return mesanterior;
+    }    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="mesAnterior(String mes) "> 
+    /**
+     * devuelve el nombre del mes anterior
+     *
+     * @param mes
+     * @return
+     */
+    public static String mesAnterior(String mes) {
         String mesanterior = "";
         try {
             switch (mes.toLowerCase()) {
