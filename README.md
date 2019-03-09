@@ -1,3 +1,2 @@
-# avbravoutils
-utilidades para aplicaciones java enterprise edition
-
+# jmoordbutils
+utilerias para jmoordb y aplicaciones jakarta EE
