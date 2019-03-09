@@ -1,2 +1,3 @@
 # jmoordbutils
-utilerias para jmoordb y aplicaciones jakarta EE
+Utilerias para jmoordb y aplicaciones jakarta EE.
+
