@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avbravo.avbravoutils.email;
+package com.avbravo.jmoordbutils.email;
 
-import com.avbravo.avbravoutils.JsfUtil;
+import com.avbravo.jmoordbutils.JsfUtil;
 import javax.inject.Named;
 import java.util.Properties;
 import javax.enterprise.context.RequestScoped;

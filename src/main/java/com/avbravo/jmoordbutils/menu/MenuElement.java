@@ -3,7 +3,7 @@
 * To change this template file, choose Tools | Templates
  * and open the template in the editor.
 */
-package com.avbravo.avbravoutils.menu;
+package com.avbravo.jmoordbutils.menu;
 
 import java.io.Serializable;
 //import javax.enterprise.context.SessionScoped;

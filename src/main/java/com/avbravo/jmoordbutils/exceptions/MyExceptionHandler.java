@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avbravo.avbravoutils.exceptions;
+package com.avbravo.jmoordbutils.exceptions;
 
 import java.util.Iterator;
 import java.util.logging.Logger;

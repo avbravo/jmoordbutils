@@ -1,5 +1,5 @@
 
-package com.avbravo.avbravoutils;
+package com.avbravo.jmoordbutils;
 
 import java.io.IOException;
 import javax.faces.application.ResourceHandler;

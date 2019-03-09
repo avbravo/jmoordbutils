@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avbravo.avbravoutils.crypto;
+package com.avbravo.jmoordbutils.crypto;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;

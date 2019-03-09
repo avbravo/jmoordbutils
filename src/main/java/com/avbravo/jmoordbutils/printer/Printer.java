@@ -3,10 +3,10 @@
 * To change this template file, choose Tools | Templates
  * and open the template in the editor.
 */
-package com.avbravo.avbravoutils.printer;
+package com.avbravo.jmoordbutils.printer;
 
 
-import com.avbravo.avbravoutils.JsfUtil;
+import com.avbravo.jmoordbutils.JsfUtil;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avbravo.avbravoutils;
+package com.avbravo.jmoordbutils;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
