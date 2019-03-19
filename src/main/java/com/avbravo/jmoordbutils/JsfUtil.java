@@ -1176,4 +1176,27 @@ public class JsfUtil implements Serializable {
     return  e.getMethodName();
 }
    // </editor-fold>
+   
+    // <editor-fold defaultstate="collapsed" desc=" String textoDespuesUltimoPunto(String texto)">
+   
+   /**
+    * obtiene el texto despues del ultimo puento
+    * @param texto (com.avbravo.entity.Rol)
+    * @return Rol
+    */
+   public static String textoDespuesUltimoPunto(String texto){
+       String result="";
+          // TODO code application logic here
+          try {
+       
+        Integer pos =texto.lastIndexOf(".");
+
+       result = texto.substring(pos+1, texto.length());
+
+       } catch (Exception e) {
+       }
+        return result;
+        
+   }
+    // </editor-fold>
 }
