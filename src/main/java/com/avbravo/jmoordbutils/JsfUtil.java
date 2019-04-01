@@ -7,6 +7,7 @@ package com.avbravo.jmoordbutils;
 // <editor-fold defaultstate="collapsed" desc="import">  
 
 import com.avbravo.jmoordbutils.crypto.CryptoConverter;
+import com.sun.xml.internal.ws.client.RequestContext;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -36,7 +37,9 @@ import javax.faces.context.ExternalContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import net.sf.jasperreports.engine.JasperCompileManager;
-import org.primefaces.context.RequestContext;
+import org.primefaces.PrimeFaces;
+import org.primefaces.context.PrimeRequestContext;
+
 // </editor-fold>
 
 /**
@@ -149,32 +152,32 @@ public class JsfUtil implements Serializable {
     public static void infoDialog(String titulo, String texto) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, titulo,
                 texto);
-        RequestContext.getCurrentInstance().showMessageInDialog(message);
+   PrimeFaces.current().dialog().showMessageDynamic(message);
     }
     // </editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="warningDialog"> 
     public static void warningDialog(String titulo, String texto) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, titulo,
                 texto);
-        RequestContext.getCurrentInstance().showMessageInDialog(message);
-        LOG.warning(titulo + " " + texto);
+        
+        
+          PrimeFaces.current().dialog().showMessageDynamic(message);
+    
+       
     }    // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="fatalDialog"> 
 
     public static void fatalDialog(String titulo, String texto) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_FATAL, titulo,
                 texto);
-        RequestContext.getCurrentInstance().showMessageInDialog(message);
-        LOG.warning(titulo + " " + texto);
+          PrimeFaces.current().dialog().showMessageDynamic(message);
     }    // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="errorDialog"> 
 
     public static void errorDialog(String titulo, String texto) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                 titulo, texto);
-        RequestContext.getCurrentInstance().showMessageInDialog(message);
-        LOG.warning(titulo + " " + texto);
+        PrimeFaces.current().dialog().showMessageDynamic(message);
     }    // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="converterDate"> 
 
