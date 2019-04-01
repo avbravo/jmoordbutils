@@ -7,7 +7,7 @@ package com.avbravo.jmoordbutils;
 // <editor-fold defaultstate="collapsed" desc="import">  
 
 import com.avbravo.jmoordbutils.crypto.CryptoConverter;
-import com.sun.xml.internal.ws.client.RequestContext;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -38,7 +38,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import org.primefaces.PrimeFaces;
-import org.primefaces.context.PrimeRequestContext;
 
 // </editor-fold>
 
