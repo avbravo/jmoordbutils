@@ -418,7 +418,7 @@ public class DateUtil implements Serializable {
 
     }
 // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="mesDeUnaFechaStartEneroWith1(Date date)"> 
+    // <editor-fold defaultstate="collapsed" desc="mesDeUnaFechaStartEneroWith0(Date date)"> 
 
     public static Integer mesDeUnaFechaStartEneroWith0(Date date) {
         int mes = 0;
