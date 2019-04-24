@@ -1296,4 +1296,9 @@ public static LocalDate convertirJavaDateToLocalDate(Date dateToConvert) {
 }
  
     // </editor-fold>
+
+ // <editor-fold defaultstate="collapsed" desc="LocalDate convertirJavaDateToLocalDate(Date dateToConvert)">
+public static Date convertirLocalDateToJavaDate(LocalDate localDate) {
+    return java.sql.Date.valueOf(localDate);
+}    // </editor-fold>
 }
