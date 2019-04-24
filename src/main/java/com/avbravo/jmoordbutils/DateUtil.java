@@ -397,6 +397,7 @@ public class DateUtil implements Serializable {
         return mes;
     }
 // </editor-fold>
+ 
 
     // <editor-fold defaultstate="collapsed" desc="mesDeUnaFechaStartEneroWith1(Date date)"> 
 
@@ -408,6 +409,25 @@ public class DateUtil implements Serializable {
 
             int anio = calendar.get(Calendar.YEAR);
             mes = calendar.get(Calendar.MONTH) + 1;
+            int dia = calendar.get(Calendar.DAY_OF_MONTH);
+            return mes;
+        } catch (Exception e) {
+            errorDialog("error", "getMesDeUnaFechaStartEneroWith1() " + e.getLocalizedMessage());
+        }
+        return 0;
+
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="mesDeUnaFechaStartEneroWith1(Date date)"> 
+
+    public static Integer mesDeUnaFechaStartEneroWith0(Date date) {
+        int mes = 0;
+        try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+
+            int anio = calendar.get(Calendar.YEAR);
+            mes = calendar.get(Calendar.MONTH) ;
             int dia = calendar.get(Calendar.DAY_OF_MONTH);
             return mes;
         } catch (Exception e) {
