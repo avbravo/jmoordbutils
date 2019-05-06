@@ -121,6 +121,67 @@ sending=true;
         return sending;
     }// </editor-fold>
     
+    // <editor-fold defaultstate="collapsed" desc="send"> 
+/**
+ * 
+ * @param emaildestinatario
+ * @param titulo
+ * @param mensaje
+ * @param emailremitente
+ * @param passwordremitente
+ * @return 
+ */
+    public Boolean sendOutlook(String emaildestinatario, String titulo, String mensaje,
+            String emailremitente, String passwordremitente) {
+        Boolean sending=false;
+        try {
+
+//            final String username = "avbravo@gmail.com";
+//            final String password = "javnet180denver$";
+            final String username = emailremitente;
+            final String password = passwordremitente;
+//            Properties props = new Properties();
+//            props.put("mail.smtp.auth", "true");
+//            props.put("mail.smtp.starttls.enable", "true");
+//          //  props.put("mail.smtp.host", "smtp.office365.com");
+//            props.put("mail.smtp.port", "993");
+//            
+//    
+//        props.put("mail.host", "outlook.office365.com");
+//        props.put("mail.store.protocol", "pop3s");
+//        props.put("mail.pop3s.auth", "true");
+//        props.put("mail.pop3s.port", "995");
+//        
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.office365.com");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.starttls.enable", "true");
+
+
+            Session session = Session.getInstance(props,
+                    new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(username, password);
+                }
+            });
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(emaildestinatario));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(emaildestinatario));
+            message.setSubject(titulo);
+            message.setText(mensaje);
+
+            Transport.send(message);
+sending=true;
+        } catch (Exception ex) {
+            JsfUtil.errorMessage("send() "+ ex.getLocalizedMessage());
+            System.out.println("send() " + ex.getLocalizedMessage());
+        }
+        return sending;
+    }// </editor-fold>
+    
     
     // <editor-fold defaultstate="collapsed" desc="send"> 
 
