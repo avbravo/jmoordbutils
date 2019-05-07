@@ -6,12 +6,13 @@
 package com.avbravo.jmoordbutils.email;
 
 import com.avbravo.jmoordbutils.JsfUtil;
-import javax.inject.Named;
+import java.util.Date;
 import java.util.Properties;
-import javax.enterprise.context.RequestScoped;
+import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
+import javax.mail.Store;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -28,7 +29,7 @@ public class ManagerEmail {
      */
     public ManagerEmail() {
     }
-// <editor-fold defaultstate="collapsed" desc="nenviar"> 
+// <editor-fold defaultstate="collapsed" desc="enviar"> 
 
     public String enviar() {
         try {
@@ -72,7 +73,7 @@ public class ManagerEmail {
     }// </editor-fold>
     
     
-    // <editor-fold defaultstate="collapsed" desc="send"> 
+    // <editor-fold defaultstate="collapsed" desc=" send(String emaildestinatario, String titulo, String mensaje,    String emailremitente, String passwordremitente)"> 
 /**
  * 
  * @param emaildestinatario
@@ -121,7 +122,7 @@ sending=true;
         return sending;
     }// </editor-fold>
     
-    // <editor-fold defaultstate="collapsed" desc="send"> 
+    // <editor-fold defaultstate="collapsed" desc="Boolean sendOutlook(String emaildestinatario, String titulo, String mensaje,           String emailremitente, String passwordremitente)"> 
 /**
  * 
  * @param emaildestinatario
@@ -140,17 +141,7 @@ sending=true;
 //            final String password = "javnet180denver$";
             final String username = emailremitente;
             final String password = passwordremitente;
-//            Properties props = new Properties();
-//            props.put("mail.smtp.auth", "true");
-//            props.put("mail.smtp.starttls.enable", "true");
-//          //  props.put("mail.smtp.host", "smtp.office365.com");
-//            props.put("mail.smtp.port", "993");
-//            
-//    
-//        props.put("mail.host", "outlook.office365.com");
-//        props.put("mail.store.protocol", "pop3s");
-//        props.put("mail.pop3s.auth", "true");
-//        props.put("mail.pop3s.port", "995");
+
 //        
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.office365.com");
@@ -172,6 +163,7 @@ sending=true;
                     InternetAddress.parse(emaildestinatario));
             message.setSubject(titulo);
             message.setText(mensaje);
+             message.setSentDate(new Date());
 
             Transport.send(message);
 sending=true;
@@ -183,7 +175,7 @@ sending=true;
     }// </editor-fold>
     
     
-    // <editor-fold defaultstate="collapsed" desc="send"> 
+    // <editor-fold defaultstate="collapsed" desc="Boolean send(String emaildestinatario, String titulo, String mensaje,           String emailremitente, String passwordremitente,Properties props) "> 
 
     /**
      * 
@@ -228,7 +220,7 @@ sending=true;
         return sending;
     }// </editor-fold>
    
-    // <editor-fold defaultstate="collapsed" desc="send"> 
+    // <editor-fold defaultstate="collapsed" desc=" Boolean send(String emaildestinatario, String titulo, String mensaje,           String emailremitente, String passwordremitente,EmailSegurityProperties emailSegurityProperties)"> 
 
     /**
      * 
@@ -277,5 +269,64 @@ sending=true;
         }
         return sending;
     }// </editor-fold>
-   
+    
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="Boolean getOutlook( String mtemail, String mypassword)"> 
+    public Boolean getOutlook( String myemail, String mypassword) {
+        Boolean sending=false;
+        try {
+
+//            final String username = "avbravo@gmail.com";
+//            final String password = "javnet180denver$";
+            final String username = myemail;
+            final String password = mypassword;
+
+//        
+      
+         Properties props = new Properties();
+        props.put("mail.host", "outlook.office365.com");
+        props.put("mail.store.protocol", "pop3s");
+        props.put("mail.pop3s.auth", "true");
+        props.put("mail.pop3s.port", "995");
+
+
+            Session session = Session.getInstance(props,
+                    new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(username, password);
+                }
+            });
+
+            Store store = session.getStore("pop3s");
+        store.connect();
+        Folder emailFolder = store.getFolder("INBOX");
+
+        emailFolder.open(Folder.READ_ONLY);
+
+        // retrieve the messages from the folder in an array and print it
+        Message[] messages = emailFolder.getMessages();
+        System.out.println("messages.length---" + messages.length);
+
+        for (int i = 0, n = messages.length; i < n; i++) {
+            Message message = messages[i];
+            System.out.println("---------------------------------");
+            System.out.println("Email Number " + (i + 1));
+            System.out.println("Subject: " + message.getSubject());
+            System.out.println("From: " + message.getFrom()[0]);
+            System.out.println("Fecha: " +message.getSentDate());
+            System.out.println("Content: " +message.getContent());
+        }
+
+        //close the store and folder objects
+        emailFolder.close(false);
+        store.close();
+sending=true;
+        } catch (Exception ex) {
+            JsfUtil.errorMessage("send() "+ ex.getLocalizedMessage());
+            System.out.println("send() " + ex.getLocalizedMessage());
+        }
+        return sending;
+    }
+   // </editor-fold>
 }
