@@ -23,6 +23,7 @@ import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.security.MessageDigest;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -37,10 +38,10 @@ import javax.faces.context.ExternalContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import net.sf.jasperreports.engine.JasperCompileManager;
+import org.apache.commons.beanutils.BeanUtils;
 import org.primefaces.PrimeFaces;
 
 // </editor-fold>
-
 /**
  *
  * @authoravbravo
@@ -151,25 +152,24 @@ public class JsfUtil implements Serializable {
     public static void infoDialog(String titulo, String texto) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, titulo,
                 texto);
-   PrimeFaces.current().dialog().showMessageDynamic(message);
+        PrimeFaces.current().dialog().showMessageDynamic(message);
     }
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="warningDialog"> 
     public static void warningDialog(String titulo, String texto) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, titulo,
                 texto);
-        
-        
-          PrimeFaces.current().dialog().showMessageDynamic(message);
-    
-       
+
+        PrimeFaces.current().dialog().showMessageDynamic(message);
+
     }    // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="fatalDialog"> 
 
     public static void fatalDialog(String titulo, String texto) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_FATAL, titulo,
                 texto);
-          PrimeFaces.current().dialog().showMessageDynamic(message);
+        PrimeFaces.current().dialog().showMessageDynamic(message);
     }    // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="errorDialog"> 
 
@@ -499,7 +499,7 @@ public class JsfUtil implements Serializable {
             return 1d;
         }
     }// </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="nombreDia"> 
     public static String nameOfDay(LocalDate date) {
         String nombre = "DOMINGO";
@@ -537,11 +537,6 @@ public class JsfUtil implements Serializable {
         return nombre;
     }
 // </editor-fold>
-
-   
-
-   
-
 
     // <editor-fold defaultstate="collapsed" desc="letterToUpper"> 
     public String letterToUpper(String texto) {
@@ -587,9 +582,6 @@ public class JsfUtil implements Serializable {
         }
         return texto;
     }// </editor-fold>
-
-  
-    
 
     // <editor-fold defaultstate="collapsed" desc="twoDigitString"> 
     private static String twoDigitString(int number) {
@@ -1056,8 +1048,6 @@ public class JsfUtil implements Serializable {
     }
     // </editor-fold>
 
-
-
     // <editor-fold defaultstate="collapsed" desc="isVacio(String texto)()"> 
     /**
      * return true si es null empty equals("")
@@ -1080,7 +1070,7 @@ public class JsfUtil implements Serializable {
     public static Boolean isVacio(Integer texto) {
         return texto == null || texto.equals("");
     }// </editor-fold>
-   
+
     // <editor-fold defaultstate="collapsed" desc="isVacio(Integer texto)"> 
     /**
      * return true si es null empty equals("")
@@ -1091,7 +1081,7 @@ public class JsfUtil implements Serializable {
     public static Boolean isVacio(Double texto) {
         return texto == null || texto.equals("");
     }// </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="Boolean isNegativo(Double texto)"> 
     /**
      * return true si es null empty equals("")
@@ -1100,9 +1090,9 @@ public class JsfUtil implements Serializable {
      * @return
      */
     public static Boolean isNegativo(Double numero) {
-        return numero == null || numero.equals("") || numero <0;
+        return numero == null || numero.equals("") || numero < 0;
     }// </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="Boolean isNegativo(Double texto)"> 
     /**
      * return true si es null empty equals("")
@@ -1111,10 +1101,8 @@ public class JsfUtil implements Serializable {
      * @return
      */
     public static Boolean isNegativo(Integer numero) {
-        return numero == null || numero.equals("") || numero <0;
+        return numero == null || numero.equals("") || numero < 0;
     }// </editor-fold>
-    
-    
 
     // <editor-fold defaultstate="collapsed" desc="createJasper">  
     private Boolean createJasper(String reportSource, String pathJasper) {
@@ -1144,66 +1132,59 @@ public class JsfUtil implements Serializable {
     }
 
     // </editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="emailValidate(String email)">
-    
     public static Boolean emailValidate(String email) {
         pattern = Pattern.compile(EMAIL_REGEX, Pattern.CASE_INSENSITIVE);
         matcher = pattern.matcher(email);
         return matcher.matches();
     }// </editor-fold>
 
-    
-    
     // <editor-fold defaultstate="collapsed" desc="nameOfClassAndMethod()">
- 
-      public static String nameOfClassAndMethod() {
-    final StackTraceElement e = Thread.currentThread().getStackTrace()[2];
-    final String s = e.getClassName();
-    return s.substring(s.lastIndexOf('.') + 1, s.length()) + "." + e.getMethodName();
-}// </editor-fold>
-      // <editor-fold defaultstate="collapsed" desc="nameOfClass()">
+    public static String nameOfClassAndMethod() {
+        final StackTraceElement e = Thread.currentThread().getStackTrace()[2];
+        final String s = e.getClassName();
+        return s.substring(s.lastIndexOf('.') + 1, s.length()) + "." + e.getMethodName();
+    }// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="nameOfClass()">
 
-   public static String nameOfClass() {
-    final StackTraceElement e = Thread.currentThread().getStackTrace()[2];
-    final String s = e.getClassName();
-    return s.substring(s.lastIndexOf('.') + 1, s.length()) ;
-}    // </editor-fold>
-   
+    public static String nameOfClass() {
+        final StackTraceElement e = Thread.currentThread().getStackTrace()[2];
+        final String s = e.getClassName();
+        return s.substring(s.lastIndexOf('.') + 1, s.length());
+    }    // </editor-fold>
+
     // <editor-fold defaultstate="collapsed" desc="nameOfMethod(">
-
-   public static String nameOfMethod() {
-    final StackTraceElement e = Thread.currentThread().getStackTrace()[2];
-    final String s = e.getClassName();
-    return  e.getMethodName();
-}
-   // </editor-fold>
-   
-    // <editor-fold defaultstate="collapsed" desc=" String textoDespuesUltimoPunto(String texto)">
-   
-   /**
-    * obtiene el texto despues del ultimo puento
-    * @param texto (com.avbravo.entity.Rol)
-    * @return Rol
-    */
-   public static String textoDespuesUltimoPunto(String texto){
-       String result="";
-          // TODO code application logic here
-          try {
-       
-        Integer pos =texto.lastIndexOf(".");
-
-       result = texto.substring(pos+1, texto.length());
-
-       } catch (Exception e) {
-       }
-        return result;
-        
-   }
+    public static String nameOfMethod() {
+        final StackTraceElement e = Thread.currentThread().getStackTrace()[2];
+        final String s = e.getClassName();
+        return e.getMethodName();
+    }
     // </editor-fold>
-   
-   
-       // <editor-fold defaultstate="collapsed" desc="boolean isValidEmail(String email()">
+
+    // <editor-fold defaultstate="collapsed" desc=" String textoDespuesUltimoPunto(String texto)">
+    /**
+     * obtiene el texto despues del ultimo puento
+     *
+     * @param texto (com.avbravo.entity.Rol)
+     * @return Rol
+     */
+    public static String textoDespuesUltimoPunto(String texto) {
+        String result = "";
+        // TODO code application logic here
+        try {
+
+            Integer pos = texto.lastIndexOf(".");
+
+            result = texto.substring(pos + 1, texto.length());
+
+        } catch (Exception e) {
+        }
+        return result;
+
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="boolean isValidEmail(String email()">
     public static Boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."
                 + "[a-zA-Z0-9_+&*-]+)*@"
@@ -1216,4 +1197,21 @@ public class JsfUtil implements Serializable {
         }
         return pat.matcher(email).matches();
     }  // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Object copyBeans(Object destino, Object fuente)">
+    /**
+     * Copia el contenido de un bean en otro
+     * @param destino
+     * @param fuente
+     * @return 
+     */
+    public static Object copyBeans(Object destino, Object fuente) {
+        try {
+            BeanUtils.copyProperties(destino, fuente);
+        } catch (Exception e) {
+        }
+
+        return destino;
+    }// </editor-fold>
+
 }

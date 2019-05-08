@@ -4,7 +4,7 @@
 
     <groupId>com.avbravo</groupId>
     <artifactId>jmoordbutils</artifactId>
-    <version>0.4.1</version>
+    <version>0.4.2</version>
     <packaging>ejb</packaging>
 
     <name>jmoordbutils</name>
@@ -73,6 +73,12 @@
         <artifactId>javase</artifactId>
         <version>3.3.0</version>
     </dependency>
+    
+    <dependency>
+    <groupId>commons-beanutils</groupId>
+    <artifactId>commons-beanutils</artifactId>
+    <version>1.9.3</version>
+</dependency>
     </dependencies>
 
     <build>
