@@ -1238,7 +1238,7 @@ public class JsfUtil implements Serializable {
      *
      * Salida Lista {20=[3020, 500, 1000], 55=[55, 438, 900, 1025, 3020]}
      */
-    public <T, U> void addListToMapWithDuplicated(TreeMap treeMap, U mapKey, T valor) {
+    public static <T, U> void addListToMapWithDuplicated(TreeMap treeMap, U mapKey, T valor) {
         List<T> lista = (List<T>) treeMap.get(mapKey);
 
         // Se crea si esta vacia
