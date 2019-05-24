@@ -30,6 +30,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.faces.component.UIInput;
@@ -1201,9 +1202,10 @@ public class JsfUtil implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="Object copyBeans(Object destino, Object fuente)">
     /**
      * Copia el contenido de un bean en otro
+     *
      * @param destino
      * @param fuente
-     * @return 
+     * @return
      */
     public static Object copyBeans(Object destino, Object fuente) {
         try {
@@ -1212,6 +1214,42 @@ public class JsfUtil implements Serializable {
         }
 
         return destino;
+    }// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="addListToMapWithDuplicated(TreeMap treeMap, U mapKey, T valor)">
+    /**
+     * Agrega una lista a un TreeMap con duplicados
+     *
+     * @param destino
+     * @param fuente
+     * @return Creado por Israel Deago /Modificado para Genericos
+     * @email: isde115@gmail.com
+     * Ejemplo de uso TreeMap<Integer,
+     * List<Integer>> treeMap = new TreeMap<>(); treeMap.put(55, new
+     * ArrayList<>()); JsfUtil.addListToMapWithDuplicated(treeMap, 55, 55);
+     * JsfUtil.addListToMapWithDuplicated(treeMap, 55, 438);
+     * JsfUtil.addListToMapWithDuplicated(treeMap, 55, 900);
+     * JsfUtil.addListToMapWithDuplicated(treeMap, 55, 1025);
+     * JsfUtil.addListToMapWithDuplicated(treeMap, 55, 3020); treeMap.put(20,
+     * new ArrayList<>()); JsfUtil.addListToMapWithDuplicated(treeMap, 20,
+     * 3020); JsfUtil.addListToMapWithDuplicated(treeMap, 20, 500);
+     * JsfUtil.addListToMapWithDuplicated(treeMap, 20, 1000);
+     * System.out.println("Lista " + treeMap);
+     *
+     * Salida Lista {20=[3020, 500, 1000], 55=[55, 438, 900, 1025, 3020]}
+     */
+    public <T, U> void addListToMapWithDuplicated(TreeMap treeMap, U mapKey, T valor) {
+        List<T> lista = (List<T>) treeMap.get(mapKey);
+
+        // Se crea si esta vacia
+        if (lista == null) {
+            lista = new ArrayList<>();
+           lista.add(valor);
+            treeMap.put(mapKey, lista);
+        } else {
+
+            lista.add(valor);
+        }
     }// </editor-fold>
 
 }
