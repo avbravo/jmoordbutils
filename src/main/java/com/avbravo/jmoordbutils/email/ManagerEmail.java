@@ -107,7 +107,7 @@ public class ManagerEmail {
             });
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(emaildestinatario));
+            message.setFrom(new InternetAddress(emailremitente));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(emaildestinatario));
             message.setSubject(titulo);
@@ -158,7 +158,7 @@ sending=true;
             });
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(emaildestinatario));
+            message.setFrom(new InternetAddress(emailremitente));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(emaildestinatario));
             message.setSubject(titulo);
@@ -205,7 +205,7 @@ sending=true;
             });
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(emaildestinatario));
+            message.setFrom(new InternetAddress(emailremitente));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(emaildestinatario));
             message.setSubject(titulo);
@@ -255,7 +255,7 @@ sending=true;
             });
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(emaildestinatario));
+            message.setFrom(new InternetAddress(emailremitente));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(emaildestinatario));
             message.setSubject(titulo);
