@@ -242,12 +242,21 @@ public class DateUtil implements Serializable {
         return number;
     }// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="dateFormatToString"> 
-
-    public static String dateFormatToString(Date fecha, String format) {
+/**formatea una fecha 
+ * a "dd/MM/yyyy hh:mm a"
+ * @param fecha
+ * @param format
+ * @return 
+ */
+    public static String dateFormatToString(Date fecha, String... format) {
         String dateformat = "";
+        String f = "dd/MM/yyyy hh:mm a";
         try {
-            //     SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
-            SimpleDateFormat sdf = new SimpleDateFormat(format);
+            if (format.length != 0) {
+                f = format[0];
+
+            }
+            SimpleDateFormat sdf = new SimpleDateFormat(f);
             dateformat = sdf.format(fecha);
         } catch (Exception e) {
         }
@@ -255,24 +264,24 @@ public class DateUtil implements Serializable {
     }
 
     // </editor-fold>
-    
-    
-      // <editor-fold defaultstate="collapsed" desc="hourFromDateToString(Date fecha)"> 
-/**
- * Devuelve una hora en formato hh:mm a o se puede especificar el formato deseado
- * @param fecha
- * @param format
- * @return 
- */
-    public static String hourFromDateToString(Date fecha, String...format) {
-       String h = "";
+    // <editor-fold defaultstate="collapsed" desc="hourFromDateToString(Date fecha)"> 
+    /**
+     * Devuelve una hora en formato hh:mm a o se puede especificar el formato
+     * deseado
+     *
+     * @param fecha
+     * @param format
+     * @return
+     */
+    public static String hourFromDateToString(Date fecha, String... format) {
+        String h = "";
         try {
-             String f = "hh:mm a";
-        if (format.length != 0) {
-            f = format[0];
+            String f = "hh:mm a";
+            if (format.length != 0) {
+                f = format[0];
 
-        }
-  
+            }
+
             h = dateFormatToString(fecha, f);
         } catch (Exception e) {
             JsfUtil.errorMessage("hourFromDateToString() " + e.getLocalizedMessage());
@@ -282,7 +291,6 @@ public class DateUtil implements Serializable {
     }
 
     // </editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="dateBetween(Date fechaToSearch, Date fechainicio, Date fechafin)"> 
     /**
      * busca una fecha si esta entre fechas
@@ -1308,7 +1316,4 @@ public class DateUtil implements Serializable {
         return java.sql.Date.valueOf(localDate);
     }    // </editor-fold>
 
- 
-       
-   
 }
