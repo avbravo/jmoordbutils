@@ -30,6 +30,9 @@ public class JmoordbLanguages implements Serializable {
     }
 
     public synchronized String getLocale() {
+        if(locale== null){
+            locale="es";
+        }
         return locale;
     }
 
@@ -38,6 +41,7 @@ public class JmoordbLanguages implements Serializable {
     }
 
     public JmoordbLanguages() {
+        this.locale="es";
     }
 
     public String englishAction() {
