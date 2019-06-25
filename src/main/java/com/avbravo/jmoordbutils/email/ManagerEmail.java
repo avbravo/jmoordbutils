@@ -21,7 +21,6 @@ import javax.mail.internet.MimeMessage;
  *
  * @author avbravo
  */
-
 public class ManagerEmail {
 
     /**
@@ -31,14 +30,11 @@ public class ManagerEmail {
     }
 // <editor-fold defaultstate="collapsed" desc="enviar"> 
 
-    public String enviar() {
+    private String example() {
         try {
-//username: info@centraldemotores.com
-//password:CM2017chitre@
-//smtp: smtpout.secureserver.net
-//port:587
+
             final String username = "myemail@gmail.com";
-            final String password = "azuero2015nasa";
+            final String password = "mypassword";
 
             Properties props = new Properties();
             props.put("mail.smtp.auth", "true");
@@ -54,9 +50,9 @@ public class ManagerEmail {
             });
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("avbravo@gmail.com"));
+            message.setFrom(new InternetAddress("emisor@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse("avbravo@gmail.com"));
+                    InternetAddress.parse("remitente@gmail.com"));
             message.setSubject("Alert");
             message.setText("Existe una plaga,"
                     + "\n\n No spam to my email, please!");
@@ -71,25 +67,22 @@ public class ManagerEmail {
         }
         return null;
     }// </editor-fold>
-    
-    
+
     // <editor-fold defaultstate="collapsed" desc=" send(String emaildestinatario, String titulo, String mensaje,    String emailremitente, String passwordremitente)"> 
-/**
- * 
- * @param emaildestinatario
- * @param titulo
- * @param mensaje
- * @param emailremitente
- * @param passwordremitente
- * @return 
- */
+    /**
+     *
+     * @param emaildestinatario
+     * @param titulo
+     * @param mensaje
+     * @param emailremitente
+     * @param passwordremitente
+     * @return
+     */
     public Boolean send(String emaildestinatario, String titulo, String mensaje,
             String emailremitente, String passwordremitente) {
-        Boolean sending=false;
+        Boolean sending = false;
         try {
 
-//            final String username = "avbravo@gmail.com";
-//            final String password = "javnet180denver$";
             final String username = emailremitente;
             final String password = passwordremitente;
             Properties props = new Properties();
@@ -98,7 +91,6 @@ public class ManagerEmail {
             props.put("mail.smtp.host", "smtp.gmail.com");
             props.put("mail.smtp.port", "587");
 
-
             Session session = Session.getInstance(props,
                     new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
@@ -114,41 +106,117 @@ public class ManagerEmail {
             message.setText(mensaje);
 
             Transport.send(message);
-sending=true;
+            sending = true;
         } catch (Exception ex) {
-            JsfUtil.errorMessage("send() "+ ex.getLocalizedMessage());
+            JsfUtil.errorMessage("send() " + ex.getLocalizedMessage());
             System.out.println("send() " + ex.getLocalizedMessage());
         }
         return sending;
     }// </editor-fold>
-    
-    // <editor-fold defaultstate="collapsed" desc="Boolean sendOutlook(String emaildestinatario, String titulo, String mensaje,           String emailremitente, String passwordremitente)"> 
-/**
- * 
- * @param emaildestinatario
- * @param titulo
- * @param mensaje
- * @param emailremitente
- * @param passwordremitente
- * @return 
- */
-    public Boolean sendOutlook(String emaildestinatario, String titulo, String mensaje,
+
+    // <editor-fold defaultstate="collapsed" desc=" send(String[] to, String[] cc, String[] bcc,, String titulo, String mensaje,    String emailremitente, String passwordremitente)"> 
+    /**
+     *
+     * @param to
+     * @param cc
+     * @param bcc
+     * @param titulo
+     * @param mensaje
+     * @param emailremitente
+     * @param passwordremitente
+     * @return
+     */
+    public Boolean send(String[] to, String[] cc, String[] bcc, String titulo, String mensaje,
             String emailremitente, String passwordremitente) {
-        Boolean sending=false;
+        Boolean sending = false;
         try {
 
-//            final String username = "avbravo@gmail.com";
-//            final String password = "javnet180denver$";
+            final String username = emailremitente;
+            final String password = passwordremitente;
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.port", "587");
+
+             InternetAddress[] toAddress = new InternetAddress[to.length];
+            // To get the array of toaddresses
+            for (int i = 0; i < to.length; i++) {
+                toAddress[i] = new InternetAddress(to[i]);
+            }
+
+            InternetAddress[] ccAddress = new InternetAddress[cc.length];
+
+            // To get the array of ccaddresses
+            for (int i = 0; i < cc.length; i++) {
+                ccAddress[i] = new InternetAddress(cc[i]);
+            }
+            InternetAddress[] bccAddress = new InternetAddress[bcc.length];
+
+            // To get the array of bccaddresses
+            for (int i = 0; i < bcc.length; i++) {
+                bccAddress[i] = new InternetAddress(bcc[i]);
+            }
+            
+            Session session = Session.getInstance(props,
+                    new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(username, password);
+                }
+            });
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(emailremitente));
+            // Set To: header field of the header.
+            for (int i = 0; i < toAddress.length; i++) {
+                message.addRecipient(Message.RecipientType.TO, toAddress[i]);
+            }
+            // Set cc: header field of the header.
+            for (int i = 0; i < ccAddress.length; i++) {
+                message.addRecipient(Message.RecipientType.CC, ccAddress[i]);
+            }
+            // Set bcc: header field of the header.
+            for (int i = 0; i < bccAddress.length; i++) {
+                message.addRecipient(Message.RecipientType.BCC, bccAddress[i]);
+            }
+
+            message.setSubject(titulo);
+            message.setText(mensaje);
+            message.setSentDate(new Date());
+
+            Transport.send(message);
+            sending = true;
+        } catch (Exception ex) {
+            JsfUtil.errorMessage("send() " + ex.getLocalizedMessage());
+            System.out.println("send() " + ex.getLocalizedMessage());
+        }
+        return sending;
+    }// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Boolean sendOutlook(String emaildestinatario, String titulo, String mensaje,           String emailremitente, String passwordremitente)"> 
+    /**
+     *
+     * @param emaildestinatario
+     * @param titulo
+     * @param mensaje
+     * @param emailremitente
+     * @param passwordremitente
+     * @return
+     */
+    public Boolean sendOutlook(String emaildestinatario, String titulo, String mensaje,
+            String emailremitente, String passwordremitente) {
+        Boolean sending = false;
+        try {
+
             final String username = emailremitente;
             final String password = passwordremitente;
 
 //        
-        Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.office365.com");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.port", "587");
-        props.put("mail.smtp.starttls.enable", "true");
-
+            Properties props = new Properties();
+            props.put("mail.smtp.host", "smtp.office365.com");
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.port", "587");
+            props.put("mail.smtp.starttls.enable", "true");
 
             Session session = Session.getInstance(props,
                     new javax.mail.Authenticator() {
@@ -163,39 +231,119 @@ sending=true;
                     InternetAddress.parse(emaildestinatario));
             message.setSubject(titulo);
             message.setText(mensaje);
-             message.setSentDate(new Date());
+            message.setSentDate(new Date());
 
             Transport.send(message);
-sending=true;
+            sending = true;
         } catch (Exception ex) {
-            JsfUtil.errorMessage("send() "+ ex.getLocalizedMessage());
+            JsfUtil.errorMessage("send() " + ex.getLocalizedMessage());
             System.out.println("send() " + ex.getLocalizedMessage());
         }
         return sending;
     }// </editor-fold>
-    
-    
-    // <editor-fold defaultstate="collapsed" desc="Boolean send(String emaildestinatario, String titulo, String mensaje,           String emailremitente, String passwordremitente,Properties props) "> 
+    // <editor-fold defaultstate="collapsed" desc="Boolean sendOutlook(String emaildestinatario, String titulo, String mensaje,           String emailremitente, String passwordremitente)"> 
 
     /**
-     * 
-     * @param emaildestinatario
+     *  String[] to = { "xxxx@gmail.com" }; // list of recipient email addresses
+        String[] cc={ "xxxxt@gmail.com" };
+        String[] bcc={ "sxxxx@gmail.com" };
+     *
+     * @param to
+     * @param cc
+     * @param bcc
      * @param titulo
      * @param mensaje
      * @param emailremitente
      * @param passwordremitente
-     * @param props
-     * @return 
+     * @return
      */
-    public Boolean send(String emaildestinatario, String titulo, String mensaje,
-            String emailremitente, String passwordremitente,Properties props) {
-        Boolean sending=false;
+    public Boolean sendOutlook(String[] to, String[] cc, String[] bcc, String titulo, String mensaje,
+            String emailremitente, String passwordremitente) {
+        Boolean sending = false;
         try {
-
 
             final String username = emailremitente;
             final String password = passwordremitente;
-           
+            //cc, bcc, to multiples
+            InternetAddress[] toAddress = new InternetAddress[to.length];
+            // To get the array of toaddresses
+            for (int i = 0; i < to.length; i++) {
+                toAddress[i] = new InternetAddress(to[i]);
+            }
+
+            InternetAddress[] ccAddress = new InternetAddress[cc.length];
+
+            // To get the array of ccaddresses
+            for (int i = 0; i < cc.length; i++) {
+                ccAddress[i] = new InternetAddress(cc[i]);
+            }
+            InternetAddress[] bccAddress = new InternetAddress[bcc.length];
+
+            // To get the array of bccaddresses
+            for (int i = 0; i < bcc.length; i++) {
+                bccAddress[i] = new InternetAddress(bcc[i]);
+            }
+
+//        
+            Properties props = new Properties();
+            props.put("mail.smtp.host", "smtp.office365.com");
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.port", "587");
+            props.put("mail.smtp.starttls.enable", "true");
+
+            Session session = Session.getInstance(props,
+                    new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(username, password);
+                }
+            });
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(emailremitente));
+            // Set To: header field of the header.
+            for (int i = 0; i < toAddress.length; i++) {
+                message.addRecipient(Message.RecipientType.TO, toAddress[i]);
+            }
+            // Set cc: header field of the header.
+            for (int i = 0; i < ccAddress.length; i++) {
+                message.addRecipient(Message.RecipientType.CC, ccAddress[i]);
+            }
+            // Set bcc: header field of the header.
+            for (int i = 0; i < bccAddress.length; i++) {
+                message.addRecipient(Message.RecipientType.BCC, bccAddress[i]);
+            }
+
+            message.setSubject(titulo);
+            message.setText(mensaje);
+            message.setSentDate(new Date());
+
+            Transport.send(message);
+            sending = true;
+        } catch (Exception ex) {
+            JsfUtil.errorMessage("send() " + ex.getLocalizedMessage());
+            System.out.println("send() " + ex.getLocalizedMessage());
+        }
+        return sending;
+    }// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Boolean send(String emaildestinatario, String titulo, String mensaje,           String emailremitente, String passwordremitente,Properties props) "> 
+    /**
+     *
+     * @param emaildestinatario
+     * @param titulo
+     * @param mensaje
+     * @param emailremitente
+     * @param passwordremitente
+     * @param props
+     * @return
+     */
+    public Boolean send(String emaildestinatario, String titulo, String mensaje,
+            String emailremitente, String passwordremitente, Properties props) {
+        Boolean sending = false;
+        try {
+
+            final String username = emailremitente;
+            final String password = passwordremitente;
 
             Session session = Session.getInstance(props,
                     new javax.mail.Authenticator() {
@@ -212,37 +360,36 @@ sending=true;
             message.setText(mensaje);
 
             Transport.send(message);
-sending=true;
+            sending = true;
         } catch (Exception ex) {
-            JsfUtil.errorMessage("send() "+ ex.getLocalizedMessage());
+            JsfUtil.errorMessage("send() " + ex.getLocalizedMessage());
             System.out.println("send() " + ex.getLocalizedMessage());
         }
         return sending;
     }// </editor-fold>
-   
-    // <editor-fold defaultstate="collapsed" desc=" Boolean send(String emaildestinatario, String titulo, String mensaje,           String emailremitente, String passwordremitente,EmailSegurityProperties emailSegurityProperties)"> 
 
+    // <editor-fold defaultstate="collapsed" desc=" Boolean send(String emaildestinatario, String titulo, String mensaje,           String emailremitente, String passwordremitente,EmailSegurityProperties emailSegurityProperties)"> 
     /**
-     * 
+     *
      * @param emaildestinatario
      * @param titulo
      * @param mensaje
      * @param emailremitente
      * @param passwordremitente
      * @param props
-     * @return 
+     * @return
      */
     public Boolean send(String emaildestinatario, String titulo, String mensaje,
-            String emailremitente, String passwordremitente,EmailSegurityProperties emailSegurityProperties) {
-        Boolean sending=false;
+            String emailremitente, String passwordremitente, EmailSegurityProperties emailSegurityProperties) {
+        Boolean sending = false;
         try {
 
 //            final String username = "avbravo@gmail.com";
 //            final String password = "javnet180denver$";
             final String username = emailremitente;
             final String password = passwordremitente;
-           
-  Properties props = new Properties();
+
+            Properties props = new Properties();
             props.put("mail.smtp.auth", emailSegurityProperties.getMailSmtpAuth());
             props.put("mail.smtp.starttls.enable", emailSegurityProperties.getMailSmtpStarttlsEnable());
             props.put("mail.smtp.host", emailSegurityProperties.getMailSmtpHost());
@@ -262,19 +409,17 @@ sending=true;
             message.setText(mensaje);
 
             Transport.send(message);
-sending=true;
+            sending = true;
         } catch (Exception ex) {
-            JsfUtil.errorMessage("send() "+ ex.getLocalizedMessage());
+            JsfUtil.errorMessage("send() " + ex.getLocalizedMessage());
             System.out.println("send() " + ex.getLocalizedMessage());
         }
         return sending;
     }// </editor-fold>
-    
-    
-    
+
     // <editor-fold defaultstate="collapsed" desc="Boolean getOutlook( String mtemail, String mypassword)"> 
-    public Boolean getOutlook( String myemail, String mypassword) {
-        Boolean sending=false;
+    public Boolean getOutlook(String myemail, String mypassword) {
+        Boolean sending = false;
         try {
 
 //            final String username = "avbravo@gmail.com";
@@ -283,13 +428,11 @@ sending=true;
             final String password = mypassword;
 
 //        
-      
-         Properties props = new Properties();
-        props.put("mail.host", "outlook.office365.com");
-        props.put("mail.store.protocol", "pop3s");
-        props.put("mail.pop3s.auth", "true");
-        props.put("mail.pop3s.port", "995");
-
+            Properties props = new Properties();
+            props.put("mail.host", "outlook.office365.com");
+            props.put("mail.store.protocol", "pop3s");
+            props.put("mail.pop3s.auth", "true");
+            props.put("mail.pop3s.port", "995");
 
             Session session = Session.getInstance(props,
                     new javax.mail.Authenticator() {
@@ -299,34 +442,34 @@ sending=true;
             });
 
             Store store = session.getStore("pop3s");
-        store.connect();
-        Folder emailFolder = store.getFolder("INBOX");
+            store.connect();
+            Folder emailFolder = store.getFolder("INBOX");
 
-        emailFolder.open(Folder.READ_ONLY);
+            emailFolder.open(Folder.READ_ONLY);
 
-        // retrieve the messages from the folder in an array and print it
-        Message[] messages = emailFolder.getMessages();
-        System.out.println("messages.length---" + messages.length);
+            // retrieve the messages from the folder in an array and print it
+            Message[] messages = emailFolder.getMessages();
+            System.out.println("messages.length---" + messages.length);
 
-        for (int i = 0, n = messages.length; i < n; i++) {
-            Message message = messages[i];
-            System.out.println("---------------------------------");
-            System.out.println("Email Number " + (i + 1));
-            System.out.println("Subject: " + message.getSubject());
-            System.out.println("From: " + message.getFrom()[0]);
-            System.out.println("Fecha: " +message.getSentDate());
-            System.out.println("Content: " +message.getContent());
-        }
+            for (int i = 0, n = messages.length; i < n; i++) {
+                Message message = messages[i];
+                System.out.println("---------------------------------");
+                System.out.println("Email Number " + (i + 1));
+                System.out.println("Subject: " + message.getSubject());
+                System.out.println("From: " + message.getFrom()[0]);
+                System.out.println("Fecha: " + message.getSentDate());
+                System.out.println("Content: " + message.getContent());
+            }
 
-        //close the store and folder objects
-        emailFolder.close(false);
-        store.close();
-sending=true;
+            //close the store and folder objects
+            emailFolder.close(false);
+            store.close();
+            sending = true;
         } catch (Exception ex) {
-            JsfUtil.errorMessage("send() "+ ex.getLocalizedMessage());
+            JsfUtil.errorMessage("send() " + ex.getLocalizedMessage());
             System.out.println("send() " + ex.getLocalizedMessage());
         }
         return sending;
     }
-   // </editor-fold>
+    // </editor-fold>
 }
