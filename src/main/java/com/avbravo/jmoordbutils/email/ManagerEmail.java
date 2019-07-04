@@ -85,10 +85,10 @@ public class ManagerEmail {
             String emailremitente, String passwordremitente, Boolean... typehtml) {
         Boolean sending = false;
         try {
-            
-  Boolean texthtml = false;
+
+            Boolean texthtml = false;
             if (typehtml.length != 0) {
-                texthtml= typehtml[0];
+                texthtml = typehtml[0];
 
             }
             final String username = emailremitente;
@@ -148,9 +148,9 @@ public class ManagerEmail {
             String emailremitente, String passwordremitente, Boolean... typehtml) {
         Boolean sending = false;
         try {
-  Boolean texthtml = false;
+            Boolean texthtml = false;
             if (typehtml.length != 0) {
-                texthtml= typehtml[0];
+                texthtml = typehtml[0];
 
             }
             final String username = emailremitente;
@@ -394,12 +394,12 @@ public class ManagerEmail {
      * @return
      */
     public Boolean send(String emaildestinatario, String titulo, String mensaje,
-            String emailremitente, String passwordremitente, Properties props,Boolean... typehtml) {
+            String emailremitente, String passwordremitente, Properties props, Boolean... typehtml) {
         Boolean sending = false;
         try {
-  Boolean texthtml = false;
+            Boolean texthtml = false;
             if (typehtml.length != 0) {
-                texthtml= typehtml[0];
+                texthtml = typehtml[0];
 
             }
             final String username = emailremitente;
@@ -453,9 +453,9 @@ public class ManagerEmail {
             String emailremitente, String passwordremitente, EmailSegurityProperties emailSegurityProperties, Boolean... typehtml) {
         Boolean sending = false;
         try {
-  Boolean texthtml = false;
+            Boolean texthtml = false;
             if (typehtml.length != 0) {
-                texthtml= typehtml[0];
+                texthtml = typehtml[0];
 
             }
 
