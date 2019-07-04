@@ -10,12 +10,15 @@ import java.util.Date;
 import java.util.Properties;
 import javax.mail.Folder;
 import javax.mail.Message;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 /**
  *
@@ -28,7 +31,7 @@ public class ManagerEmail {
      */
     public ManagerEmail() {
     }
-// <editor-fold defaultstate="collapsed" desc="enviar"> 
+// <editor-fold defaultstate="collapsed" desc="example()"> 
 
     private String example() {
         try {
@@ -79,10 +82,15 @@ public class ManagerEmail {
      * @return
      */
     public Boolean send(String emaildestinatario, String titulo, String mensaje,
-            String emailremitente, String passwordremitente) {
+            String emailremitente, String passwordremitente, Boolean... typehtml) {
         Boolean sending = false;
         try {
+            
+  Boolean texthtml = false;
+            if (typehtml.length != 0) {
+                texthtml= typehtml[0];
 
+            }
             final String username = emailremitente;
             final String password = passwordremitente;
             Properties props = new Properties();
@@ -103,7 +111,17 @@ public class ManagerEmail {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(emaildestinatario));
             message.setSubject(titulo);
-            message.setText(mensaje);
+//            message.setText(mensaje);
+
+            if (texthtml) {
+                MimeBodyPart mimeBodyPart = new MimeBodyPart();
+                mimeBodyPart.setContent(mensaje, "text/html");
+                Multipart multipart = new MimeMultipart();
+                multipart.addBodyPart(mimeBodyPart);
+                message.setContent(multipart);
+            } else {
+                message.setText(mensaje);
+            }
 
             Transport.send(message);
             sending = true;
@@ -127,10 +145,14 @@ public class ManagerEmail {
      * @return
      */
     public Boolean send(String[] to, String[] cc, String[] bcc, String titulo, String mensaje,
-            String emailremitente, String passwordremitente) {
+            String emailremitente, String passwordremitente, Boolean... typehtml) {
         Boolean sending = false;
         try {
+  Boolean texthtml = false;
+            if (typehtml.length != 0) {
+                texthtml= typehtml[0];
 
+            }
             final String username = emailremitente;
             final String password = passwordremitente;
             Properties props = new Properties();
@@ -139,7 +161,7 @@ public class ManagerEmail {
             props.put("mail.smtp.host", "smtp.gmail.com");
             props.put("mail.smtp.port", "587");
 
-             InternetAddress[] toAddress = new InternetAddress[to.length];
+            InternetAddress[] toAddress = new InternetAddress[to.length];
             // To get the array of toaddresses
             for (int i = 0; i < to.length; i++) {
                 toAddress[i] = new InternetAddress(to[i]);
@@ -157,7 +179,7 @@ public class ManagerEmail {
             for (int i = 0; i < bcc.length; i++) {
                 bccAddress[i] = new InternetAddress(bcc[i]);
             }
-            
+
             Session session = Session.getInstance(props,
                     new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
@@ -181,9 +203,18 @@ public class ManagerEmail {
             }
 
             message.setSubject(titulo);
-            message.setText(mensaje);
+//            message.setText(mensaje);
             message.setSentDate(new Date());
 
+            if (texthtml) {
+                MimeBodyPart mimeBodyPart = new MimeBodyPart();
+                mimeBodyPart.setContent(mensaje, "text/html");
+                Multipart multipart = new MimeMultipart();
+                multipart.addBodyPart(mimeBodyPart);
+                message.setContent(multipart);
+            } else {
+                message.setText(mensaje);
+            }
             Transport.send(message);
             sending = true;
         } catch (Exception ex) {
@@ -204,10 +235,14 @@ public class ManagerEmail {
      * @return
      */
     public Boolean sendOutlook(String emaildestinatario, String titulo, String mensaje,
-            String emailremitente, String passwordremitente) {
+            String emailremitente, String passwordremitente, Boolean... typehtml) {
         Boolean sending = false;
         try {
+            Boolean texthtml = false;
+            if (typehtml.length != 0) {
+                texthtml = typehtml[0];
 
+            }
             final String username = emailremitente;
             final String password = passwordremitente;
 
@@ -230,9 +265,18 @@ public class ManagerEmail {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(emaildestinatario));
             message.setSubject(titulo);
-            message.setText(mensaje);
+//            message.setText(mensaje);
             message.setSentDate(new Date());
 
+            if (texthtml) {
+                MimeBodyPart mimeBodyPart = new MimeBodyPart();
+                mimeBodyPart.setContent(mensaje, "text/html");
+                Multipart multipart = new MimeMultipart();
+                multipart.addBodyPart(mimeBodyPart);
+                message.setContent(multipart);
+            } else {
+                message.setText(mensaje);
+            }
             Transport.send(message);
             sending = true;
         } catch (Exception ex) {
@@ -241,12 +285,11 @@ public class ManagerEmail {
         }
         return sending;
     }// </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Boolean sendOutlook(String emaildestinatario, String titulo, String mensaje,           String emailremitente, String passwordremitente)"> 
+    // <editor-fold defaultstate="collapsed" desc="Boolean sendOutlook(String[] to, String[] cc, String[] bcc, String titulo, String mensaje,  String emailremitente, String passwordremitente)"> 
 
     /**
-     *  String[] to = { "xxxx@gmail.com" }; // list of recipient email addresses
-        String[] cc={ "xxxxt@gmail.com" };
-        String[] bcc={ "sxxxx@gmail.com" };
+     * String[] to = { "xxxx@gmail.com" }; // list of recipient email addresses
+     * String[] cc={ "xxxxt@gmail.com" }; String[] bcc={ "sxxxx@gmail.com" };
      *
      * @param to
      * @param cc
@@ -258,10 +301,14 @@ public class ManagerEmail {
      * @return
      */
     public Boolean sendOutlook(String[] to, String[] cc, String[] bcc, String titulo, String mensaje,
-            String emailremitente, String passwordremitente) {
+            String emailremitente, String passwordremitente, Boolean... typehtml) {
         Boolean sending = false;
         try {
+            Boolean texthtml = false;
+            if (typehtml.length != 0) {
+                texthtml = typehtml[0];
 
+            }
             final String username = emailremitente;
             final String password = passwordremitente;
             //cc, bcc, to multiples
@@ -313,8 +360,17 @@ public class ManagerEmail {
                 message.addRecipient(Message.RecipientType.BCC, bccAddress[i]);
             }
 
+            if (texthtml) {
+                MimeBodyPart mimeBodyPart = new MimeBodyPart();
+                mimeBodyPart.setContent(mensaje, "text/html");
+                Multipart multipart = new MimeMultipart();
+                multipart.addBodyPart(mimeBodyPart);
+                message.setContent(multipart);
+            } else {
+                message.setText(mensaje);
+            }
             message.setSubject(titulo);
-            message.setText(mensaje);
+
             message.setSentDate(new Date());
 
             Transport.send(message);
@@ -338,10 +394,14 @@ public class ManagerEmail {
      * @return
      */
     public Boolean send(String emaildestinatario, String titulo, String mensaje,
-            String emailremitente, String passwordremitente, Properties props) {
+            String emailremitente, String passwordremitente, Properties props,Boolean... typehtml) {
         Boolean sending = false;
         try {
+  Boolean texthtml = false;
+            if (typehtml.length != 0) {
+                texthtml= typehtml[0];
 
+            }
             final String username = emailremitente;
             final String password = passwordremitente;
 
@@ -357,7 +417,17 @@ public class ManagerEmail {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(emaildestinatario));
             message.setSubject(titulo);
-            message.setText(mensaje);
+//            message.setText(mensaje);
+
+            if (texthtml) {
+                MimeBodyPart mimeBodyPart = new MimeBodyPart();
+                mimeBodyPart.setContent(mensaje, "text/html");
+                Multipart multipart = new MimeMultipart();
+                multipart.addBodyPart(mimeBodyPart);
+                message.setContent(multipart);
+            } else {
+                message.setText(mensaje);
+            }
 
             Transport.send(message);
             sending = true;
@@ -380,12 +450,15 @@ public class ManagerEmail {
      * @return
      */
     public Boolean send(String emaildestinatario, String titulo, String mensaje,
-            String emailremitente, String passwordremitente, EmailSegurityProperties emailSegurityProperties) {
+            String emailremitente, String passwordremitente, EmailSegurityProperties emailSegurityProperties, Boolean... typehtml) {
         Boolean sending = false;
         try {
+  Boolean texthtml = false;
+            if (typehtml.length != 0) {
+                texthtml= typehtml[0];
 
-//            final String username = "avbravo@gmail.com";
-//            final String password = "javnet180denver$";
+            }
+
             final String username = emailremitente;
             final String password = passwordremitente;
 
@@ -406,7 +479,17 @@ public class ManagerEmail {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(emaildestinatario));
             message.setSubject(titulo);
-            message.setText(mensaje);
+//            message.setText(mensaje);
+
+            if (texthtml) {
+                MimeBodyPart mimeBodyPart = new MimeBodyPart();
+                mimeBodyPart.setContent(mensaje, "text/html");
+                Multipart multipart = new MimeMultipart();
+                multipart.addBodyPart(mimeBodyPart);
+                message.setContent(multipart);
+            } else {
+                message.setText(mensaje);
+            }
 
             Transport.send(message);
             sending = true;
