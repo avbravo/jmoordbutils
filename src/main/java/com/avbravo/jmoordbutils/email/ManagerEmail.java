@@ -8,6 +8,10 @@ package com.avbravo.jmoordbutils.email;
 import com.avbravo.jmoordbutils.JsfUtil;
 import java.util.Date;
 import java.util.Properties;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.Multipart;
@@ -25,6 +29,8 @@ import javax.mail.internet.MimeMultipart;
  * @author avbravo
  */
 public class ManagerEmail {
+
+    Boolean texthtml = false;
 
     /**
      * Creates a new instance of EnviarEmail
@@ -555,4 +561,227 @@ public class ManagerEmail {
         return sending;
     }
     // </editor-fold>
+
+    
+    
+
+    
+    
+    // <editor-fold defaultstate="collapsed" desc=" send(String emaildestinatario, String titulo, String mensaje,    String emailremitente, String passwordremitente)"> 
+    /**
+     *
+     * @param emaildestinatario
+     * @param titulo
+     * @param mensaje
+     * @param emailremitente
+     * @param passwordremitente
+     * @return
+     */
+   public Future<String> sendAsync(String emaildestinatario, String titulo, String mensaje,
+            String emailremitente, String passwordremitente, Boolean... isTextHtml) {
+       texthtml=false;
+        if (isTextHtml.length != 0) {
+            texthtml = isTextHtml[0];
+
+        }
+        CompletableFuture<String> completableFuture
+                = new CompletableFuture<>();
+
+        Executors.newCachedThreadPool().submit(new Callable<Object>() {
+            @Override
+            public Object call() throws Exception {
+
+         send(emaildestinatario,  titulo, mensaje,  emailremitente, passwordremitente, isTextHtml);
+                completableFuture.complete("enviado");
+
+                return null;
+            }
+        });
+
+        return completableFuture;
+    }// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc=" send(String[] to, String[] cc, String[] bcc,, String titulo, String mensaje,    String emailremitente, String passwordremitente)"> 
+    /**
+     *
+     * @param to
+     * @param cc
+     * @param bcc
+     * @param titulo
+     * @param mensaje
+     * @param emailremitente
+     * @param passwordremitente
+     * @return
+     */
+   public Future<String> sendAsync(String[] to, String[] cc, String[] bcc, String titulo, String mensaje,
+            String emailremitente, String passwordremitente, Boolean... isTextHtml) {
+       texthtml=false;
+        if (isTextHtml.length != 0) {
+            texthtml = isTextHtml[0];
+
+        }
+        CompletableFuture<String> completableFuture
+                = new CompletableFuture<>();
+
+        Executors.newCachedThreadPool().submit(new Callable<Object>() {
+            @Override
+            public Object call() throws Exception {
+
+          send( to,  cc,  bcc, titulo,  mensaje,emailremitente,  passwordremitente,isTextHtml);
+                completableFuture.complete("enviado");
+
+                return null;
+            }
+        });
+
+        return completableFuture;
+    }// </editor-fold>
+
+    
+    // <editor-fold defaultstate="collapsed" desc="Boolean send(String emaildestinatario, String titulo, String mensaje,           String emailremitente, String passwordremitente,Properties props) "> 
+    /**
+     *
+     * @param emaildestinatario
+     * @param titulo
+     * @param mensaje
+     * @param emailremitente
+     * @param passwordremitente
+     * @param props
+     * @return
+     */
+   public Future<String> sendAsync(String emaildestinatario, String titulo, String mensaje,
+            String emailremitente, String passwordremitente, Properties props, Boolean... isTextHtml) {
+       texthtml=false;
+        if (isTextHtml.length != 0) {
+            texthtml = isTextHtml[0];
+
+        }
+        CompletableFuture<String> completableFuture
+                = new CompletableFuture<>();
+
+        Executors.newCachedThreadPool().submit(new Callable<Object>() {
+            @Override
+            public Object call() throws Exception {
+
+           send(emaildestinatario,  titulo, mensaje,
+             emailremitente,  passwordremitente,props, isTextHtml) ;
+                completableFuture.complete("enviado");
+
+                return null;
+            }
+        });
+
+        return completableFuture;
+    }// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc=" Boolean send(String emaildestinatario, String titulo, String mensaje,           String emailremitente, String passwordremitente,EmailSegurityProperties emailSegurityProperties)"> 
+    /**
+     *
+     * @param emaildestinatario
+     * @param titulo
+     * @param mensaje
+     * @param emailremitente
+     * @param passwordremitente
+     * @param props
+     * @return
+     */
+public Future<String>  sendAsync(String emaildestinatario, String titulo, String mensaje,
+            String emailremitente, String passwordremitente, EmailSegurityProperties emailSegurityProperties, Boolean... isTextHtml) {
+      texthtml=false;
+        if (isTextHtml.length != 0) {
+            texthtml = isTextHtml[0];
+
+        }
+        CompletableFuture<String> completableFuture
+                = new CompletableFuture<>();
+
+        Executors.newCachedThreadPool().submit(new Callable<Object>() {
+            @Override
+            public Object call() throws Exception {
+
+           send( emaildestinatario,  titulo,  mensaje,
+            emailremitente,passwordremitente, emailSegurityProperties,isTextHtml) ;
+                completableFuture.complete("enviado");
+
+                return null;
+            }
+        });
+
+        return completableFuture;
+    }// </editor-fold>
+ 
+// <editor-fold defaultstate="collapsed" desc="sendOutlookAsync(String emailreceptor, String titulo, String mensaje, String emailemisor, String passwordemisor)">
+    /**
+     * Email asincronico
+     *
+     * @param emailreceptor
+     * @param titulo
+     * @param mensaje
+     * @param emailemisor
+     * @param passwordemisor
+     * @return
+     * @throws InterruptedException
+     */
+    public Future<String> sendOutlookAsync(String emailreceptor, String titulo, String mensaje, String emailemisor, String passwordemisor,  Boolean... isTextHtml) throws InterruptedException {
+        texthtml=false;
+ if (isTextHtml.length != 0) {
+            texthtml = isTextHtml[0];
+
+        }
+        CompletableFuture<String> completableFuture
+                = new CompletableFuture<>();
+
+        Executors.newCachedThreadPool().submit(new Callable<Object>() {
+
+            @Override
+            public Object call() throws Exception {
+
+                sendOutlook(emailreceptor, titulo, mensaje, emailemisor, passwordemisor,texthtml);
+
+                completableFuture.complete("enviado");
+
+                return null;
+            }
+        });
+
+        return completableFuture;
+    }// </editor-fold>
+
+    
+    // <editor-fold defaultstate="collapsed" desc="sendOutlookAsync(String[] to, String[] cc, String[] bcc, String titulo, String mensaje, String emailemisor, String passwordemisor)">
+    /**
+     * Envia emails asincronicos
+     *
+     * @param to
+     * @param cc
+     * @param bcc
+     * @param titulo
+     * @param mensaje
+     * @param emailemisor
+     * @param passwordemisor
+     * @return
+     * @throws InterruptedException
+     */
+    public Future<String> sendOutlookAsync(String[] to, String[] cc, String[] bcc, String titulo, String mensaje, String emailemisor, String passwordemisor, Boolean... isTextHtml) throws InterruptedException {
+texthtml=false;
+        if (isTextHtml.length != 0) {
+            texthtml = isTextHtml[0];
+
+        }
+        CompletableFuture<String> completableFuture
+                = new CompletableFuture<>();
+
+        Executors.newCachedThreadPool().submit(new Callable<Object>() {
+            @Override
+            public Object call() throws Exception {
+
+                sendOutlook(to, cc, bcc, titulo, mensaje, emailemisor, passwordemisor, texthtml);
+                completableFuture.complete("enviado");
+
+                return null;
+            }
+        });
+
+        return completableFuture;
+    }// </editor-fold>
 }
