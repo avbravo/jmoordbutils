@@ -1316,7 +1316,12 @@ public class DateUtil implements Serializable {
     }    // </editor-fold>
 
     
-    // <editor-fold defaultstate="collapsed" desc="metodo()">
+    // <editor-fold defaultstate="collapsed" desc="descomponerFecha(Date date)">
+    /**
+     * Descompone una fecha en año, mes, dia, hora , minutos y nombre de mes
+     * @param date
+     * @return 
+     */
     public static DecomposedDate descomponerFecha(Date date){
         DecomposedDate decomposedDate = new DecomposedDate();
         try {
@@ -1332,4 +1337,33 @@ public class DateUtil implements Serializable {
         return decomposedDate;
     }
     // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Integer numberOfMonthBetweenDecomposedDate(DecomposedDate start, DecomposedDate end)">
+    /**
+     * Devuelve el numero de meses entre dos fechas de tipo DescomposedDate
+     * @param start
+     * @param end
+     * @return 
+     */
+
+    public static Integer numberOfMonthBetweenDecomposedDate(DecomposedDate start, DecomposedDate end){
+        Integer meses=0;
+        try {
+     
+                if (start.getMonth()> end.getMonth()) {
+                    meses = (end.getMonth()+ 12) - start.getMonth();
+                } else {
+                    if (start.getYear() < end.getYear()) {
+                        meses = (end.getMonth() + 12) - start.getMonth();
+                    } else {
+                        meses = end.getMonth() - start.getMonth();
+                    }
+
+                }
+        } catch (Exception e) {
+                errorMessage("numeroMesesEntreFechas() " + e.getLocalizedMessage());
+        }
+  return meses;
+    }
+        // </editor-fold>
 }
