@@ -8,6 +8,7 @@ package com.avbravo.jmoordbutils;
 
 import static com.avbravo.jmoordbutils.JsfUtil.errorDialog;
 import static com.avbravo.jmoordbutils.JsfUtil.errorMessage;
+import com.avbravo.jmoordbutils.dates.DecomposedDate;
 
 import com.avbravo.jmoordbutils.dates.FechaDiaUtils;
 import java.util.List;
@@ -27,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -35,7 +35,6 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.faces.context.FacesContext;
 // </editor-fold>
 
 /**
@@ -1316,4 +1315,21 @@ public class DateUtil implements Serializable {
         return java.sql.Date.valueOf(localDate);
     }    // </editor-fold>
 
+    
+    // <editor-fold defaultstate="collapsed" desc="metodo()">
+    public static DecomposedDate descomponerFecha(Date date){
+        DecomposedDate decomposedDate = new DecomposedDate();
+        try {
+               Integer diaPartida = DateUtil.diaDeUnaFecha(date);
+                Integer mesPartida = DateUtil.mesDeUnaFechaStartEneroWith0(date);
+                String nombreMesPartida = DateUtil.nombreMes(mesPartida);
+                Integer anioPartida = DateUtil.anioDeUnaFecha(date);
+                Integer horapartida = DateUtil.horaDeUnaFecha(date);
+                Integer minutopartida = DateUtil.minutosDeUnaFecha(date);
+        } catch (Exception e) {
+               errorMessage("descomponerFecha() " + e.getLocalizedMessage());
+        }
+        return decomposedDate;
+    }
+    // </editor-fold>
 }
