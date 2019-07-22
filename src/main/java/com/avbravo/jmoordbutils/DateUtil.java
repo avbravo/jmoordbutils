@@ -1325,12 +1325,19 @@ public class DateUtil implements Serializable {
     public static DecomposedDate descomponerFecha(Date date){
         DecomposedDate decomposedDate = new DecomposedDate();
         try {
-               Integer diaPartida = DateUtil.diaDeUnaFecha(date);
-                Integer mesPartida = DateUtil.mesDeUnaFechaStartEneroWith0(date);
-                String nombreMesPartida = DateUtil.nombreMes(mesPartida);
-                Integer anioPartida = DateUtil.anioDeUnaFecha(date);
-                Integer horapartida = DateUtil.horaDeUnaFecha(date);
-                Integer minutopartida = DateUtil.minutosDeUnaFecha(date);
+               Integer day= DateUtil.diaDeUnaFecha(date);
+                Integer month = DateUtil.mesDeUnaFechaStartEneroWith0(date);
+                String nameOfMonth = DateUtil.nombreMes(month);
+                Integer year = DateUtil.anioDeUnaFecha(date);
+                Integer hour= DateUtil.horaDeUnaFecha(date);
+                Integer minute= DateUtil.minutosDeUnaFecha(date);
+                decomposedDate.setDay(day);
+                decomposedDate.setHour(hour);
+                decomposedDate.setMinute(minute);
+                decomposedDate.setMonth(month);
+                decomposedDate.setNameOfMonth(nameOfMonth);
+                decomposedDate.setYear(year);
+               
         } catch (Exception e) {
                errorMessage("descomponerFecha() " + e.getLocalizedMessage());
         }
