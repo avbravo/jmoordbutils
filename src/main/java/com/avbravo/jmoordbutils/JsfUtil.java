@@ -1223,10 +1223,9 @@ public class JsfUtil implements Serializable {
      * @param destino
      * @param fuente
      * @return Creado por Israel Deago /Modificado para Genericos
-     * @email: isde115@gmail.com
-     * Ejemplo de uso TreeMap<Integer,
-     * List<Integer>> treeMap = new TreeMap<>(); treeMap.put(55, new
-     * ArrayList<>()); JsfUtil.addListToMapWithDuplicated(treeMap, 55, 55);
+     * @email: isde115@gmail.com Ejemplo de uso TreeMap<Integer, List<Integer>>
+     * treeMap = new TreeMap<>(); treeMap.put(55, new ArrayList<>());
+     * JsfUtil.addListToMapWithDuplicated(treeMap, 55, 55);
      * JsfUtil.addListToMapWithDuplicated(treeMap, 55, 438);
      * JsfUtil.addListToMapWithDuplicated(treeMap, 55, 900);
      * JsfUtil.addListToMapWithDuplicated(treeMap, 55, 1025);
@@ -1244,12 +1243,33 @@ public class JsfUtil implements Serializable {
         // Se crea si esta vacia
         if (lista == null) {
             lista = new ArrayList<>();
-           lista.add(valor);
+            lista.add(valor);
             treeMap.put(mapKey, lista);
         } else {
 
             lista.add(valor);
         }
     }// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="totalCaracteresVaciosAlfinalCadena() ">
+    /**
+     * Cuenta la cantidad de espacios al final de una cadena
+     * @param texto
+     * @return 
+     */
+    public static Integer totalEspaciosAlfinalCadena(String texto) {
+        Integer count = 0;
+        for (int x = texto.length() - 1; x > 0; x--) {
+            System.out.println("Inverso " + x + ": " + texto.charAt(x));
+            char c = texto.charAt(x);
+
+            if (texto.charAt(x) == ' ') {
+                count++;
+            }
+        }
+        return count;
+     
+    }
+    // </editor-fold>
 
 }
