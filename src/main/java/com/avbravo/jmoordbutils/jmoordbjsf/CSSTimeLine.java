@@ -13,6 +13,11 @@ import java.util.ArrayList;
  */
 public class CSSTimeLine {
 
+    
+    /**
+     * Cada vez que se agrega un color al css de csstimeline en el proyecto jmoordbjsf
+     * debe agregarse al array y definir la propidad de tipo static
+     */
     static String[] colorDisponibles = {
         "rojo", "verde", "azul", "celeste", "naranja", "amarillo",
         "morado", "unavailable", "available",
@@ -23,7 +28,7 @@ public class CSSTimeLine {
     public static String verde = "verde";
     public static String azul = "azul";
     public static String celeste = "celeste";
-    public static String naranaja = "naranja";
+    public static String naranja = "naranja";
     public static String amarillo = "amarillo";
     public static String morado = "morado";
 
