@@ -19,13 +19,17 @@ public class CSSTimeLine {
      * debe agregarse al array y definir la propidad de tipo static
      */
     static String[] colorDisponibles = {
-        "rojo", "verde", "azul", "celeste", "naranja", "amarillo",
-        "morado", "unavailable", "available",
-        "maybe", "norealizado", "realizado", "aprobado",
+        "rojo", "verde", "azul", "celeste",
+        "naranja", "amarillo", "chocolate",
+        "morado", "unavailable","available",
+        "verdeamarillo", "maybe", "norealizado",
+        "realizado", "aprobado",
         "cancelado", "anulado", "solicitado", "rechazado"};
 
     public static String rojo = "rojo";
+    public static String chocolate= "chocolate";
     public static String verde = "verde";
+    public static String verdeamarillo = "verdeamarillo";
     public static String azul = "azul";
     public static String celeste = "celeste";
     public static String naranja = "naranja";
