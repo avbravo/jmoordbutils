@@ -1373,4 +1373,40 @@ public class DateUtil implements Serializable {
   return meses;
     }
         // </editor-fold>
+    
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="List<FechaDiaUtils> validarRangoFechas(Integer anioPartida, String nombreMesPartida)">
+    /**
+     * valida el rango de las fechas validas
+     *
+     * @param anioPartida
+     * @param nombreMesPartida
+     * @return
+     */
+    public static List<FechaDiaUtils> validarRangoFechas(Integer anioPartida, String nombreMesPartida, Date fechaHoraPartida, Date fechaHoraRegreso) {
+        List<FechaDiaUtils> fechaDiaUtilsSaveList = new ArrayList<>();
+        try {
+            List<FechaDiaUtils> fechaDiaUtilsInicialList = DateUtil.nameOfDayOfDateOfMonth(anioPartida, nombreMesPartida);
+
+//convertir la fecha de solicitud a LocalDate
+            LocalDate start = DateUtil.convertirJavaDateToLocalDate(fechaHoraPartida);
+            LocalDate end = DateUtil.convertirJavaDateToLocalDate(fechaHoraRegreso);
+
+            //Buscar si esta en el intervalo de dias entre las fechas
+            fechaDiaUtilsInicialList.forEach((fdu) -> {
+                LocalDate l = fdu.getDate();
+
+                if (l.isEqual(start) || l.isEqual(end) || (l.isAfter(start) && l.isBefore(end))) {
+                    fechaDiaUtilsSaveList.add(fdu);
+
+                }
+            });
+
+        } catch (Exception e) {
+                 errorMessage("validarRangoFechas() " + e.getLocalizedMessage());
+        }
+        return fechaDiaUtilsSaveList;
+    }  // </editor-fold>
+
 }
