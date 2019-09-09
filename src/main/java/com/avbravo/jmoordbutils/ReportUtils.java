@@ -44,11 +44,19 @@ public class ReportUtils implements Serializable {
     }
 
     // </editor-fold>  
-    // <editor-fold defaultstate="collapsed" desc="metodo()">
+    // <editor-fold defaultstate="collapsed" desc="PdfPCell PdfCell(String texto, Font fontFactory, Integer ALIGN)">
     public static PdfPCell PdfCell(String texto, Font fontFactory, Integer ALIGN) {
 
         PdfPCell cell = new PdfPCell(new Paragraph(texto, fontFactory));
         cell.setHorizontalAlignment(ALIGN);
+        return cell;
+    }
+    // </editor-fold>  
+    // <editor-fold defaultstate="collapsed" desc="PdfPCell PdfCell(String texto, Font fontFactory, Integer ALIGN)">
+    public static PdfPCell PdfCell(String texto, Font fontFactory) {
+
+        PdfPCell cell = new PdfPCell(new Paragraph(texto, fontFactory));
+
         return cell;
     }
     // </editor-fold>  
