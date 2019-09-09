@@ -39,7 +39,7 @@ public class ReportUtils implements Serializable {
                 FontFactory.getFont("arial", // fuente
                         12, // tamaño
                         Font.BOLD));
-        p.setAlignment(Element.ALIGN_CENTER);
+        p.setAlignment(ALIGN);
         return p;
     }
 
