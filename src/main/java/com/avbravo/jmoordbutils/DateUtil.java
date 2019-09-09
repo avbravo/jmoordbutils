@@ -1410,7 +1410,7 @@ public class DateUtil implements Serializable {
     }  // </editor-fold>
 
             // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
-    public String showDate(Date date) {
+    public static String showDate(Date date) {
         String h = "";
         try {
             h = DateUtil.dateFormatToString(date, "dd/MM/yyyy");
@@ -1422,7 +1422,7 @@ public class DateUtil implements Serializable {
     
         // <editor-fold defaultstate="collapsed" desc="String showHour(Date date)">
 
-    public String showHour(Date date) {
+    public static String showHour(Date date) {
         String h = "";
         try {
             h = DateUtil.hourFromDateToString(date);
