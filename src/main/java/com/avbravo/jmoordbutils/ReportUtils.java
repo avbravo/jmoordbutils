@@ -35,10 +35,7 @@ public class ReportUtils implements Serializable {
      * @return
      */
     public static Paragraph paragraph(String texto, Font fonFactory, Integer ALIGN) {
-        Paragraph p = new Paragraph(texto,
-                FontFactory.getFont("arial", // fuente
-                        12, // tamaño
-                        Font.BOLD));
+        Paragraph p = new Paragraph(texto, fonFactory);
         p.setAlignment(ALIGN);
         return p;
     }
