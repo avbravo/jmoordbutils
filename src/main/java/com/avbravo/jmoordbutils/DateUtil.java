@@ -241,12 +241,14 @@ public class DateUtil implements Serializable {
         return number;
     }// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="dateFormatToString"> 
-/**formatea una fecha 
- * a "dd/MM/yyyy hh:mm a"
- * @param fecha
- * @param format
- * @return 
- */
+
+    /**
+     * formatea una fecha a "dd/MM/yyyy hh:mm a"
+     *
+     * @param fecha
+     * @param format
+     * @return
+     */
     public static String dateFormatToString(Date fecha, String... format) {
         String dateformat = "";
         String f = "dd/MM/yyyy hh:mm a";
@@ -1315,67 +1317,65 @@ public class DateUtil implements Serializable {
         return java.sql.Date.valueOf(localDate);
     }    // </editor-fold>
 
-    
     // <editor-fold defaultstate="collapsed" desc="descomponerFecha(Date date)">
     /**
      * Descompone una fecha en año, mes, dia, hora , minutos y nombre de mes
+     *
      * @param date
-     * @return 
+     * @return
      */
-    public static DecomposedDate descomponerFecha(Date date){
+    public static DecomposedDate descomponerFecha(Date date) {
         DecomposedDate decomposedDate = new DecomposedDate();
         try {
-               Integer day= DateUtil.diaDeUnaFecha(date);
-                Integer month = DateUtil.mesDeUnaFechaStartEneroWith0(date);
-                String nameOfMonth = DateUtil.nombreMes(month);
-                Integer year = DateUtil.anioDeUnaFecha(date);
-                Integer hour= DateUtil.horaDeUnaFecha(date);
-                Integer minute= DateUtil.minutosDeUnaFecha(date);
-                decomposedDate.setDay(day);
-                decomposedDate.setHour(hour);
-                decomposedDate.setMinute(minute);
-                decomposedDate.setMonth(month);
-                decomposedDate.setNameOfMonth(nameOfMonth);
-                decomposedDate.setYear(year);
-               
+            Integer day = DateUtil.diaDeUnaFecha(date);
+            Integer month = DateUtil.mesDeUnaFechaStartEneroWith0(date);
+            String nameOfMonth = DateUtil.nombreMes(month);
+            Integer year = DateUtil.anioDeUnaFecha(date);
+            Integer hour = DateUtil.horaDeUnaFecha(date);
+            Integer minute = DateUtil.minutosDeUnaFecha(date);
+            decomposedDate.setDay(day);
+            decomposedDate.setHour(hour);
+            decomposedDate.setMinute(minute);
+            decomposedDate.setMonth(month);
+            decomposedDate.setNameOfMonth(nameOfMonth);
+            decomposedDate.setYear(year);
+
         } catch (Exception e) {
-               errorMessage("descomponerFecha() " + e.getLocalizedMessage());
+            errorMessage("descomponerFecha() " + e.getLocalizedMessage());
         }
         return decomposedDate;
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="Integer numberOfMonthBetweenDecomposedDate(DecomposedDate start, DecomposedDate end)">
     /**
      * Devuelve el numero de meses entre dos fechas de tipo DescomposedDate
+     *
      * @param start
      * @param end
-     * @return 
+     * @return
      */
-
-    public static Integer numberOfMonthBetweenDecomposedDate(DecomposedDate start, DecomposedDate end){
-        Integer meses=0;
+    public static Integer numberOfMonthBetweenDecomposedDate(DecomposedDate start, DecomposedDate end) {
+        Integer meses = 0;
         try {
-     
-                if (start.getMonth()> end.getMonth()) {
-                    meses = (end.getMonth()+ 12) - start.getMonth();
-                } else {
-                    if (start.getYear() < end.getYear()) {
-                        meses = (end.getMonth() + 12) - start.getMonth();
-                    } else {
-                        meses = end.getMonth() - start.getMonth();
-                    }
 
+            if (start.getMonth() > end.getMonth()) {
+                meses = (end.getMonth() + 12) - start.getMonth();
+            } else {
+                if (start.getYear() < end.getYear()) {
+                    meses = (end.getMonth() + 12) - start.getMonth();
+                } else {
+                    meses = end.getMonth() - start.getMonth();
                 }
+
+            }
         } catch (Exception e) {
-                errorMessage("numeroMesesEntreFechas() " + e.getLocalizedMessage());
+            errorMessage("numeroMesesEntreFechas() " + e.getLocalizedMessage());
         }
-  return meses;
+        return meses;
     }
-        // </editor-fold>
-    
-    
-    
+    // </editor-fold>
+
     // <editor-fold defaultstate="collapsed" desc="List<FechaDiaUtils> validarRangoFechas(Integer anioPartida, String nombreMesPartida)">
     /**
      * valida el rango de las fechas validas
@@ -1404,12 +1404,12 @@ public class DateUtil implements Serializable {
             });
 
         } catch (Exception e) {
-                 errorMessage("validarRangoFechas() " + e.getLocalizedMessage());
+            errorMessage("validarRangoFechas() " + e.getLocalizedMessage());
         }
         return fechaDiaUtilsSaveList;
     }  // </editor-fold>
 
-            // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
+    // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
     public static String showDate(Date date) {
         String h = "";
         try {
@@ -1419,9 +1419,8 @@ public class DateUtil implements Serializable {
         }
         return h;
     }// </editor-fold>
-    
-        // <editor-fold defaultstate="collapsed" desc="String showHour(Date date)">
 
+    // <editor-fold defaultstate="collapsed" desc="String showHour(Date date)">
     public static String showHour(Date date) {
         String h = "";
         try {
@@ -1430,5 +1429,30 @@ public class DateUtil implements Serializable {
             JsfUtil.errorMessage("showHour() " + e.getLocalizedMessage());
         }
         return h;
+    }// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="java.util.Date  localDateToDate(LocalDate localDate)"> 
+    public static java.util.Date localDateToDate(LocalDate localDate) {
+        java.util.Date date = java.sql.Date.valueOf(localDate);
+        return date;
+    } // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="java.util.Date insertHorasMinutosSegundosToDate(Date date, Integer hora,Integer minutos, Integer segundos) "> 
+    /**
+     * Inserta horas, minutos y segundos a una fecha
+     *
+     * @param date
+     * @param hora
+     * @param minutos
+     * @param segundos
+     * @return
+     */
+    public static java.util.Date insertHoursMinutesSecondsToDate(Date date, Integer hora, Integer minutos, Integer segundos) {
+        Integer anio = anioDeUnaFecha(date);
+        Integer mes = mesDeUnaFecha(date);
+        Integer dia = DateUtil.diaDeUnaFecha(date);
+        LocalDateTime start = LocalDateTime.of(anio, mes, dia, hora, minutos, segundos);
+        Date ldate = Date.from(start.atZone(ZoneId.systemDefault()).toInstant());
+        return ldate;
     }// </editor-fold>
 }
