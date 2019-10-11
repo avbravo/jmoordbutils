@@ -1271,5 +1271,17 @@ public class JsfUtil implements Serializable {
      
     }
     // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="totalCaracteresVaciosAlfinalCadena() ">
+    /**
+     * Cuenta la cantidad de espacios al final de una cadena
+     * @param texto
+     * @return 
+     */
+    public static String updateJSFComponent(String jsfcomponent) {
+       PrimeFaces.current().ajax().update(jsfcomponent);
+        return "";
+     
+    }
+    // </editor-fold>
 
 }
