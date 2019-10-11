@@ -1271,9 +1271,9 @@ public class JsfUtil implements Serializable {
      
     }
     // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="totalCaracteresVaciosAlfinalCadena() ">
+    // <editor-fold defaultstate="collapsed" desc=" updateJSFComponent(String jsfcomponent)">
     /**
-     * Cuenta la cantidad de espacios al final de una cadena
+     * Actualiza un componente JSF en un formulario .xhtml
      * @param texto
      * @return 
      */
