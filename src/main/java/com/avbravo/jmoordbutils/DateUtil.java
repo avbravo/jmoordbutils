@@ -11,6 +11,7 @@ import static com.avbravo.jmoordbutils.JsfUtil.errorMessage;
 import com.avbravo.jmoordbutils.dates.DecomposedDate;
 
 import com.avbravo.jmoordbutils.dates.FechaDiaUtils;
+import com.avbravo.jmoordbutils.pojos.Tiempo;
 import java.util.List;
 import java.util.logging.Logger;
 import java.io.Serializable;
@@ -859,6 +860,47 @@ public class DateUtil implements Serializable {
 
         return d;
     }// </editor-fold>
+    
+// <editor-fold defaultstate="collapsed" desc="Integer minutosEntreFechas(Date fechaMayor, Date fechaMenor)"> 
+    /**
+     * Devuelve el tiempo entre dos fechas (dias,horas, munutos)
+     * @param fechaMayor
+     * @param fechaMenor
+     * @return 
+     */
+
+    public static Tiempo diferenciaEntreFechas(Date fechaMayor, Date fechaMenor) {
+        int d = 0;
+        Tiempo tiempo = new Tiempo(0,0,0);
+        try {
+         int diferencia=(int) ((fechaMayor.getTime()-fechaMenor.getTime())/1000);
+
+            int dias=0;
+        int horas=0;
+        int minutos=0;
+        if(diferencia>86400) {
+            dias=(int)Math.floor(diferencia/86400);
+            diferencia=diferencia-(dias*86400);
+        }
+        if(diferencia>3600) {
+            horas=(int)Math.floor(diferencia/3600);
+            diferencia=diferencia-(horas*3600);
+        }
+        if(diferencia>60) {
+            minutos=(int)Math.floor(diferencia/60);
+            diferencia=diferencia-(minutos*60);
+        }
+   
+        tiempo.setDias(dias);
+        tiempo.setHoras(horas);
+        tiempo.setMinutos(minutos);
+        } catch (Exception e) {
+            System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
+        }
+
+        return tiempo;
+    }// </editor-fold>
+            
 
     // <editor-fold defaultstate="collapsed" desc="fechaMenor(Date date1, Date date2)">
     public static Boolean fechaMenor(Date date1, Date date2) {
