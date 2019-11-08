@@ -1497,4 +1497,65 @@ public class DateUtil implements Serializable {
         Date ldate = Date.from(start.atZone(ZoneId.systemDefault()).toInstant());
         return ldate;
     }// </editor-fold>
+    
+    
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="Date primerDiaDelMesActual()"> 
+
+    /**
+     *
+     * @param month
+     * @return Date primerDiaDelActual()
+     */
+    public static Date primerDiaDelMesActual() {
+        LocalDate now = LocalDate.now();//# 2015-11-23
+        Integer day = 1;
+        LocalDate firstDay = LocalDate.of(anioActual(), mesActual(), day);
+        Date date = java.sql.Date.valueOf(firstDay);
+        return date;
+    }
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc=" Date primerDiaDelMesActualConPrimeraHoraDelDia()"> 
+
+    /**
+     *
+     * @param month
+     * @return Date primerDiaDelActual()
+     */
+    public static Date primerDiaDelMesActualConPrimeraHoraDelDia() {
+        LocalDate now = LocalDate.now();//# 2015-11-23
+        Integer day = 1;
+        LocalDate firstDay = LocalDate.of(anioActual(), mesActual(), day);
+        Date date = java.sql.Date.valueOf(firstDay);
+      date=  insertHoursMinutesSecondsToDate(date,0,0, 0);
+        return date;
+    }
+    // </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="Date ultimoDiaDelMesActual(Integer year, Integer month) "> 
+
+    public static Date ultimoDiaDelMesActual() {
+        LocalDate now = LocalDate.now();//# 2015-11-23
+        Integer day = numberDayOfMonth(anioActual(), mesActual());
+
+        LocalDate firstDay = LocalDate.of(anioActual(), mesActual(), day);
+        Date date = java.sql.Date.valueOf(firstDay);
+        return date;
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="Date ultimoDiaDelMesActualConHoraFinal() "> 
+
+    public static Date ultimoDiaDelMesActualConHoraFinal() {
+        LocalDate now = LocalDate.now();//# 2015-11-23
+        Integer day = numberDayOfMonth(anioActual(), mesActual());
+
+        LocalDate firstDay = LocalDate.of(anioActual(), mesActual(), day);
+        Date date = java.sql.Date.valueOf(firstDay);
+        date=  insertHoursMinutesSecondsToDate(date,23,59, 0);
+        return date;
+    }
+// </editor-fold>
+
 }
