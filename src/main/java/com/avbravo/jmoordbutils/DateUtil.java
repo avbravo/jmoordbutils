@@ -891,9 +891,19 @@ public class DateUtil implements Serializable {
             diferencia=diferencia-(minutos*60);
         }
    
+        if(minutos >=60){
+            minutos=0;
+            horas++;
+        }
+        if(horas>=24){
+            horas=0;
+            dias++;
+        }
         tiempo.setDias(dias);
         tiempo.setHoras(horas);
         tiempo.setMinutos(minutos);
+        
+        
         } catch (Exception e) {
             System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
         }
