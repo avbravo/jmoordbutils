@@ -1542,6 +1542,22 @@ public class DateUtil implements Serializable {
         return date;
     }
     // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="Date primerDiaDelMesActualCoHoraMinutosSegundos(Integer hora, Integer minutos, Integer segundos)"> 
+
+    /**
+     *
+     * @param month
+     * @return Date primerDiaDelActual()
+     */
+    public static Date primerDiaDelMesActualCoHoraMinutosSegundos(Integer hora, Integer minutos, Integer segundos) {
+        LocalDate now = LocalDate.now();//# 2015-11-23
+        Integer day = 1;
+        LocalDate firstDay = LocalDate.of(anioActual(), mesActual(), day);
+        Date date = java.sql.Date.valueOf(firstDay);
+      date=  insertHoursMinutesSecondsToDate(date,hora,minutos, segundos);
+        return date;
+    }
+    // </editor-fold>
     
     
     // <editor-fold defaultstate="collapsed" desc="Date ultimoDiaDelMesActual(Integer year, Integer month) "> 
@@ -1564,6 +1580,18 @@ public class DateUtil implements Serializable {
         LocalDate firstDay = LocalDate.of(anioActual(), mesActual(), day);
         Date date = java.sql.Date.valueOf(firstDay);
         date=  insertHoursMinutesSecondsToDate(date,23,59, 0);
+        return date;
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="Date ultimoDiaDelMesActualConHoraMinutoSegundo(Integer hora, Integer minuto, Integer segundo) "> 
+
+    public static Date ultimoDiaDelMesActualConHoraMinutoSegundo(Integer hora, Integer minutos, Integer segundos) {
+        LocalDate now = LocalDate.now();//# 2015-11-23
+        Integer day = numberDayOfMonth(anioActual(), mesActual());
+
+        LocalDate firstDay = LocalDate.of(anioActual(), mesActual(), day);
+        Date date = java.sql.Date.valueOf(firstDay);
+        date=  insertHoursMinutesSecondsToDate(date,hora,minutos, segundos);
         return date;
     }
 // </editor-fold>
