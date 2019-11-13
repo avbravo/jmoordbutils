@@ -1542,14 +1542,14 @@ public class DateUtil implements Serializable {
         return date;
     }
     // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Date primerDiaDelMesActualCoHoraMinutosSegundos(Integer hora, Integer minutos, Integer segundos)"> 
+    // <editor-fold defaultstate="collapsed" desc="Date primerDiaDelMesActualConHoraMinutosSegundos(Integer hora, Integer minutos, Integer segundos)"> 
 
     /**
      *
      * @param month
      * @return Date primerDiaDelActual()
      */
-    public static Date primerDiaDelMesActualCoHoraMinutosSegundos(Integer hora, Integer minutos, Integer segundos) {
+    public static Date primerDiaDelMesActualConHoraMinutosSegundos(Integer hora, Integer minutos, Integer segundos) {
         LocalDate now = LocalDate.now();//# 2015-11-23
         Integer day = 1;
         LocalDate firstDay = LocalDate.of(anioActual(), mesActual(), day);
