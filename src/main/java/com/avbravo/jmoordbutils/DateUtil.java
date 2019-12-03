@@ -860,57 +860,55 @@ public class DateUtil implements Serializable {
 
         return d;
     }// </editor-fold>
-    
+
 // <editor-fold defaultstate="collapsed" desc="Integer minutosEntreFechas(Date fechaMayor, Date fechaMenor)"> 
     /**
      * Devuelve el tiempo entre dos fechas (dias,horas, munutos)
+     *
      * @param fechaMayor
      * @param fechaMenor
-     * @return 
+     * @return
      */
-
     public static Tiempo diferenciaEntreFechas(Date fechaMayor, Date fechaMenor) {
         int d = 0;
-        Tiempo tiempo = new Tiempo(0,0,0);
+        Tiempo tiempo = new Tiempo(0, 0, 0);
         try {
-         int diferencia=(int) ((fechaMayor.getTime()-fechaMenor.getTime())/1000);
+            int diferencia = (int) ((fechaMayor.getTime() - fechaMenor.getTime()) / 1000);
 
-            int dias=0;
-        int horas=0;
-        int minutos=0;
-        if(diferencia>86400) {
-            dias=(int)Math.floor(diferencia/86400);
-            diferencia=diferencia-(dias*86400);
-        }
-        if(diferencia>3600) {
-            horas=(int)Math.floor(diferencia/3600);
-            diferencia=diferencia-(horas*3600);
-        }
-        if(diferencia>60) {
-            minutos=(int)Math.floor(diferencia/60);
-            diferencia=diferencia-(minutos*60);
-        }
-   
-        if(minutos >=60){
-            minutos=0;
-            horas++;
-        }
-        if(horas>=24){
-            horas=0;
-            dias++;
-        }
-        tiempo.setDias(dias);
-        tiempo.setHoras(horas);
-        tiempo.setMinutos(minutos);
-        
-        
+            int dias = 0;
+            int horas = 0;
+            int minutos = 0;
+            if (diferencia > 86400) {
+                dias = (int) Math.floor(diferencia / 86400);
+                diferencia = diferencia - (dias * 86400);
+            }
+            if (diferencia > 3600) {
+                horas = (int) Math.floor(diferencia / 3600);
+                diferencia = diferencia - (horas * 3600);
+            }
+            if (diferencia > 60) {
+                minutos = (int) Math.floor(diferencia / 60);
+                diferencia = diferencia - (minutos * 60);
+            }
+
+            if (minutos >= 60) {
+                minutos = 0;
+                horas++;
+            }
+            if (horas >= 24) {
+                horas = 0;
+                dias++;
+            }
+            tiempo.setDias(dias);
+            tiempo.setHoras(horas);
+            tiempo.setMinutos(minutos);
+
         } catch (Exception e) {
             System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
         }
 
         return tiempo;
     }// </editor-fold>
-            
 
     // <editor-fold defaultstate="collapsed" desc="fechaMenor(Date date1, Date date2)">
     public static Boolean fechaMenor(Date date1, Date date2) {
@@ -1507,12 +1505,8 @@ public class DateUtil implements Serializable {
         Date ldate = Date.from(start.atZone(ZoneId.systemDefault()).toInstant());
         return ldate;
     }// </editor-fold>
-    
-    
-    
-    
-    // <editor-fold defaultstate="collapsed" desc="Date primerDiaDelMesActual()"> 
 
+    // <editor-fold defaultstate="collapsed" desc="Date primerDiaDelMesActual()"> 
     /**
      *
      * @param month
@@ -1538,7 +1532,7 @@ public class DateUtil implements Serializable {
         Integer day = 1;
         LocalDate firstDay = LocalDate.of(anioActual(), mesActual(), day);
         Date date = java.sql.Date.valueOf(firstDay);
-      date=  insertHoursMinutesSecondsToDate(date,0,0, 0);
+        date = insertHoursMinutesSecondsToDate(date, 0, 0, 0);
         return date;
     }
     // </editor-fold>
@@ -1554,14 +1548,12 @@ public class DateUtil implements Serializable {
         Integer day = 1;
         LocalDate firstDay = LocalDate.of(anioActual(), mesActual(), day);
         Date date = java.sql.Date.valueOf(firstDay);
-      date=  insertHoursMinutesSecondsToDate(date,hora,minutos, segundos);
+        date = insertHoursMinutesSecondsToDate(date, hora, minutos, segundos);
         return date;
     }
     // </editor-fold>
-    
-    
-    // <editor-fold defaultstate="collapsed" desc="Date ultimoDiaDelMesActual(Integer year, Integer month) "> 
 
+    // <editor-fold defaultstate="collapsed" desc="Date ultimoDiaDelMesActual(Integer year, Integer month) "> 
     public static Date ultimoDiaDelMesActual() {
         LocalDate now = LocalDate.now();//# 2015-11-23
         Integer day = numberDayOfMonth(anioActual(), mesActual());
@@ -1579,7 +1571,7 @@ public class DateUtil implements Serializable {
 
         LocalDate firstDay = LocalDate.of(anioActual(), mesActual(), day);
         Date date = java.sql.Date.valueOf(firstDay);
-        date=  insertHoursMinutesSecondsToDate(date,23,59, 0);
+        date = insertHoursMinutesSecondsToDate(date, 23, 59, 0);
         return date;
     }
 // </editor-fold>
@@ -1591,33 +1583,33 @@ public class DateUtil implements Serializable {
 
         LocalDate firstDay = LocalDate.of(anioActual(), mesActual(), day);
         Date date = java.sql.Date.valueOf(firstDay);
-        date=  insertHoursMinutesSecondsToDate(date,hora,minutos, segundos);
+        date = insertHoursMinutesSecondsToDate(date, hora, minutos, segundos);
         return date;
     }
 // </editor-fold>
 
-    
-         // <editor-fold defaultstate="collapsed" desc="Date convertStringWithDateTtoDate(String dateString) "> 
-
+    // <editor-fold defaultstate="collapsed" desc="Date convertStringWithDateTtoDate(String dateString) "> 
     /**
-     *Convierte una fecha String con valores con T
-     *   String str = "2009-12-23T00:00:00";
-     * @param 
+     * Convierte una fecha String con valores con T String str =
+     * "2009-12-23T00:00:00";
+     *
+     * @param
      * @return Date primerDiaDelActual()
      */
     public static Date convertStringWithDateTtoDate(String dateStringWithT) {
         Date date = new Date();
         try {
-          String str = "2009-12-23T00:00:00";
-       //     String str = "2009-12-23T00:00:00";
-         //   SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss. SSS");
-  SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:SSS");
-   date = format.parse(str);
+
+            //     String str = "2009-12-23T00:00:00";
+            //   SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss. SSS");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:SSS");
+            date = format.parse(dateStringWithT);
 
         } catch (Exception e) {
-            System.out.println(" stringToDateWithT() "+e.getLocalizedMessage());
+            System.out.println(" stringToDateWithT() " + e.getLocalizedMessage());
         }
         return date;
     }
-    // </editor-fold>
+
+   
 }
