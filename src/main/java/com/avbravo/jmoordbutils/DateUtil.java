@@ -1575,6 +1575,7 @@ public class DateUtil implements Serializable {
         return date;
     }
 // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="Date ultimoDiaDelMesActualConHoraMinutoSegundo(Integer hora, Integer minuto, Integer segundo) "> 
 
     public static Date ultimoDiaDelMesActualConHoraMinutoSegundo(Integer hora, Integer minutos, Integer segundos) {
@@ -1610,6 +1611,21 @@ public class DateUtil implements Serializable {
         }
         return date;
     }
-
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="Date convertStringWithDateTtoDate(String dateString) "> 
+    /**
+     * Convierte una fecha String con valores con T String str =
+     * "2009-12-23T00:00:00";
+     *
+     * @param
+     * @return Date primerDiaDelActual()
+     */
+    public static java.sql.Date javasqlDateToJavaUtilDate(java.util.Date date) {
+       
+       java.sql.Date d=  new   java.sql.Date(date.getTime());
+       
+       return  d;
+    }
+// </editor-fold>
    
 }
