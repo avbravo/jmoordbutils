@@ -1612,7 +1612,9 @@ public class DateUtil implements Serializable {
         return date;
     }
 // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Date convertStringWithDateTtoDate(String dateString) "> 
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="java.sql.Date javasqlDateToJavaUtilDate(java.util.Date date) "> 
     /**
      * Convierte una fecha String con valores con T String str =
      * "2009-12-23T00:00:00";
@@ -1627,5 +1629,19 @@ public class DateUtil implements Serializable {
        return  d;
     }
 // </editor-fold>
-   
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="java.sql.Date stringToDate(String str)"> 
+public static java.sql.Date stringToDate(String str) {
+        Date date = new Date();
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:SSS");
+            date = format.parse(str);
+        } catch (Exception e) {
+            System.out.println("stringToDate()");
+        }
+       return  new java.sql.Date(date.getTime());
+      //  return date;
+    }
+   // </editor-fold>
 }
