@@ -1596,4 +1596,28 @@ public class DateUtil implements Serializable {
     }
 // </editor-fold>
 
+    
+         // <editor-fold defaultstate="collapsed" desc="Date convertStringWithDateTtoDate(String dateString) "> 
+
+    /**
+     *Convierte una fecha String con valores con T
+     *   String str = "2009-12-23T00:00:00";
+     * @param 
+     * @return Date primerDiaDelActual()
+     */
+    public static Date convertStringWithDateTtoDate(String dateStringWithT) {
+        Date date = new Date();
+        try {
+          String str = "2009-12-23T00:00:00";
+       //     String str = "2009-12-23T00:00:00";
+         //   SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss. SSS");
+  SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:SSS");
+   date = format.parse(str);
+
+        } catch (Exception e) {
+            System.out.println(" stringToDateWithT() "+e.getLocalizedMessage());
+        }
+        return date;
+    }
+    // </editor-fold>
 }
