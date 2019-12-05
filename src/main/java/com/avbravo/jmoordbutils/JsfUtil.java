@@ -1283,5 +1283,16 @@ public class JsfUtil implements Serializable {
      
     }
     // </editor-fold>
-
+    // <editor-fold defaultstate="collapsed" desc=" Integer decenaDeUnEntero(Integer  n)">
+   public static Integer decenaDeUnEntero(Integer  n){
+       Integer decena=0;
+       try {
+              String x=String.valueOf(n);
+            decena = Integer.parseInt(x.substring(0,x.length()-1));
+       } catch (Exception e) {
+           System.out.println("decenaDeUnEntero() "+e.getLocalizedMessage());
+       }
+      
+             return decena;
+   }    // </editor-fold>
 }
