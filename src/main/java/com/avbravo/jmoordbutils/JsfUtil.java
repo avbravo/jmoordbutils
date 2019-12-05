@@ -1288,6 +1288,9 @@ public class JsfUtil implements Serializable {
        Integer decena=0;
        try {
               String x=String.valueOf(n);
+              if(x.length()==0){
+                  return 0;
+              }
             decena = Integer.parseInt(x.substring(0,x.length()-1));
        } catch (Exception e) {
            System.out.println("decenaDeUnEntero() "+e.getLocalizedMessage());
