@@ -1287,6 +1287,9 @@ public class JsfUtil implements Serializable {
    public static Integer decenaDeUnEntero(Integer  n){
        Integer decena=0;
        try {
+           if(n == null || n.equals("")){
+               return 0;
+           }
               String x=String.valueOf(n);
               if(x.length()==0){
                   return 0;
