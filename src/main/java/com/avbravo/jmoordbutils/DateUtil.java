@@ -357,7 +357,7 @@ public class DateUtil implements Serializable {
             listMeses.add("Octubre");
             listMeses.add("Noviembre");
             listMeses.add("Diciembre");
-            return listMeses.get(numeromes-1);
+            return listMeses.get(numeromes - 1);
 
         } catch (Exception e) {
         }
@@ -1600,9 +1600,8 @@ public class DateUtil implements Serializable {
         return date;
     }
 // </editor-fold>
-    
-    // <editor-fold defaultstate="collapsed" desc="Date ultimoDiaDelMesActualConHoraMinutoSegundo(Integer hora, Integer minuto, Integer segundo) "> 
 
+    // <editor-fold defaultstate="collapsed" desc="Date ultimoDiaDelMesActualConHoraMinutoSegundo(Integer hora, Integer minuto, Integer segundo) "> 
     public static Date ultimoDiaDelMesActualConHoraMinutoSegundo(Integer hora, Integer minutos, Integer segundos) {
         LocalDate now = LocalDate.now();//# 2015-11-23
         Integer day = numberDayOfMonth(anioActual(), mesActual());
@@ -1637,8 +1636,7 @@ public class DateUtil implements Serializable {
         return date;
     }
 // </editor-fold>
-    
-    
+
     // <editor-fold defaultstate="collapsed" desc="java.sql.Date javasqlDateToJavaUtilDate(java.util.Date date) "> 
     /**
      * Convierte una fecha String con valores con T String str =
@@ -1648,16 +1646,15 @@ public class DateUtil implements Serializable {
      * @return Date primerDiaDelActual()
      */
     public static java.sql.Date javasqlDateToJavaUtilDate(java.util.Date date) {
-       
-       java.sql.Date d=  new   java.sql.Date(date.getTime());
-       
-       return  d;
+
+        java.sql.Date d = new java.sql.Date(date.getTime());
+
+        return d;
     }
 // </editor-fold>
-    
-    
+
     // <editor-fold defaultstate="collapsed" desc="java.sql.Date stringToDate(String str)"> 
-public static java.sql.Date stringToDate(String str) {
+    public static java.sql.Date stringToDate(String str) {
         Date date = new Date();
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:SSS");
@@ -1665,8 +1662,32 @@ public static java.sql.Date stringToDate(String str) {
         } catch (Exception e) {
             System.out.println("stringToDate()");
         }
-       return  new java.sql.Date(date.getTime());
-      //  return date;
+        return new java.sql.Date(date.getTime());
+        //  return date;
     }
-   // </editor-fold>
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="String fechaEnLetras(Date fecha)"> 
+    public static String fechaEnLetras(Date fecha) {
+        String text = "";
+        try {
+
+            Integer anio = DateUtil.anioDeUnaFecha(fecha);
+            Integer mes = DateUtil.mesDeUnaFecha(fecha);
+
+            Integer dia = diaDeUnaFecha(fecha);
+
+            String nombreDia = DateUtil.nameOfDay(fecha);
+
+            String nombremes = nombreMes(mes);
+
+            text = nombreDia + " " + dia + " de " + nombremes + " de " + anio;
+
+        } catch (Exception e) {
+            System.out.println("fechaEnLetras()" + e.getLocalizedMessage());
+        }
+        return text;
+        //  return date;
+    }
+    // </editor-fold>
 }
