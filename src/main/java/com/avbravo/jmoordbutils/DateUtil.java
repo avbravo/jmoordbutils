@@ -615,6 +615,43 @@ public class DateUtil implements Serializable {
         return nombre;
     }
 // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="nameOfDay()"> 
+    public static String nameOfDayMinuscula(LocalDate date) {
+        String nombre = "Domingo";
+        try {
+            DayOfWeek dia = date.getDayOfWeek();
+            dia.name();
+            switch (dia.name()) {
+                case "SATURDAY":
+                    nombre = "Sabado";
+                    break;
+                case "SUNDAY":
+                    nombre = "Domingo";
+                    break;
+                case "MONDAY":
+                    nombre = "Lunes";
+                    break;
+                case "TUESDAY":
+                    nombre = "Martes";
+                    break;
+                case "WEDNESDAY":
+                    nombre = "Miercoles";
+                    break;
+                case "THURSDAY":
+                    nombre = "Jueves";
+                    break;
+                case "FRIDAY":
+                    nombre = "Viernes";
+                    break;
+
+            }
+
+        } catch (Exception e) {
+            errorMessage("nameOfDayMinusculas() " + e.getLocalizedMessage());
+        }
+        return nombre;
+    }
+// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="nameOfDay(Date date)"> 
 
     public static String nameOfDay(Date date) {
@@ -624,6 +661,21 @@ public class DateUtil implements Serializable {
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate();
             nombre = nameOfDay(localDate);
+        } catch (Exception e) {
+            errorMessage("nameOfDay() " + e.getLocalizedMessage());
+        }
+        return nombre;
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="nameOfDay(Date date)"> 
+
+    public static String nameOfDayMinusculas(Date date) {
+        String nombre = "";
+        try {
+            LocalDate localDate = date.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+            nombre = nameOfDayMinuscula(localDate);
         } catch (Exception e) {
             errorMessage("nameOfDay() " + e.getLocalizedMessage());
         }
@@ -1672,12 +1724,35 @@ public class DateUtil implements Serializable {
         String text = "";
         try {
 
-            Integer anio = DateUtil.anioDeUnaFecha(fecha);
-            Integer mes = DateUtil.mesDeUnaFecha(fecha);
+            Integer anio = anioDeUnaFecha(fecha);
+            Integer mes = mesDeUnaFecha(fecha);
 
             Integer dia = diaDeUnaFecha(fecha);
 
-            String nombreDia = DateUtil.nameOfDay(fecha);
+            String nombreDia = nameOfDay(fecha);
+
+            String nombremes = nombreMes(mes);
+
+            text = nombreDia + " " + dia + " de " + nombremes + " de " + anio;
+
+        } catch (Exception e) {
+            System.out.println("fechaEnLetras()" + e.getLocalizedMessage());
+        }
+        return text;
+        //  return date;
+    }
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="String fechaEnLetrasMinusculas(Date fecha)"> 
+    public static String fechaEnLetrasMinusculas(Date fecha) {
+        String text = "";
+        try {
+
+            Integer anio =anioDeUnaFecha(fecha);
+            Integer mes = mesDeUnaFecha(fecha);
+
+            Integer dia = diaDeUnaFecha(fecha);
+
+            String nombreDia = nameOfDayMinusculas(fecha);
 
             String nombremes = nombreMes(mes);
 
