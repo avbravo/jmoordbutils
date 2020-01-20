@@ -1690,4 +1690,30 @@ public class DateUtil implements Serializable {
         //  return date;
     }
     // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="esMismoDia(Date fechaInicio, Date fechaFin)"> 
+    public static Boolean esMismoDia(Date fechaInicio, Date fechaFin) {
+       Boolean iguales=false;
+        try {
+
+            Integer anio = DateUtil.anioDeUnaFecha(fechaInicio);
+            Integer aniofin = DateUtil.anioDeUnaFecha(fechaFin);
+
+            Integer mes = DateUtil.mesDeUnaFecha(fechaInicio);
+            Integer mesfin = DateUtil.mesDeUnaFecha(fechaFin);
+            
+            Integer dia = DateUtil.diaDeUnaFecha(fechaInicio);
+            Integer diafin = DateUtil.diaDeUnaFecha(fechaFin);
+            
+            if(anio.equals(aniofin) && mes.equals(mesfin) && dia.equals(diafin)){
+                iguales=true;
+            }
+          
+
+        } catch (Exception e) {
+            System.out.println("esMismoDia()" + e.getLocalizedMessage());
+        }
+        return iguales;
+        //  return date;
+    }
+    // </editor-fold>
 }
