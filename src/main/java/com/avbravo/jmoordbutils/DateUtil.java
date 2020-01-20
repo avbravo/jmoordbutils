@@ -357,6 +357,31 @@ public class DateUtil implements Serializable {
             listMeses.add("Octubre");
             listMeses.add("Noviembre");
             listMeses.add("Diciembre");
+            return listMeses.get(numeromes-1);
+
+        } catch (Exception e) {
+        }
+        return "";
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="nombreMes(Integer numeromes) "> 
+
+    public static String nombreMesFirstMesZero(Integer numeromes) {
+        try {
+            String nombre = "";
+            List<String> listMeses = new ArrayList<>();
+            listMeses.add("Enero");
+            listMeses.add("Febrero");
+            listMeses.add("Marzo");
+            listMeses.add("Abril");
+            listMeses.add("Mayo");
+            listMeses.add("Junio");
+            listMeses.add("Julio");
+            listMeses.add("Agosto");
+            listMeses.add("Septiembre");
+            listMeses.add("Octubre");
+            listMeses.add("Noviembre");
+            listMeses.add("Diciembre");
             return listMeses.get(numeromes);
 
         } catch (Exception e) {
