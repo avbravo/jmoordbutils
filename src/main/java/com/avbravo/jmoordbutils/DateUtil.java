@@ -1536,7 +1536,7 @@ public class DateUtil implements Serializable {
         try {
             Integer day =  diaDeUnaFecha(date);
             Integer month =  mesDeUnaFechaStartEneroWith0(date);
-            String nameOfMonth =  nameOfMonthStartWith1(month);
+            String nameOfMonth =  nameOfMonthStartWith0(month);
             Integer year =  anioDeUnaFecha(date);
             Integer hour =  horaDeUnaFecha(date);
             Integer minute =  minutosDeUnaFecha(date);
