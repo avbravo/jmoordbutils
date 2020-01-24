@@ -42,9 +42,9 @@ import java.util.regex.Pattern;
  *
  * @authoravbravo
  */
-public class DateUtil implements Serializable {
+public class DateUtil implements Serializable { 
 
-    private static final Logger LOG = Logger.getLogger(DateUtil.class.getName());
+    private static final Logger LOG = Logger.getLogger( DateUtil.class.getName());
     private static final String EMAIL_REGEX = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";
 
     // static Pattern object, since pattern is fixed
@@ -339,29 +339,108 @@ public class DateUtil implements Serializable {
         return "";
     }
 // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="nombreMes(Integer numeromes) "> 
 
-    public static String nombreMes(Integer numeromes) {
+    // <editor-fold defaultstate="collapsed" desc="String nameOfMonthStartWith1 "> 
+    public static String nameOfMonthStartWith1(Integer numeromes) {
+        String nombre = "";
         try {
-            String nombre = "";
-            List<String> listMeses = new ArrayList<>();
-            listMeses.add("Enero");
-            listMeses.add("Febrero");
-            listMeses.add("Marzo");
-            listMeses.add("Abril");
-            listMeses.add("Mayo");
-            listMeses.add("Junio");
-            listMeses.add("Julio");
-            listMeses.add("Agosto");
-            listMeses.add("Septiembre");
-            listMeses.add("Octubre");
-            listMeses.add("Noviembre");
-            listMeses.add("Diciembre");
-            return listMeses.get(numeromes - 1);
+
+            switch (numeromes) {
+                case 1:
+                    nombre = "Enero";
+                    break;
+                case 2:
+                    nombre = "Febrero";
+                    break;
+                case 3:
+                    nombre = "Marzo";
+                    break;
+                case 4:
+                    nombre = "Abril";
+                    break;
+                case 5:
+                    nombre = "Mayo";
+                    break;
+                case 6:
+                    nombre = "Junio";
+                    break;
+                case 7:
+                    nombre = "Julio";
+                    break;
+                case 8:
+                    nombre = "Agosto";
+                    break;
+                case 9:
+                    nombre = "Septiembre";
+                    break;
+                case 10:
+                    nombre = "Octubre";
+                    break;
+                case 11:
+                    nombre = "Noviembre";
+                    break;
+                case 12:
+                    nombre = "Diciembre";
+                    break;
+
+            }
 
         } catch (Exception e) {
+            System.out.println("nombreMesStartWith1 " + e.getLocalizedMessage());
         }
-        return "";
+        return nombre;
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="String nameOfMonthStartWith1 "> 
+
+    public static String nameOfMonthStartWith0(Integer numeromes) {
+        String nombre = "";
+        try {
+
+            switch (numeromes) {
+                case 0:
+                    nombre = "Enero";
+                    break;
+                case 1:
+                    nombre = "Febrero";
+                    break;
+                case 2:
+                    nombre = "Marzo";
+                    break;
+                case 3:
+                    nombre = "Abril";
+                    break;
+                case 4:
+                    nombre = "Mayo";
+                    break;
+                case 5:
+                    nombre = "Junio";
+                    break;
+                case 6:
+                    nombre = "Julio";
+                    break;
+                case 7:
+                    nombre = "Agosto";
+                    break;
+                case 8:
+                    nombre = "Septiembre";
+                    break;
+                case 9:
+                    nombre = "Octubre";
+                    break;
+                case 10:
+                    nombre = "Noviembre";
+                    break;
+                case 11:
+                    nombre = "Diciembre";
+                    break;
+
+            }
+
+        } catch (Exception e) {
+            System.out.println("nombreMesStartWith0 " + e.getLocalizedMessage());
+        }
+        return nombre;
     }
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="nombreMes(Integer numeromes) "> 
@@ -616,6 +695,7 @@ public class DateUtil implements Serializable {
     }
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="nameOfDay()"> 
+
     public static String nameOfDayMinuscula(LocalDate date) {
         String nombre = "Domingo";
         try {
@@ -1332,12 +1412,12 @@ public class DateUtil implements Serializable {
                 JsfUtil.warningMessage(rs.getString("warning.anionegativo"));
                 return false;
             }
-            if (anioselected > DateUtil.getAnioActual()) {
+            if (anioselected >  getAnioActual()) {
                 JsfUtil.warningMessage(rs.getString("warning.anomayorqueactual"));
                 return false;
             }
 
-            Integer anio = DateUtil.getAnioActual() - anioselected;
+            Integer anio =  getAnioActual() - anioselected;
             if (anio.intValue() > 1) {
                 JsfUtil.warningMessage(rs.getString("warning.aniomuyantiguo"));
                 return false;
@@ -1346,10 +1426,10 @@ public class DateUtil implements Serializable {
                 JsfUtil.warningMessage(rs.getString("warning.debecerrardiciembredelañoanterior"));
                 return false;
             }
-            Integer diaactual = DateUtil.diaActual();
-            Integer mesactual = DateUtil.mesActual();
+            Integer diaactual =  diaActual();
+            Integer mesactual =  mesActual();
             //Esto pasarlo a avbravoutils
-            Integer numeromesseleccionado = DateUtil.numeroMes(messelected);
+            Integer numeromesseleccionado =  numeroMes(messelected);
 
             if (numeromesseleccionado > mesactual) {
                 JsfUtil.warningMessage(rs.getString("warning.mesacerrarmayoractual"));
@@ -1380,22 +1460,22 @@ public class DateUtil implements Serializable {
                 return "warning.anionegativo";
 
             }
-            if (anioselected > DateUtil.getAnioActual()) {
+            if (anioselected >  getAnioActual()) {
                 return "warning.anomayorqueactual";
 
             }
 
-            Integer anio = DateUtil.getAnioActual() - anioselected;
+            Integer anio =  getAnioActual() - anioselected;
             if (anio.intValue() > 1) {
                 return "warning.aniomuyantiguo";
             }
             if (anio.intValue() == 1 && !messelected.toLowerCase().equals("diciembre")) {
                 return "warning.debecerrardiciembredelañoanterior";
             }
-            Integer diaactual = DateUtil.diaActual();
-            Integer mesactual = DateUtil.mesActual();
+            Integer diaactual =  diaActual();
+            Integer mesactual =  mesActual();
             //Esto pasarlo a avbravoutils
-            Integer numeromesseleccionado = DateUtil.numeroMes(messelected);
+            Integer numeromesseleccionado =  numeroMes(messelected);
 
             if (numeromesseleccionado > mesactual) {
                 return "warning.mesacerrarmayoractual";
@@ -1454,12 +1534,12 @@ public class DateUtil implements Serializable {
     public static DecomposedDate descomponerFecha(Date date) {
         DecomposedDate decomposedDate = new DecomposedDate();
         try {
-            Integer day = DateUtil.diaDeUnaFecha(date);
-            Integer month = DateUtil.mesDeUnaFechaStartEneroWith0(date);
-            String nameOfMonth = DateUtil.nombreMes(month);
-            Integer year = DateUtil.anioDeUnaFecha(date);
-            Integer hour = DateUtil.horaDeUnaFecha(date);
-            Integer minute = DateUtil.minutosDeUnaFecha(date);
+            Integer day =  diaDeUnaFecha(date);
+            Integer month =  mesDeUnaFechaStartEneroWith0(date);
+            String nameOfMonth =  nameOfMonthStartWith1(month);
+            Integer year =  anioDeUnaFecha(date);
+            Integer hour =  horaDeUnaFecha(date);
+            Integer minute =  minutosDeUnaFecha(date);
             decomposedDate.setDay(day);
             decomposedDate.setHour(hour);
             decomposedDate.setMinute(minute);
@@ -1514,11 +1594,11 @@ public class DateUtil implements Serializable {
     public static List<FechaDiaUtils> validarRangoFechas(Integer anioPartida, String nombreMesPartida, Date fechaHoraPartida, Date fechaHoraRegreso) {
         List<FechaDiaUtils> fechaDiaUtilsSaveList = new ArrayList<>();
         try {
-            List<FechaDiaUtils> fechaDiaUtilsInicialList = DateUtil.nameOfDayOfDateOfMonth(anioPartida, nombreMesPartida);
+            List<FechaDiaUtils> fechaDiaUtilsInicialList =  nameOfDayOfDateOfMonth(anioPartida, nombreMesPartida);
 
 //convertir la fecha de solicitud a LocalDate
-            LocalDate start = DateUtil.convertirJavaDateToLocalDate(fechaHoraPartida);
-            LocalDate end = DateUtil.convertirJavaDateToLocalDate(fechaHoraRegreso);
+            LocalDate start =  convertirJavaDateToLocalDate(fechaHoraPartida);
+            LocalDate end =  convertirJavaDateToLocalDate(fechaHoraRegreso);
 
             //Buscar si esta en el intervalo de dias entre las fechas
             fechaDiaUtilsInicialList.forEach((fdu) -> {
@@ -1540,7 +1620,7 @@ public class DateUtil implements Serializable {
     public static String showDate(Date date) {
         String h = "";
         try {
-            h = DateUtil.dateFormatToString(date, "dd/MM/yyyy");
+            h =  dateFormatToString(date, "dd/MM/yyyy");
         } catch (Exception e) {
             JsfUtil.errorMessage("showDate() " + e.getLocalizedMessage());
         }
@@ -1551,7 +1631,7 @@ public class DateUtil implements Serializable {
     public static String showHour(Date date) {
         String h = "";
         try {
-            h = DateUtil.hourFromDateToString(date);
+            h =  hourFromDateToString(date);
         } catch (Exception e) {
             JsfUtil.errorMessage("showHour() " + e.getLocalizedMessage());
         }
@@ -1577,7 +1657,7 @@ public class DateUtil implements Serializable {
     public static java.util.Date insertHoursMinutesSecondsToDate(Date date, Integer hora, Integer minutos, Integer segundos) {
         Integer anio = anioDeUnaFecha(date);
         Integer mes = mesDeUnaFecha(date);
-        Integer dia = DateUtil.diaDeUnaFecha(date);
+        Integer dia =  diaDeUnaFecha(date);
         LocalDateTime start = LocalDateTime.of(anio, mes, dia, hora, minutos, segundos);
         Date ldate = Date.from(start.atZone(ZoneId.systemDefault()).toInstant());
         return ldate;
@@ -1731,7 +1811,7 @@ public class DateUtil implements Serializable {
 
             String nombreDia = nameOfDay(fecha);
 
-            String nombremes = nombreMes(mes);
+            String nombremes = nameOfMonthStartWith1(mes);
 
             text = nombreDia + " " + dia + " de " + nombremes + " de " + anio;
 
@@ -1741,20 +1821,21 @@ public class DateUtil implements Serializable {
         return text;
         //  return date;
     }
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="String fechaEnLetrasMinusculas(Date fecha)"> 
     public static String fechaEnLetrasMinusculas(Date fecha) {
         String text = "";
         try {
 
-            Integer anio =anioDeUnaFecha(fecha);
+            Integer anio = anioDeUnaFecha(fecha);
             Integer mes = mesDeUnaFecha(fecha);
 
             Integer dia = diaDeUnaFecha(fecha);
 
             String nombreDia = nameOfDayMinusculas(fecha);
 
-            String nombremes = nombreMes(mes);
+            String nombremes = nameOfMonthStartWith1(mes);
 
             text = nombreDia + " " + dia + " de " + nombremes + " de " + anio;
 
@@ -1764,25 +1845,25 @@ public class DateUtil implements Serializable {
         return text;
         //  return date;
     }
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="esMismoDia(Date fechaInicio, Date fechaFin)"> 
     public static Boolean esMismoDia(Date fechaInicio, Date fechaFin) {
-       Boolean iguales=false;
+        Boolean iguales = false;
         try {
 
-            Integer anio = DateUtil.anioDeUnaFecha(fechaInicio);
-            Integer aniofin = DateUtil.anioDeUnaFecha(fechaFin);
+            Integer anio =  anioDeUnaFecha(fechaInicio);
+            Integer aniofin =  anioDeUnaFecha(fechaFin);
 
-            Integer mes = DateUtil.mesDeUnaFecha(fechaInicio);
-            Integer mesfin = DateUtil.mesDeUnaFecha(fechaFin);
-            
-            Integer dia = DateUtil.diaDeUnaFecha(fechaInicio);
-            Integer diafin = DateUtil.diaDeUnaFecha(fechaFin);
-            
-            if(anio.equals(aniofin) && mes.equals(mesfin) && dia.equals(diafin)){
-                iguales=true;
+            Integer mes =  mesDeUnaFecha(fechaInicio);
+            Integer mesfin =  mesDeUnaFecha(fechaFin);
+
+            Integer dia =  diaDeUnaFecha(fechaInicio);
+            Integer diafin =  diaDeUnaFecha(fechaFin);
+
+            if (anio.equals(aniofin) && mes.equals(mesfin) && dia.equals(diafin)) {
+                iguales = true;
             }
-          
 
         } catch (Exception e) {
             System.out.println("esMismoDia()" + e.getLocalizedMessage());
