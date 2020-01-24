@@ -1531,7 +1531,7 @@ public class DateUtil implements Serializable {
      * @param date
      * @return
      */
-    public static DecomposedDate descomponerFecha(Date date) {
+    public static DecomposedDate descomponerFechaMonthStartWith0(Date date) {
         DecomposedDate decomposedDate = new DecomposedDate();
         try {
             Integer day =  diaDeUnaFecha(date);
@@ -1548,7 +1548,36 @@ public class DateUtil implements Serializable {
             decomposedDate.setYear(year);
 
         } catch (Exception e) {
-            errorMessage("descomponerFecha() " + e.getLocalizedMessage());
+            errorMessage("descomponerFechaMonthStartWith0() " + e.getLocalizedMessage());
+        }
+        return decomposedDate;
+    }
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="descomponerFecha(Date date)">
+    /**
+     * Descompone una fecha en año, mes, dia, hora , minutos y nombre de mes
+     *
+     * @param date
+     * @return
+     */
+    public static DecomposedDate descomponerFechaMonthStartWith1(Date date) {
+        DecomposedDate decomposedDate = new DecomposedDate();
+        try {
+            Integer day =  diaDeUnaFecha(date);
+            Integer month =  mesDeUnaFechaStartEneroWith1(date);
+            String nameOfMonth =  nameOfMonthStartWith1(month);
+            Integer year =  anioDeUnaFecha(date);
+            Integer hour =  horaDeUnaFecha(date);
+            Integer minute =  minutosDeUnaFecha(date);
+            decomposedDate.setDay(day);
+            decomposedDate.setHour(hour);
+            decomposedDate.setMinute(minute);
+            decomposedDate.setMonth(month);
+            decomposedDate.setNameOfMonth(nameOfMonth);
+            decomposedDate.setYear(year);
+
+        } catch (Exception e) {
+            errorMessage("descomponerFechaMonthStartWith1() " + e.getLocalizedMessage());
         }
         return decomposedDate;
     }
