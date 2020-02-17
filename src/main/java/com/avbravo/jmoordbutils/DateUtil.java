@@ -665,7 +665,7 @@ public class DateUtil implements Serializable {
             dia.name();
             switch (dia.name()) {
                 case "SATURDAY":
-                    nombre = "SABADO";
+                    nombre = "SÁBADO";
                     break;
                 case "SUNDAY":
                     nombre = "DOMINGO";
@@ -677,7 +677,7 @@ public class DateUtil implements Serializable {
                     nombre = "MARTES";
                     break;
                 case "WEDNESDAY":
-                    nombre = "MIERCOLES";
+                    nombre = "MIÉRCOLES";
                     break;
                 case "THURSDAY":
                     nombre = "JUEVES";
