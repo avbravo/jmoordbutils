@@ -509,7 +509,7 @@ public class JsfUtil implements Serializable {
             dia.name();
             switch (dia.name()) {
                 case "SATURDAY":
-                    nombre = "SÁBADO";
+                    nombre = "SABADO";
                     break;
                 case "SUNDAY":
                     nombre = "DOMINGO";
@@ -521,7 +521,7 @@ public class JsfUtil implements Serializable {
                     nombre = "MARTES";
                     break;
                 case "WEDNESDAY":
-                    nombre = "MIÉRCOLES";
+                    nombre = "MIERCOLES";
                     break;
                 case "THURSDAY":
                     nombre = "JUEVES";
