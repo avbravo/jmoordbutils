@@ -1307,7 +1307,7 @@ public class JsfUtil implements Serializable {
     }    // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="String closeDialog(String widgetVarDialog)">
-    public String closeDialog(String widgetVarDialog) {
+    public static String closeDialog(String widgetVarDialog) {
         try {
             PrimeFaces current = PrimeFaces.current();
            
