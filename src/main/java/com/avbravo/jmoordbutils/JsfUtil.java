@@ -1254,8 +1254,9 @@ public class JsfUtil implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="totalCaracteresVaciosAlfinalCadena() ">
     /**
      * Cuenta la cantidad de espacios al final de una cadena
+     *
      * @param texto
-     * @return 
+     * @return
      */
     public static Integer totalEspaciosAlfinalCadena(String texto) {
         Integer count = 0;
@@ -1268,37 +1269,56 @@ public class JsfUtil implements Serializable {
             }
         }
         return count;
-     
+
     }
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc=" updateJSFComponent(String jsfcomponent)">
     /**
      * Actualiza un componente JSF en un formulario .xhtml
+     *
      * @param texto
-     * @return 
+     * @return
      */
     public static String updateJSFComponent(String jsfcomponent) {
-       PrimeFaces.current().ajax().update(jsfcomponent);
+        PrimeFaces.current().ajax().update(jsfcomponent);
         return "";
-     
+
     }
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc=" Integer decenaDeUnEntero(Integer  n)">
-   public static Integer decenaDeUnEntero(Integer  n){
-       Integer decena=0;
-       try {
-           if(n == null || n.equals("")){
-               return 0;
-           }
-              String x=String.valueOf(n);
-              if(x.length()==0){
-                  return 0;
-              }
-            decena = Integer.parseInt(x.substring(0,x.length()-1));
-       } catch (Exception e) {
-           System.out.println("decenaDeUnEntero() "+e.getLocalizedMessage());
-       }
-      
-             return decena;
-   }    // </editor-fold>
+    public static Integer decenaDeUnEntero(Integer n) {
+        Integer decena = 0;
+        try {
+            if (n == null || n.equals("")) {
+                return 0;
+            }
+            String x = String.valueOf(n);
+            if (x.length() == 0) {
+                return 0;
+            }
+            decena = Integer.parseInt(x.substring(0, x.length() - 1));
+        } catch (Exception e) {
+            System.out.println("decenaDeUnEntero() " + e.getLocalizedMessage());
+        }
+
+        return decena;
+    }    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="String closeDialog(String widgetVarDialog)">
+    public String closeDialog(String widgetVarDialog) {
+        try {
+            PrimeFaces current = PrimeFaces.current();
+           
+            String dialog = "PF('" + widgetVarDialog + "').hide();";
+
+
+            current.executeScript(dialog);
+        } catch (Exception e) {
+            errorDialog("closeDialog()", e.getLocalizedMessage());
+        }
+        return "";
+    }
+    // </editor-fold>
 }
