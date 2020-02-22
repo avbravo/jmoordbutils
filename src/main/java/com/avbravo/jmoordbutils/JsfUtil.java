@@ -57,6 +57,8 @@ public class JsfUtil implements Serializable {
 
     // non-static Matcher object because it's created from the input String
     private static Matcher matcher;
+    
+    private static String opertativeSystem = System.getProperty("os.name").toLowerCase();
 
 // <editor-fold defaultstate="collapsed" desc="getSelectItems"> 
     public static SelectItem[] getSelectItems(List<?> entities, boolean selectOne) {
@@ -1321,4 +1323,37 @@ public class JsfUtil implements Serializable {
         return "";
     }
     // </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="isWindows()">
+    /*
+    Implementado desde el ejemplo de Mkyong
+    https://mkyong.com/java/how-to-detect-os-in-java-systemgetpropertyosname/
+    */
+    public static boolean isWindows() {
+
+		return (opertativeSystem.indexOf("win") >= 0);
+
+	}
+    // </editor-fold>
+ // <editor-fold defaultstate="collapsed" desc="isMac()">
+	public static boolean isMac() {
+
+		return (opertativeSystem.indexOf("mac") >= 0);
+
+	}
+    // </editor-fold>
+        
+	public static boolean isLinux() {
+
+		return (opertativeSystem.indexOf("nix") >= 0 || opertativeSystem.indexOf("nux") >= 0 || opertativeSystem.indexOf("aix") > 0 );
+		
+	}
+    // </editor-fold>
+	public static boolean isSolaris() {
+
+		return (opertativeSystem.indexOf("sunos") >= 0);
+
+	}
+            // </editor-fold>
 }
