@@ -1356,4 +1356,50 @@ public class JsfUtil implements Serializable {
 
 	}
             // </editor-fold>
+        
+        
+        
+        // <editor-fold defaultstate="collapsed" desc="String conversorTfhka(String d, String tipo)">
+        /**
+         * 
+         * @param d
+         * @param tipo
+         * @return convierte un string para impresora fiscal
+         */
+        
+    public static String conversorTfhka(String d, String tipo) {
+        try {
+            Integer tam = d.length();
+            String r = "";
+            switch (tipo) {
+
+                case "preciounitario":
+
+                    if (tam != 8) {
+                        for (int i = 0; i < 8 - tam; i++) {
+                            r += "0";
+                        }
+                        d = r + d;
+                    }
+
+                    break;
+                case "cantidad":
+
+                    if (tam != 5) {
+                        for (int i = 0; i < 5 - tam; i++) {
+                            r += "0";
+                        }
+                        d = r + d;
+                    }
+
+                    break;
+            }
+
+        } catch (Exception e) {
+            JsfUtil.warningMessage("conversor() " + e.getLocalizedMessage().toString());
+
+        }
+        return d;
+    }
+    // </editor-fold>
 }
