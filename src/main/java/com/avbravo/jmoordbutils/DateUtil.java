@@ -1519,6 +1519,12 @@ public class DateUtil implements Serializable {
     }
 
     // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="java.sql.Date convertirJavaDateToJavaSQLDate(java.util.Date date)">
+    public static java.sql.Date convertirJavaDateToJavaSQLDate(java.util.Date date) {
+        return java.sql.Date.valueOf( convertirJavaDateToLocalDate(date));
+    }
+
+    // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="LocalDate convertirJavaDateToLocalDate(Date dateToConvert)">
     public static Date convertirLocalDateToJavaDate(LocalDate localDate) {
         return java.sql.Date.valueOf(localDate);
