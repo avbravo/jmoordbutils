@@ -1402,4 +1402,80 @@ public class JsfUtil implements Serializable {
         return d;
     }
     // </editor-fold>
+    
+    
+    
+    
+    //https://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html
+    public static String fileSeparator()
+    {
+     return   System.getProperty("file.separator");
+
+    }
+    public static String javaClassPath()
+    {
+     return   System.getProperty("java.class.path");
+
+    }
+    public static String javaHome()
+    {
+     return   System.getProperty("java.home");
+
+    }
+    public static String javaVendor()
+    {
+     return   System.getProperty("java.vendor");
+
+    }
+    public static String javaVendorUrl()
+    {
+     return   System.getProperty("java.vendor.url");
+
+    }
+    public static String javaVersion()
+    {
+     return   System.getProperty("java.version");
+
+    }
+    public static String lineSeparator()
+    {
+     return   System.getProperty("line.separator");
+
+    }
+    public static String osArch()
+    {
+     return   System.getProperty("os.arch");
+
+    }
+    public static String osName()
+    {
+     return   System.getProperty("os.name");
+
+    }
+    public static String osVersion()
+    {
+     return   System.getProperty("os.version");
+
+    }
+    
+    public static String pathSeparator()
+    {
+     return   System.getProperty("path.separator");
+
+    }
+    public static String useDir()
+    {
+     return   System.getProperty("user.dir");
+
+    }
+    public static String userHome()
+    {
+     return   System.getProperty("user.home");
+
+    }
+    public static String userName()
+    {
+     return   System.getProperty("user.name");
+
+    }
 }
