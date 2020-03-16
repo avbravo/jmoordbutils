@@ -1463,7 +1463,7 @@ public class JsfUtil implements Serializable {
      return   System.getProperty("path.separator");
 
     }
-    public static String useDir()
+    public static String userDir()
     {
      return   System.getProperty("user.dir");
 
