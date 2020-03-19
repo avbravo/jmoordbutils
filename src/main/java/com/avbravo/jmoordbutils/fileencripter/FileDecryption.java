@@ -25,11 +25,11 @@ public class FileDecryption {
 
         try {
             
-       
+           
                     
             String decryptedFile= fileEnc.substring(0, fileEnc.lastIndexOf('.'))+"_decrypted."+extension;
             
-            System.out.println(" decryptedFile "+decryptedFile);
+
             // reading the salt
             // user should have secure mechanism to transfer the
             // salt, iv and password to the recipient
