@@ -28,6 +28,7 @@ public class FileEncryption {
         try {
            String filenameEnc = filenamepath.substring(0, filenamepath.lastIndexOf('.'))+".enc";
            String filenameIvEnc = filenamepath.substring(0, filenamepath.lastIndexOf('.'))+"iv.enc";
+           String filenameDes = filenamepath.substring(0, filenamepath.lastIndexOf('.'))+".des";
 
             // password to encrypt the file
             //String password = "javapapers";
@@ -35,7 +36,8 @@ public class FileEncryption {
             FileInputStream inFile = new FileInputStream(filenamepath);
 
             // encrypted file
-            FileOutputStream outFile = new FileOutputStream("encryptedfile.des");
+          //  FileOutputStream outFile = new FileOutputStream("encryptedfile.des");
+            FileOutputStream outFile = new FileOutputStream(filenameDes);
 
             // password, iv and salt should be transferred to the other end
             // in a secure manner
