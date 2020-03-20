@@ -9,6 +9,7 @@ package com.avbravo.jmoordbutils;
 import com.avbravo.jmoordbutils.crypto.CryptoConverter;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -33,6 +34,8 @@ import java.util.Random;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import javax.faces.component.UIInput;
 import javax.faces.component.UISelectItem;
 import javax.faces.context.ExternalContext;
@@ -1478,4 +1481,46 @@ public class JsfUtil implements Serializable {
      return   System.getProperty("user.name");
 
     }
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="Boolean unzip(String fileZip, String directoryDestine)">
+    public static Boolean unzip(String fileZip, String directoryDestine){
+        try {
+        File destDir = new File(directoryDestine);
+        byte[] buffer = new byte[1024];
+        ZipInputStream zis = new ZipInputStream(new FileInputStream(fileZip));
+        ZipEntry zipEntry = zis.getNextEntry();
+        while (zipEntry != null) {
+            File newFile = newFileForUnzip(destDir, zipEntry);
+            FileOutputStream fos = new FileOutputStream(newFile);
+            int len;
+            while ((len = zis.read(buffer)) > 0) {
+                fos.write(buffer, 0, len);
+            }
+            fos.close();
+            zipEntry = zis.getNextEntry();
+        }
+        zis.closeEntry();
+        zis.close();
+        } catch (Exception e) {
+            errorDialog("unzip()", e.getLocalizedMessage());
+        }
+        return false;
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="File newFileForUnzip(File destinationDir, ZipEntry zipEntry))">
+    public static File newFileForUnzip(File destinationDir, ZipEntry zipEntry) throws IOException {
+        File destFile = new File(destinationDir, zipEntry.getName());
+         
+        String destDirPath = destinationDir.getCanonicalPath();
+        String destFilePath = destFile.getCanonicalPath();
+         
+        if (!destFilePath.startsWith(destDirPath + File.separator)) {
+            throw new IOException("Entry is outside of the target dir: " + zipEntry.getName());
+        }
+         
+        return destFile;
+    }
+    // </editor-fold>
 }
