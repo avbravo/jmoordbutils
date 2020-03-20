@@ -1502,6 +1502,7 @@ public class JsfUtil implements Serializable {
         }
         zis.closeEntry();
         zis.close();
+        return true;
         } catch (Exception e) {
             errorDialog("unzip()", e.getLocalizedMessage());
         }
@@ -1523,4 +1524,27 @@ public class JsfUtil implements Serializable {
         return destFile;
     }
     // </editor-fold>
+    
+    
+    
+    // <editor-fold defaultstate="collapsed" desc=" Boolean runCommand(String command)">
+    /**
+     * 
+     * @param command
+     * @return ejecuta comandos del sistema operativo
+     */
+    public static Boolean runCommand(String command){
+        try {
+
+	Runtime.getRuntime().exec(command); 
+
+            return true;
+        } catch (Exception e) {
+                errorDialog("runCommand()", e.getLocalizedMessage());
+        }
+        return false;
+    }
+    // </editor-fold>
+    
+    
 }
