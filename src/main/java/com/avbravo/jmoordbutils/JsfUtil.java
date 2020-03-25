@@ -1798,4 +1798,11 @@ public class JsfUtil implements Serializable {
         return false;
     }
     // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Long curretnTimeMillis()">
+    public Long curretnTimeMillis(){
+         return  System.currentTimeMillis();
+    }
+    // </editor-fold>
+
 }
