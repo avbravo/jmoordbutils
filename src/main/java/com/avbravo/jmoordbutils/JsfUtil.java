@@ -1800,7 +1800,7 @@ public class JsfUtil implements Serializable {
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Long curretnTimeMillis()">
-    public Long curretnTimeMillis(){
+    public static Long curretnTimeMillis(){
          return  System.currentTimeMillis();
     }
     // </editor-fold>
