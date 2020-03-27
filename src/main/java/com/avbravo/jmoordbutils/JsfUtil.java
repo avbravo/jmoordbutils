@@ -26,10 +26,16 @@ import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.security.MessageDigest;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Random;
@@ -1714,13 +1720,13 @@ public class JsfUtil implements Serializable {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="unzipFileToDirectory(String fileZipWithPath, String pathToUnzip)">
-    
     /**
      * Fuente
      * https://examples.javacodegeeks.com/core-java/util/zip/extract-zip-file-with-subdirectories/
+     *
      * @param fileZipWithPath
      * @param pathToUnzip
-     * @return 
+     * @return
      */
     public static Boolean unzipFileToDirectory(String fileZipWithPath, String pathToUnzip) {
         try {
@@ -1778,7 +1784,7 @@ public class JsfUtil implements Serializable {
                     }
 
                 }
-     return true;
+                return true;
             } catch (IOException ioe) {
                 System.out.println("Error opening zip file" + ioe);
             } finally {
@@ -1791,18 +1797,46 @@ public class JsfUtil implements Serializable {
                 }
             }
 
-       
         } catch (Exception e) {
             errorDialog("unzipFileToDirectory()", e.getLocalizedMessage());
         }
         return false;
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="Long curretnTimeMillis()">
-    public static Long curretnTimeMillis(){
-         return  System.currentTimeMillis();
+    public static Long curretnTimeMillis() {
+        return System.currentTimeMillis();
     }
     // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Boolean appendTextToFile() ">
+    /**
+     *
+     * @return
+     */
+    public static Boolean appendTextToFile(String filePath, String text) {
+        try {
+
+            Charset utf8 = StandardCharsets.UTF_8;
+            List<String> list = Arrays.asList(text);
+
+            try {
+
+                Files.write(Paths.get(filePath), list, utf8,
+                        StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                return true;
+            } catch (IOException x) {
+                System.err.format("IOException: %s%n", x);
+                errorDialog("pathOfFile()", x.getLocalizedMessage());
+            }
+
+        } catch (Exception e) {
+            errorDialog("pathOfFile()", e.getLocalizedMessage());
+        }
+        return false;
+    }
+ 
+// </editor-fold>    
 
 }
