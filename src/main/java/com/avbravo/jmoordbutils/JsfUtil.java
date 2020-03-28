@@ -9,13 +9,17 @@ package com.avbravo.jmoordbutils;
 import com.avbravo.jmoordbutils.crypto.CryptoConverter;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.UUID;
 import java.util.List;
 import java.util.logging.Logger;
@@ -1810,7 +1814,7 @@ public class JsfUtil implements Serializable {
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Boolean appendTextToFile() ">
+    // <editor-fold defaultstate="collapsed" desc="Boolean appendTextToFile(String filePath, String text) ">
     /**
      *
      * @return
@@ -1836,7 +1840,302 @@ public class JsfUtil implements Serializable {
         }
         return false;
     }
- 
+
 // </editor-fold>    
+    // <editor-fold defaultstate="collapsed" desc="Boolean appendTextToFileJSonFormat(String filePath, String text) ">
+    /**
+     *
+     * @return
+     */
+    public static Boolean appendTextToFileJSonFormat(String filePath, String text) {
+        try {
+
+            Charset utf8 = StandardCharsets.UTF_8;
+            List<String> list = Arrays.asList(text);
+
+            try {
+
+                Files.write(Paths.get(filePath), list, utf8,
+                        StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                return true;
+            } catch (IOException x) {
+                System.err.format("IOException: %s%n", x);
+                errorDialog("pathOfFile()", x.getLocalizedMessage());
+            }
+
+        } catch (Exception e) {
+            errorDialog("pathOfFile()", e.getLocalizedMessage());
+        }
+        return false;
+    }
+
+// </editor-fold>    
+    // <editor-fold defaultstate="collapsed" desc="Boolean appendTextToLogFile(String filePath, String nameOfClass, String nameOfMethod, String text, Boolean isError)">
+    /**
+     *
+     * @return
+     */
+    public static Boolean appendTextToLogFile(String filePath, String nameOfClass, String nameOfMethod, String text, Boolean isError) {
+        try {
+            String json = "";
+            if (!existFile(filePath)) {
+                Charset utf8 = StandardCharsets.UTF_8;
+                List<String> list = Arrays.asList("[\n\n\n]");
+
+                Files.write(Paths.get(filePath), list, utf8,
+                        StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            }else{
+               json= "\n,"; 
+            }
+            
+            if (isError) {
+                json = "{nameOfClass:\"" + nameOfClass + "\",\nnameOfMethod:\"" + nameOfMethod + "\"\nError:\"" + text + "\"},";
+            } else {
+                json = "{nameOfClass:\"" + nameOfClass + "\",\nnameOfMethod:\"" + nameOfMethod + "\"\nMensaje:\"" + text + "\"},";
+            }
+            insertarTextoArchivo(filePath, "]", json, true);
+//a
+//            Charset utf8 = StandardCharsets.UTF_8;
+//            List<String> list = Arrays.asList(text);
+//
+//            Files.write(Paths.get(filePath), list, utf8,
+//                    StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            return true;
+
+        } catch (Exception e) {
+            errorDialog("appendTextToLogFile()", e.getLocalizedMessage());
+        }
+        return false;
+    }
+
+// </editor-fold>    
+    // <editor-fold defaultstate="collapsed" desc="Boolean existFile(String filePath) ">
+    public static Boolean existFile(String filePath) {
+        try {
+            File file = new File(filePath);
+            if (!file.exists()) {
+                return false;
+                // file.createNewFile();
+            }
+            return true;
+        } catch (Exception e) {
+            errorDialog("existFile()", e.getLocalizedMessage());
+        }
+        return false;
+
+    }
+    // </editor-fold>   
+
+    // <editor-fold defaultstate="collapsed" desc="deleteDirectory(File path)">
+    public static void deleteDirectory(File path) {
+
+        try {
+            if (path.exists()) {
+                File[] files = path.listFiles();
+                for (int i = 0; i < files.length; i++) {
+                    if (files[i].isDirectory()) {
+                        deleteDirectory(files[i]);
+                    } else {
+                        files[i].delete();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            errorDialog("deleteDirectory()", e.getLocalizedMessage());
+        }
+
+    }
+
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="Boolean deleteDirectorio(String ruta) ">
+    public Boolean deleteDirectorio(String ruta) {
+        try {
+            File file = new File(ruta);
+            if (!file.exists()) {
+                //existe
+                return false;
+            } else {
+                deleteDirectory(file);
+                return true;
+            }
+        } catch (Exception ex) {
+            errorDialog("deleteDirectory()", ex.getLocalizedMessage());
+        }
+        return false;
+    }
+
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="String convertirLetraMayuscula(String texto)">
+    public static String convertirLetraMayuscula(String texto) {
+
+        try {
+
+            texto = texto.trim();
+            int largo = texto.length();
+            if (largo <= 0) {
+                return texto;
+            }
+            String letra = texto.substring(0, 1);
+
+            texto = letra.toUpperCase() + texto.substring(1);
+        } catch (Exception ex) {
+            errorDialog("convertirLetraMayuscula()", ex.getLocalizedMessage());
+        }
+        return texto;
+    }
+// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="String convertirLetraMinuscula(String texto)">
+    /**
+     * ConvertirLetraMinuscula
+     *
+     * @param s_cadena
+     * @param caracter
+     * @return
+     */
+    public static String convertirLetraMinuscula(String texto) {
+
+        try {
+
+            texto = texto.trim();
+            int largo = texto.length();
+            if (largo <= 0) {
+                return texto;
+            }
+            String letra = texto.substring(0, 1);
+
+            texto = letra.toLowerCase() + texto.substring(1);
+        } catch (Exception ex) {
+            errorDialog("convertirLetraMinuscula()", ex.getLocalizedMessage());
+        }
+        return texto;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="agregarTextoAlFinalArchivo(String rutaArchivo, String texto)">
+    public static void agregarTextoAlFinalArchivo(String rutaArchivo, String texto) {
+        try {
+            RandomAccessFile miRAFile;
+            // Abrimos el fichero de acceso aleatorio
+            miRAFile = new RandomAccessFile(rutaArchivo, "rw");
+            // Nos vamos al final del fichero
+            miRAFile.seek(miRAFile.length());
+            // Incorporamos la cadena al fichero     
+            miRAFile.writeBytes(texto);
+            // Cerramos el fichero
+            miRAFile.close();
+        } catch (Exception ex) {
+            errorDialog("agregarTextoAlFinalArchivo()", ex.getLocalizedMessage());
+        }
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="actualizaTextoArchivo(String rutaArchivo, String search, String reemplazo)">
+    /*
+     * Actualiza el archivo una cadena con la que le especifiquemos ejemplo
+     * ActualizarTextoArchivo("/home/avbravo/Documentos/etiquetas.properties",
+     * "nombre", "name"); Actualiza en el archivo nombre por name
+     */
+    public static Boolean actualizaTextoArchivo(String rutaArchivo, String search, String reemplazo) {
+        try {
+
+            File file = new File(rutaArchivo);
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line = "", oldtext = "";
+
+            while ((line = reader.readLine()) != null) {
+
+                oldtext += line + "\r\n";
+
+            }
+            reader.close();
+
+            if (oldtext.indexOf(search) != -1) {
+                String newtext = oldtext.replaceAll(search, reemplazo);
+
+                FileWriter writer = new FileWriter(rutaArchivo);
+                writer.write(newtext);
+                writer.close();
+
+                return true;
+            }
+
+        } catch (Exception ex) {
+            errorDialog("actualizaTextoArchivo()", ex.getLocalizedMessage());
+        }
+        return false;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Boolean encontrarTextoArchivo(String rutaArchivo, String search) ">
+    public static Boolean encontrarTextoArchivo(String rutaArchivo, String search) {
+        try {
+
+            File file = new File(rutaArchivo);
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+            boolean encontrado = false;
+            while ((line = reader.readLine()) != null) {
+                if (line.indexOf(search) != -1) {
+                    encontrado = true;
+                }
+            }
+            return encontrado;
+        } catch (Exception ex) {
+            errorDialog("encontrarTextoArchivo()", ex.getLocalizedMessage());
+        }
+        return false;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Boolean insertarTextoArchivo(String rutaArchivo, String search, String textoInsertar, boolean antes)>
+
+    /*
+     * Inserta texto en el archivo antes o despues de la linea donde se
+     * encuentre la cadena search el parametro antes = true : indica que se
+     * insertara antes antes = false : indica que se insertara despues
+     * InsertarTextoArchivo("/home/avbravo/Documentos/etiquetas.properties",
+     * "name", "email=\"@ww\"", false)
+     */
+    public static Boolean insertarTextoArchivo(String rutaArchivo, String search, String textoInsertar, Boolean antes) {
+        try {
+
+            File file = new File(rutaArchivo);
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line = "", oldtext = "";
+            boolean encontrado = false;
+            while ((line = reader.readLine()) != null) {
+                if (line.indexOf(search) != -1) {
+                    if (antes) {
+                        //insertarlo antes
+                        oldtext += textoInsertar + "\r\n" + line + "\r\n";
+                    } else {
+                        //insertar despues
+                        oldtext += line + "\r\n" + textoInsertar + "\r\n";
+                    }
+
+                    encontrado = true;
+
+                } else {
+                    oldtext += line + "\r\n";
+                }
+
+            }
+            reader.close();
+
+            if (encontrado) {
+                FileWriter writer = new FileWriter(rutaArchivo);
+                writer.write(oldtext);
+                writer.close();
+
+                return true;
+            }
+
+        } catch (Exception ex) {
+            errorDialog("insertarTextoArchivo()", ex.getLocalizedMessage());
+        }
+        return false;
+    }
+    // </editor-fold>
 
 }
