@@ -1880,7 +1880,7 @@ public class JsfUtil implements Serializable {
             String json = "";
             if (!existFile(filePath)) {
                 Charset utf8 = StandardCharsets.UTF_8;
-                List<String> list = Arrays.asList("[\n\n\n]");
+                List<String> list = Arrays.asList("[\n]");
 
                 Files.write(Paths.get(filePath), list, utf8,
                         StandardOpenOption.CREATE, StandardOpenOption.APPEND);
@@ -1889,9 +1889,9 @@ public class JsfUtil implements Serializable {
             }
             
             if (isError) {
-                json = "{nameOfClass:\"" + nameOfClass + "\",\nnameOfMethod:\"" + nameOfMethod + "\"\nError:\"" + text + "\"},";
+                json += "{\n \"dateTime\"!:"+ DateUtil.fechaHoraActual()+ "\n \"nameOfClass\":\"" + nameOfClass + "\",\n \"nameOfMethod\":\"" + nameOfMethod + "\",\n \"Error\":\"" + text + "\"}";
             } else {
-                json = "{nameOfClass:\"" + nameOfClass + "\",\nnameOfMethod:\"" + nameOfMethod + "\"\nMensaje:\"" + text + "\"},";
+                json += "{\n \"dateTime\"!:"+ DateUtil.fechaHoraActual()+ "\n \"nameOfClass\":\"" + nameOfClass + "\",\n \"nameOfMethod\":\"" + nameOfMethod + "\",\n \"Message\":\"" + text + "\"}";
             }
             insertarTextoArchivo(filePath, "]", json, true);
 //a
