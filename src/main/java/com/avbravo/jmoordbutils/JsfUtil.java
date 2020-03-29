@@ -1877,6 +1877,13 @@ public class JsfUtil implements Serializable {
      */
     public static Boolean appendTextToLogFile(String filePath, String nameOfClass, String nameOfMethod, String text, Boolean isError) {
         try {
+            String path =pathOfFile(filePath);
+            
+            System.out.println("===>>> path" +path);
+            System.out.println("===>>> filePAth" +filePath);
+            if(!existDirectory(path)){
+                mkdir(filePath);
+            }
             String json = "";
             if (!existFile(filePath)) {
                 Charset utf8 = StandardCharsets.UTF_8;
