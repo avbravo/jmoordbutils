@@ -1889,9 +1889,9 @@ public class JsfUtil implements Serializable {
             }
             
             if (isError) {
-                json += "{\n \"dateTime\"!:\""+ DateUtil.fechaHoraActual()+ "\"\n \"nameOfClass\":\"" + nameOfClass + "\",\n \"nameOfMethod\":\"" + nameOfMethod + "\",\n \"Error\":\"" + text + "\"}";
+                json += "{\n \"dateTime\":\""+ DateUtil.fechaHoraActual()+ "\"\n \"nameOfClass\":\"" + nameOfClass + "\",\n \"nameOfMethod\":\"" + nameOfMethod + "\",\n \"Error\":\"" + text + "\"}";
             } else {
-                json += "{\n \"dateTime\"!:\""+ DateUtil.fechaHoraActual()+ "\"\n \"nameOfClass\":\"" + nameOfClass + "\",\n \"nameOfMethod\":\"" + nameOfMethod + "\",\n \"Message\":\"" + text + "\"}";
+                json += "{\n \"dateTime\":\""+ DateUtil.fechaHoraActual()+ "\"\n \"nameOfClass\":\"" + nameOfClass + "\",\n \"nameOfMethod\":\"" + nameOfMethod + "\",\n \"Message\":\"" + text + "\"}";
             }
             insertarTextoArchivo(filePath, "]", json, true);
 //a
