@@ -7,6 +7,7 @@ package com.avbravo.jmoordbutils.logger;
 
 
 
+import static com.avbravo.jmoordbutils.JsfUtil.errorDialog;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Properties;
@@ -39,7 +40,7 @@ public class JmoordbLoggerProducer implements Serializable {
             if (path== null) {
 
                 InputStream inputStream = getClass()
-                        .getClassLoader().getResourceAsStream("orientdb.properties");
+                        .getClassLoader().getResourceAsStream("jmoordblogger.properties");
                 Properties prop = new Properties();
 
                 if (inputStream != null) {
@@ -47,12 +48,14 @@ public class JmoordbLoggerProducer implements Serializable {
 
 
                     if (prop.getProperty("onlyfile") == null) {
+                         errorDialog("JmoordbLoggerProducer.readProperties()", "No se encontro el onlyfile del archivo jmoordblogger.prppertoes");
                         System.out.println("Advertencia: " + "No se encontro el onlyfile del archivo jmoordblogger.prppertoes");
                     } else {
                        jmoordbLogger.setOnlyfile(prop.getProperty("onlyfile"));
                     }
                   
                     if (prop.getProperty("path") == null) {
+                        errorDialog("JmoordbLoggerProducer.readProperties()",  "No se encontro el nombre de la base de datos del servidor de la base de datos");
                         System.out.println("Advertencia: " + "No se encontro el nombre de la base de datos del servidor de la base de datos");
                     } else {
                       jmoordbLogger.setPath(prop.getProperty("path"));
@@ -61,12 +64,14 @@ public class JmoordbLoggerProducer implements Serializable {
                 
 
                 } else {
-                    System.out.println("No se puede cargar el archivo connection.properties");
+                    errorDialog("JmoordbLoggerProducer.readProperties()", "No se puede cargar el archivo jmoordblogger.properties");
+                    System.out.println("No se puede cargar el archivo jmoordblogger.properties");
                 }
 
             }
         } catch (Exception e) {
             System.out.println("ConnectionProducer.readProperties() " + e.getLocalizedMessage());
+             errorDialog("JmoordbLoggerProducer.readProperties()", e.getLocalizedMessage());
         }
         return jmoordbLogger;
     }
