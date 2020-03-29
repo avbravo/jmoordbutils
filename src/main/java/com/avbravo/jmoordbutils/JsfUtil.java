@@ -1882,7 +1882,7 @@ public class JsfUtil implements Serializable {
             System.out.println("===>>> path" +path);
             System.out.println("===>>> filePAth" +filePath);
             if(!existDirectory(path)){
-                mkdir(filePath);
+                mkdir(path);
             }
             String json = "";
             if (!existFile(filePath)) {
