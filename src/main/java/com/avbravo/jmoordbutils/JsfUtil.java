@@ -1926,114 +1926,169 @@ public class JsfUtil implements Serializable {
      */
     public static Boolean appendTextToLogErrorFile(String filePath, String nameOfClass, String nameOfMethod, String text, Exception exception) {
         try {
-        
+
             String path = pathOfFile(filePath);
             String filePathDialy = pathOfFile(filePath) + fileSeparator() + nameOfFileInPath(filePath) + "_" + DateUtil.anioActual() + "_" + DateUtil.mesActual() + "_" + DateUtil.diaActual()
-                    + "."+extensionOfFileInPath(filePath);
+                    + "." + extensionOfFileInPath(filePath);
+            String filePathAll = pathOfFile(filePath) + fileSeparator() + nameOfFileInPath(filePath) + "_All" + "." + extensionOfFileInPath(filePath);
             if (!existDirectory(path)) {
-            
+
                 mkdir(path);
             }
 
             String json = "";
             String jsonDialy = "";
+            String jsonAll = "";
 
             if (!existFile(filePath)) {
-  
+
                 Charset utf8 = StandardCharsets.UTF_8;
                 List<String> list = Arrays.asList("[\n]");
 
                 Files.write(Paths.get(filePath), list, utf8,
                         StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-           
+
             } else {
-            
+
                 json = "\n                   ,";
             }
 
-          
-       
-                /**
-                 * Archivo de log.json Diario
-                 */
-                if (!existFile(filePathDialy)) {
+            /**
+             * Archivo de log.json Diario
+             */
+            if (!existFile(filePathDialy)) {
 
-                    Charset utf8 = StandardCharsets.UTF_8;
-                    List<String> list = Arrays.asList("[\n]");
+                Charset utf8 = StandardCharsets.UTF_8;
+                List<String> list = Arrays.asList("[\n]");
 
-                    Files.write(Paths.get(filePathDialy), list, utf8,
-                            StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-               
-                } else {
+                Files.write(Paths.get(filePathDialy), list, utf8,
+                        StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 
-                    jsonDialy = "\n               ,";
-                }
+            } else {
 
-          
+                jsonDialy = "\n               ,";
+            }
+            /**
+             * Archivo de log.json All
+             */
+            if (!existFile(filePathAll)) {
+
+                Charset utf8 = StandardCharsets.UTF_8;
+                List<String> list = Arrays.asList("[\n]");
+
+                Files.write(Paths.get(filePathAll), list, utf8,
+                        StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+
+            } else {
+
+                jsonAll = "\n               ,";
+            }
 
             /**
              * procesa el trace
              */
-
             String trace = "";
             if (exception != null) {
                 Integer c = 0;
                 for (StackTraceElement s : exception.getStackTrace()) {
 
                     if (s.getFileName() != null) {
-                        if (s.getFileName().indexOf(nameOfClass) != -1) {
-                            if (c == 0) {
-                                c++;
-                                trace += "\n            {";
-                                trace += "\n            \"dateTime\":\"" + DateUtil.fechaHoraActual() + "\",";
-                                trace += "\n            \"fileName\":\"" + s.getFileName() + "\",";
-                                trace += "\n            \"className\":\"" + s.getClassName() + "\",";
-                                trace += "\n            \"methods\":\"" + s.getMethodName() + "\",";
-                                trace += "\n            \"lineNumbre\":\"" + s.getLineNumber() + "\",";
-                                trace += "\n            \"exception\":\"" + exception.getLocalizedMessage() + "\"";
-                                trace += "\n            }";
-                            } else {
-                                trace += "\n           ,{";
-                                trace += "\n            \"dateTime\":\"" + DateUtil.fechaHoraActual() + "\",";
-                                trace += "\n            \"fileName\":\"" + s.getFileName() + "\",";
-                                trace += "\n            \"className\":\"" + s.getClassName() + "\",";
-                                trace += "\n            \"methods\":\"" + s.getMethodName() + "\",";
-                                trace += "\n            \"lineNumbre\":\"" + s.getLineNumber() + "\",";
-                                trace += "\n            \"exception\":\"" + exception.getLocalizedMessage() + "\"";
-                                trace += "\n            }";
-                            }
-
+            if (s.getFileName().indexOf(nameOfClass) != -1) {
+                        if (c == 0) {
+                            c++;
+                            trace += "\n            {";
+                            trace += "\n            \"dateTime\":\"" + DateUtil.fechaHoraActual() + "\",";
+                            trace += "\n            \"fileName\":\"" + s.getFileName() + "\",";
+                            trace += "\n            \"className\":\"" + s.getClassName() + "\",";
+                            trace += "\n            \"methods\":\"" + s.getMethodName() + "\",";
+                            trace += "\n            \"lineNumbre\":\"" + s.getLineNumber() + "\",";
+                            trace += "\n            \"exception\":\"" + exception.getLocalizedMessage() + "\"";
+                            trace += "\n            }";
+                        } else {
+                            trace += "\n           ,{";
+                            trace += "\n            \"dateTime\":\"" + DateUtil.fechaHoraActual() + "\",";
+                            trace += "\n            \"fileName\":\"" + s.getFileName() + "\",";
+                            trace += "\n            \"className\":\"" + s.getClassName() + "\",";
+                            trace += "\n            \"methods\":\"" + s.getMethodName() + "\",";
+                            trace += "\n            \"lineNumbre\":\"" + s.getLineNumber() + "\",";
+                            trace += "\n            \"exception\":\"" + exception.getLocalizedMessage() + "\"";
+                            trace += "\n            }";
                         }
 
+                        }
                     }
 
                 }
             }
-         
+            /**
+             * procesa el trace All
+             */
+            String traceAll = "";
+            if (exception != null) {
+                Integer c = 0;
+                for (StackTraceElement s : exception.getStackTrace()) {
 
-         
+                    if (s.getFileName() != null) {
+           
+                        if (c == 0) {
+                            c++;
+                            traceAll += "\n            {";
+                            traceAll += "\n            \"dateTime\":\"" + DateUtil.fechaHoraActual() + "\",";
+                            traceAll += "\n            \"fileName\":\"" + s.getFileName() + "\",";
+                            traceAll += "\n            \"className\":\"" + s.getClassName() + "\",";
+                            traceAll += "\n            \"methods\":\"" + s.getMethodName() + "\",";
+                            traceAll += "\n            \"lineNumbre\":\"" + s.getLineNumber() + "\",";
+                            traceAll += "\n            \"exception\":\"" + exception.getLocalizedMessage() + "\"";
+                            traceAll += "\n            }";
+                        } else {
+                            traceAll += "\n           ,{";
+                            traceAll += "\n            \"dateTime\":\"" + DateUtil.fechaHoraActual() + "\",";
+                            traceAll += "\n            \"fileName\":\"" + s.getFileName() + "\",";
+                            traceAll += "\n            \"className\":\"" + s.getClassName() + "\",";
+                            traceAll += "\n            \"methods\":\"" + s.getMethodName() + "\",";
+                            traceAll += "\n            \"lineNumbre\":\"" + s.getLineNumber() + "\",";
+                            traceAll += "\n            \"exception\":\"" + exception.getLocalizedMessage() + "\"";
+                            traceAll += "\n            }";
+                        }
+
+                     
+                    }
+
+                }
+            }
+            
+            
+            
+            
+            
+            
+            
+
             json += trace;
-         
-        
-                jsonDialy += trace;
-          
+
+            jsonDialy += trace;
+            jsonAll += traceAll;
+
             insertarTextoArchivo(filePath, "]", json, true);
 
             /**
              * Si se indica que se genera un archivo diario.
              */
-          
-   
-                insertarTextoArchivo(filePathDialy, "]", jsonDialy, true);
+            insertarTextoArchivo(filePathDialy, "]", jsonDialy, true);
 
-           
             
-         
+            /**
+             * Si se indica que se genera un archivo all
+             */
+            insertarTextoArchivo(filePathAll, "]", jsonAll, true);
+
+            
+            
             return true;
 
         } catch (Exception e) {
-            System.out.println("appendTextToLogErrorFile()"+ e.getLocalizedMessage());
-          // errorDialog("appendTextToLogErrorFile()", e.getLocalizedMessage());
+            System.out.println("appendTextToLogErrorFile()" + e.getLocalizedMessage());
+            // errorDialog("appendTextToLogErrorFile()", e.getLocalizedMessage());
         }
         return false;
     }
@@ -2381,8 +2436,8 @@ public class JsfUtil implements Serializable {
             }
 
         } catch (Exception ex) {
-            System.out.println("insertarTextoArchivo()"+ ex.getLocalizedMessage());
-           // errorDialog("insertarTextoArchivo()", ex.getLocalizedMessage());
+            System.out.println("insertarTextoArchivo()" + ex.getLocalizedMessage());
+            // errorDialog("insertarTextoArchivo()", ex.getLocalizedMessage());
         }
         return false;
     }
