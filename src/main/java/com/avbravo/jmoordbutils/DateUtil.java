@@ -1179,7 +1179,10 @@ public class DateUtil implements Serializable {
         return String.valueOf(number);
     }// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="milisegundos"> 
-
+/**
+ * 
+ * @return Devuelve los milisegundos como un long
+ */
     public static long milisegundos() {
         long milisegundos = 0;
         try {
@@ -1190,7 +1193,26 @@ public class DateUtil implements Serializable {
         }
         return milisegundos;
     }// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="Integer milisegundosToInteger()"> 
+/**
+ * 
+ * @return Devuelve los milisegundos actuales como un entero
+ * 
+ */
+    public static Integer milisegundosToInteger() {
+        long milisegundos = 0;
+        try {
+            milisegundos = System.nanoTime();
 
+        } catch (Exception e) {
+            System.out.println("getMilisegundos() " + e.getLocalizedMessage());
+        }
+        return Math.toIntExact(milisegundos);
+    }// </editor-fold>
+
+    
+    
+    
 // <editor-fold defaultstate="collapsed" desc="milisegundosTranscurridos"> 
     public static long milisegundosTranscurridos(long t0, long t1) {
         long milisegundos = 0;
