@@ -40,14 +40,11 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 import javax.faces.component.UIInput;
@@ -59,6 +56,7 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import org.apache.commons.beanutils.BeanUtils;
 import org.primefaces.PrimeFaces;
 import java.util.Enumeration;
+import java.util.SplittableRandom;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -1363,13 +1361,14 @@ public class JsfUtil implements Serializable {
     }
     // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="boolean isLinux()">
     public static boolean isLinux() {
 
         return (opertativeSystem.indexOf("nix") >= 0 || opertativeSystem.indexOf("nux") >= 0 || opertativeSystem.indexOf("aix") > 0);
 
     }
-
-    // </editor-fold>
+// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="boolean isSolaris()">
     public static boolean isSolaris() {
 
         return (opertativeSystem.indexOf("sunos") >= 0);
@@ -1420,16 +1419,21 @@ public class JsfUtil implements Serializable {
     }
     // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="String fileSeparator()">
     //https://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html
     public static String fileSeparator() {
         return System.getProperty("file.separator");
 
     }
+    // </editor-fold>
 
+    
+    // <editor-fold defaultstate="collapsed" desc="String javaClassPath()">
     public static String javaClassPath() {
         return System.getProperty("java.class.path");
 
     }
+    // </editor-fold>
 
     public static String javaHome() {
         return System.getProperty("java.home");
@@ -1619,6 +1623,7 @@ public class JsfUtil implements Serializable {
     }
 
     // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="String pathOfFile(String filenamePath) >
     /**
      *
@@ -1634,8 +1639,8 @@ public class JsfUtil implements Serializable {
         }
         return path;
     }
-
     // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="String extensionOfFileInPath(String filenamePath)">
     /**
      *
@@ -2443,4 +2448,27 @@ public class JsfUtil implements Serializable {
     }
     // </editor-fold>
 
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="metodo()">
+    /**
+     * Generador de otp estilo de codigos que usan en banca en linea es un codigo aleatorio numerico
+     * @param Optlentgh largo de digital que devolvera el opt
+     * @return otp
+     * Ejemplo  generateOtp(4)
+     * Puede generar: 7596 (4 digitos aleatorios)
+     */
+    public static String otp(int otplentgh){
+        SplittableRandom sr = new SplittableRandom();
+                  StringBuilder sb = new StringBuilder();
+        try {
+  
+            for(int i=0;i<otplentgh;i++){
+                sb.append(sr.nextInt(0,10));
+            }
+        } catch (Exception e) {
+        }
+     return sb.toString();
+    }
+    // </editor-fold>
 }
