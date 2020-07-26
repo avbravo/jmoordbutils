@@ -2217,6 +2217,79 @@ public class JsfUtil implements Serializable {
         return false;
     }
     // </editor-fold>    
+    // <editor-fold defaultstate="collapsed" desc="Boolean appendTextToLogJson(String filePath, String titulo, String text)">
+    /**
+     *
+     * @return
+     */
+    public static Boolean appendTextToLogJson(String filePath, String titulo, String text, Boolean generateDailyFile) {
+        try {
+            String path = pathOfFile(filePath);
+            String filePathDialy = pathOfFile(filePath) + fileSeparator() + nameOfFileInPath(filePath) + "_" + DateUtil.anioActual() + "_" + DateUtil.mesActual() + "_" + DateUtil.diaActual()
+                    + extensionOfFileInPath(filePath);
+            if (!existDirectory(path)) {
+
+                mkdir(path);
+            }
+
+            String json = "";
+            String jsonDialy = "";
+
+            if (!existFile(filePath)) {
+
+                Charset utf8 = StandardCharsets.UTF_8;
+                List<String> list = Arrays.asList("[\n]");
+
+                Files.write(Paths.get(filePath), list, utf8,
+                        StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            } else {
+
+                json = "\n,";
+            }
+
+            if (generateDailyFile) {
+                /**
+                 * Archivo de log.json Diario
+                 */
+                if (!existFile(filePathDialy)) {
+
+                    Charset utf8 = StandardCharsets.UTF_8;
+                    List<String> list = Arrays.asList("[\n]");
+
+                    Files.write(Paths.get(filePathDialy), list, utf8,
+                            StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                } else {
+
+                    jsonDialy = "\n,";
+                }
+
+            }
+
+           
+    
+
+            json += "{\n \"dateTime\":\"" + DateUtil.fechaHoraActual() + "\",\n \"titulo\":\"" + titulo +  "\",\n \"text\":\"" + text + "\"";
+
+            json += "\n}";
+
+            insertarTextoArchivo(filePath, "]", json, true);
+
+            /**
+             * Si se indica que se genera un archivo diario.
+             */
+            if (generateDailyFile) {
+                insertarTextoArchivo(filePathDialy, "]", json, true);
+
+            }
+
+            return true;
+
+        } catch (Exception e) {
+            errorDialog("appendTextToLogErrorFile()", e.getLocalizedMessage());
+        }
+        return false;
+    }
+    // </editor-fold>    
     // <editor-fold defaultstate="collapsed" desc="Boolean existFile(String filePath) ">
 
     public static Boolean existFile(String filePath) {
