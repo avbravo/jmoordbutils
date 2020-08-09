@@ -10,6 +10,7 @@ import com.avbravo.jmoordbutils.crypto.CryptoConverter;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -2523,7 +2524,7 @@ public class JsfUtil implements Serializable {
 
     
     
-    // <editor-fold defaultstate="collapsed" desc="metodo()">
+    // <editor-fold defaultstate="collapsed" desc="String otp(int otplentgh)">
     /**
      * Generador de otp estilo de codigos que usan en banca en linea es un codigo aleatorio numerico
      * @param Optlentgh largo de digital que devolvera el opt
@@ -2544,4 +2545,38 @@ public class JsfUtil implements Serializable {
      return sb.toString();
     }
     // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc=" metodo()">
+    /**
+     * Agrega contenido al archivo en la ruta local
+     * @param fileName nombre del archivo sin el path
+     * @param text texto a a agregar
+     * @return 
+     */
+     public static String fileAddTextToLocal(String fileName, String text) {
+        try {
+//            String fileName="filename.txt";
+
+            File myObj = new File(fileName);
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+
+            // String str = "World"+DateUtil.fechaActual();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
+            writer.append("\n");
+            writer.append(text);
+
+            writer.close();
+         //   Util.infoDialog("save", "Exitoso");
+        } catch (Exception e) {
+            //   errorServices.errorMessage(Util.nameOfClass(), Util.nameOfMethod(), e.getLocalizedMessage(), e);
+         //   Util.errorDialog("Error)(", e.getLocalizedMessage());
+
+        }
+        return "";
+    }
+// </editor-fold>
 }
