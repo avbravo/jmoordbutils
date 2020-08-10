@@ -50,6 +50,17 @@ public class JmoordbLanguages implements Serializable {
         return "changed";
     }
 
+    public String getBandera() {
+        return bandera;
+    }
+
+    public void setBandera(String bandera) {
+        this.bandera = bandera;
+    }
+
+    
+    
+    
     public JmoordbLanguages() {
         this.locale = "es";
     }
@@ -65,6 +76,7 @@ public class JmoordbLanguages implements Serializable {
     }
 
     public String spanishAction() {
+          bandera = "panama32.png";
         FacesContext context = FacesContext.getCurrentInstance();
         context.getViewRoot().setLocale(new Locale("es"));
         infoLocaleDate = new Locale("es");
