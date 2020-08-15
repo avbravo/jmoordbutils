@@ -20,7 +20,7 @@ import javax.inject.Named;
 @Named
 @SessionScoped
 public class JmoordbLanguages implements Serializable {
-
+// <editor-fold defaultstate="collapsed" desc=" field()">
     private static final long serialVersionUID = 1L;
     @Inject
     JmoordbResourcesFiles rf;
@@ -29,7 +29,8 @@ public class JmoordbLanguages implements Serializable {
 
     //private String bandera;
     private String icono;
-
+    private String returnTo="/faces/index.xhtml?faces-redirect=true";
+// </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="get/set()">
     public void setLocale(String locale) {
@@ -81,7 +82,8 @@ public class JmoordbLanguages implements Serializable {
         infoLocaleDate = Locale.ENGLISH;
         this.locale = "en";
         rf.saveLocale();
-        return null;
+        return returnTo;
+       // return null;
     }
 // </editor-fold>
    
@@ -93,7 +95,7 @@ public class JmoordbLanguages implements Serializable {
         infoLocaleDate = new Locale("es");
         this.locale = "es";
         rf.saveLocale();
-        return null;
+        return returnTo;
     }
 // </editor-fold>  
    
@@ -106,7 +108,7 @@ public class JmoordbLanguages implements Serializable {
         infoLocaleDate = new Locale("pt", "BR");
         this.locale = "es";
         rf.saveLocale();
-        return null;
+     return returnTo;
 
     }
 // </editor-fold>
@@ -119,7 +121,7 @@ public class JmoordbLanguages implements Serializable {
         infoLocaleDate = new Locale("es", "ES");
         this.locale = "es";
         rf.saveLocale();
-        return null;
+        return returnTo;
     }
 // </editor-fold>
    
@@ -131,7 +133,7 @@ public class JmoordbLanguages implements Serializable {
         infoLocaleDate = Locale.FRANCE;
         this.locale = "fr";
         rf.saveLocale();
-        return null;
+     return returnTo;
     }
 
     // </editor-fold>
@@ -145,7 +147,7 @@ public class JmoordbLanguages implements Serializable {
         infoLocaleDate = Locale.GERMAN;
         this.locale = "gr";
         rf.saveLocale();
-        return null;
+       return returnTo;
     }
     // </editor-fold>
 
@@ -158,7 +160,7 @@ public class JmoordbLanguages implements Serializable {
         infoLocaleDate = Locale.ITALIAN;
         this.locale = "il";
         rf.saveLocale();
-        return null;
+          return returnTo;
     }
     
     // </editor-fold>
