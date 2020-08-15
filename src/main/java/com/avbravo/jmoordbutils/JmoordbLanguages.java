@@ -59,7 +59,7 @@ public class JmoordbLanguages implements Serializable {
     
     @PostConstruct
     public void init() {
-       icono = "panama.png";
+       icono = "banderas/panama.png";
         spanishAction();
     }
 
@@ -75,7 +75,7 @@ public class JmoordbLanguages implements Serializable {
 
     // <editor-fold defaultstate="collapsed" desc="String englishAction()">
      public String englishAction() {
-       icono = "estadosunidos.png";
+       icono = "banderas/estadosunidos.png";
         FacesContext context = FacesContext.getCurrentInstance();
         context.getViewRoot().setLocale(Locale.ENGLISH);
         infoLocaleDate = Locale.ENGLISH;
@@ -87,7 +87,7 @@ public class JmoordbLanguages implements Serializable {
    
 // <editor-fold defaultstate="collapsed" desc="String spanishAction()">
       public String spanishAction() {
-         icono= "panama.png";
+         icono= "banderas/panama.png";
         FacesContext context = FacesContext.getCurrentInstance();
         context.getViewRoot().setLocale(new Locale("es"));
         infoLocaleDate = new Locale("es");
@@ -100,7 +100,7 @@ public class JmoordbLanguages implements Serializable {
 
       // <editor-fold defaultstate="collapsed" desc="String portugueseAction()">
        public String portugueseAction() {
-       icono = "brasil.png";
+       icono = "banderas/brasil.png";
         FacesContext context = FacesContext.getCurrentInstance();
         context.getViewRoot().setLocale(new Locale("pt", "BR"));
         infoLocaleDate = new Locale("pt", "BR");
@@ -113,7 +113,7 @@ public class JmoordbLanguages implements Serializable {
    
 // <editor-fold defaultstate="collapsed" desc="String spanishSpainAction()">
         public String spanishSpainAction() {
-       icono = "espana.png";
+       icono = "banderas/espana.png";
         FacesContext context = FacesContext.getCurrentInstance();
         context.getViewRoot().setLocale(new Locale("es", "ES"));
         infoLocaleDate = new Locale("es", "ES");
@@ -125,7 +125,7 @@ public class JmoordbLanguages implements Serializable {
    
 // <editor-fold defaultstate="collapsed" desc="String francesAction()">
     public String francesAction() {
-      icono= "francia.png";
+      icono= "banderas/francia.png";
         FacesContext context = FacesContext.getCurrentInstance();
         context.getViewRoot().setLocale(Locale.FRANCE);
         infoLocaleDate = Locale.FRANCE;
@@ -139,7 +139,7 @@ public class JmoordbLanguages implements Serializable {
     
     // <editor-fold defaultstate="collapsed" desc="String alemaniaAction()">
     public String alemaniaAction() {
-       icono = "alemania.png";
+       icono = "banderas/alemania.png";
         FacesContext context = FacesContext.getCurrentInstance();
         context.getViewRoot().setLocale(Locale.FRANCE);
         infoLocaleDate = Locale.GERMAN;
@@ -152,7 +152,7 @@ public class JmoordbLanguages implements Serializable {
     
     // <editor-fold defaultstate="collapsed" desc="String italiaAction()">
     public String italiaAction() {
-       icono = "brasil.png";
+       icono = "banderas/brasil.png";
         FacesContext context = FacesContext.getCurrentInstance();
         context.getViewRoot().setLocale(Locale.ITALIAN);
         infoLocaleDate = Locale.ITALIAN;
