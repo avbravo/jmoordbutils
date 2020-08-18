@@ -33,18 +33,32 @@ public class JmoordbLanguages implements Serializable {
 // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="get/set()">
+
+    public String getReturnTo() {
+        return returnTo;
+    }
+
+    public void setReturnTo(String returnTo) {
+        this.returnTo = returnTo;
+    }
+    
+    
+    
     public void setLocale(String locale) {
         this.locale = locale;
     }
 
-    public synchronized String getLocale() {
+    public String getLocale() {
         if (locale == null) {
+            System.out.println("----> locale es nulll");
             locale = "es";
+        }else  {
+            System.out.println("-----> locale es");
         }
         return locale;
     }
 
-    public synchronized String changeLanguage() {
+    public  String changeLanguage() {
         return "changed";
     }
 
@@ -60,7 +74,8 @@ public class JmoordbLanguages implements Serializable {
     
     @PostConstruct
     public void init() {
-       icono = "banderas/panama.png";
+       icono = "banderas/panama.png";       
+        System.out.println("------> init locale"+locale);
         spanishAction();
     }
 
