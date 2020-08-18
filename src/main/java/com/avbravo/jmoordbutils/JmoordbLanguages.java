@@ -96,6 +96,7 @@ public class JmoordbLanguages implements Serializable {
         context.getViewRoot().setLocale(Locale.ENGLISH);
         infoLocaleDate = Locale.ENGLISH;
         this.locale = "en";
+         System.out.println("--------------> cambio a english locale");
         rf.saveLocale();
         return returnTo;
        // return null;
