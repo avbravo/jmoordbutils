@@ -1929,4 +1929,19 @@ public class DateUtil implements Serializable {
         //  return date;
     }
     // </editor-fold>
+    
+        // <editor-fold defaultstate="collapsed" desc="LocalDateTime convertToLocalDateTimeViaInstant(Date dateToConvert) "> 
+    public static LocalDateTime convertToLocalDateTimeViaInstant(Date dateToConvert) {
+        return dateToConvert.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+    }
+     //  return date;
+    // <editor-fold defaultstate="collapsed" desc="LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConvert)"> 
+    public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConvert) {
+        return Instant.ofEpochMilli(dateToConvert.getTime())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+    }
+     //  return date;
 }
