@@ -1931,6 +1931,12 @@ public class DateUtil implements Serializable {
     // </editor-fold>
     
         // <editor-fold defaultstate="collapsed" desc="LocalDateTime convertToLocalDateTimeViaInstant(Date dateToConvert) "> 
+    /**
+     * fuente
+     * https://www.baeldung.com/java-date-to-localdate-and-localdatetime
+     * @param dateToConvert
+     * @return 
+     */
     public static LocalDateTime convertToLocalDateTimeViaInstant(Date dateToConvert) {
         return dateToConvert.toInstant()
                 .atZone(ZoneId.systemDefault())
@@ -1938,6 +1944,12 @@ public class DateUtil implements Serializable {
     }
      //  return date;
     // <editor-fold defaultstate="collapsed" desc="LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConvert)"> 
+        /**
+     * fuente
+     * https://www.baeldung.com/java-date-to-localdate-and-localdatetime
+     * @param dateToConvert
+     * @return 
+     */
     public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConvert) {
         return Instant.ofEpochMilli(dateToConvert.getTime())
                 .atZone(ZoneId.systemDefault())
