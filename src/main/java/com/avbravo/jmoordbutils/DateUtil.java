@@ -1943,6 +1943,7 @@ public class DateUtil implements Serializable {
                 .toLocalDateTime();
     }
      //  return date;
+        // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConvert)"> 
         /**
      * fuente
@@ -1956,4 +1957,54 @@ public class DateUtil implements Serializable {
                 .toLocalDateTime();
     }
      //  return date;
+        // </editor-fold>
+    
+    
+    
+        // <editor-fold defaultstate="collapsed" desc="String isoDateToString(Date date)"> 
+    /**
+     * Convierte un ISODATE a String
+     * util para usar con JAX-RS en microservicios
+     * que no soportan campos fechas directamente.
+     * @param date
+     * @return 
+     */
+   public static String isoDateToString(Date date) {
+        try {
+            SimpleDateFormat sdf;
+            sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+            sdf.setTimeZone(TimeZone.getDefault());
+            String text = sdf.format(date);
+            return text;
+        } catch (Exception e) {
+            System.out.println("isoDateToString() " +e.getLocalizedMessage());
+        }
+        return "";
+
+    }
+            
+                // </editor-fold>
+   
+   
+   
+   // <editor-fold defaultstate="collapsed" desc="Date stringToISODateFrom(String dateString) "> 
+   /**
+    * Convierte un String que fue convertido con isoDateToString 
+    * a Date
+    * @param dateString
+    * @return 
+    */
+    public static Date stringToISODateFrom(String dateString) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+        Date conveter = new Date();
+        try {
+            Date date = df.parse(dateString);
+            return date;
+        } catch (Exception e) {
+            System.out.println("stringToISODateFrom() " + e.getLocalizedMessage());
+
+        }
+        return conveter;
+    }
+         // </editor-fold>
 }
