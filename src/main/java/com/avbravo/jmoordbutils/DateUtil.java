@@ -1994,7 +1994,7 @@ public class DateUtil implements Serializable {
     * @param dateString
     * @return 
     */
-    public static Date stringToISODateFrom(String dateString) {
+    public static Date stringToISODate(String dateString) {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
         Date conveter = new Date();
         try {
