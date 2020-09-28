@@ -1125,6 +1125,10 @@ public class DateUtil implements Serializable {
 
         return date;
     }// </editor-fold>
+    
+    
+    
+    
 
     // <editor-fold defaultstate="collapsed" desc="sumarMesaFecha(date,mes)"> 
     /**
@@ -1149,7 +1153,67 @@ public class DateUtil implements Serializable {
         }
         return dateresult;
     }// </editor-fold>
+   
 
+     // <editor-fold defaultstate="collapsed" desc="Date sumarHorasFecha(Date date, int horas)"> 
+    public static Date sumarHorasAFecha(Date date, int horas){
+	
+      Calendar calendar = Calendar.getInstance();
+
+      calendar.setTime(date); // Configuramos la fecha que se recibe
+	
+      calendar.add(Calendar.HOUR, horas);  // numero de horas a añadir, o restar en caso de horas<0
+	
+      return calendar.getTime(); // Devuelve el objeto Date con las nuevas horas añadidas
+	
+ }
+    // </editor-fold>
+     // <editor-fold defaultstate="collapsed" desc="Date sumarMinutosFecha(Date date, int minutos)"> 
+    public static Date sumarMinutosAFecha(Date date, int minutos){
+	
+      Calendar calendar = Calendar.getInstance();
+
+      calendar.setTime(date); // Configuramos la fecha que se recibe
+	
+      calendar.add(Calendar.MINUTE, minutos);  // numero de horas a añadir, o restar en caso de horas<0
+	
+      return calendar.getTime(); // Devuelve el objeto Date con las nuevas horas añadidas
+	
+ }
+    // </editor-fold>
+     // <editor-fold defaultstate="collapsed" desc="Date sumarSegundosFecha(Date date, int horas, int minutos,  int segundos)> 
+    public static Date sumarHorasMinutosSegundosAFecha(Date date, int horas, int minutos,  int segundos){
+	
+      Calendar calendar = Calendar.getInstance();
+
+      calendar.setTime(date); // Configuramos la fecha que se recibe
+	
+      calendar.add(Calendar.HOUR, horas);  // numero de horas a añadir, o restar en caso de horas<0
+      calendar.add(Calendar.MINUTE, minutos);  // numero de horas a añadir, o restar en caso de horas<0
+      calendar.add(Calendar.SECOND, segundos);  // numero de horas a añadir, o restar en caso de horas<0
+	
+      return calendar.getTime(); // Devuelve el objeto Date con las nuevas horas añadidas
+	
+ }
+    // </editor-fold>
+     // <editor-fold defaultstate="collapsed" desc="Date sumarSegundosFecha(Date date, int segundos)"> 
+    public static Date sumarSegundosFecha(Date date, int segundos){
+	
+      Calendar calendar = Calendar.getInstance();
+
+      calendar.setTime(date); // Configuramos la fecha que se recibe
+	
+      calendar.add(Calendar.SECOND, segundos);  // numero de horas a añadir, o restar en caso de horas<0
+	
+      return calendar.getTime(); // Devuelve el objeto Date con las nuevas horas añadidas
+	
+ }
+    // </editor-fold>
+    
+    
+    
+    
+    
     // <editor-fold defaultstate="collapsed" desc="segundosToHoraString"> 
     public static String segundosToHoraString(Integer segundos) {
         String resultado = "";
