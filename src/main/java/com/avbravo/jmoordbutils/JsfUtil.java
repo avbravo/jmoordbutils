@@ -78,7 +78,10 @@ public class JsfUtil implements Serializable {
     private static Matcher matcher;
 
     private static String opertativeSystem = System.getProperty("os.name").toLowerCase();
-
+   private static Pattern patternPassword;
+    private static Matcher matcherPassword;
+    private static String PASSWORD_PATTERN = "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z]).{8,40})";
+    
 // <editor-fold defaultstate="collapsed" desc="getSelectItems"> 
     public static SelectItem[] getSelectItems(List<?> entities, boolean selectOne) {
         int size = selectOne ? entities.size() + 1 : entities.size();
@@ -1370,6 +1373,7 @@ public class JsfUtil implements Serializable {
     }
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="boolean isSolaris()">
+
     public static boolean isSolaris() {
 
         return (opertativeSystem.indexOf("sunos") >= 0);
@@ -1428,7 +1432,6 @@ public class JsfUtil implements Serializable {
     }
     // </editor-fold>
 
-    
     // <editor-fold defaultstate="collapsed" desc="String javaClassPath()">
     public static String javaClassPath() {
         return System.getProperty("java.class.path");
@@ -1624,8 +1627,7 @@ public class JsfUtil implements Serializable {
     }
 
     // </editor-fold>
-    
-    // <editor-fold defaultstate="collapsed" desc="String pathOfFile(String filenamePath) >
+    // <editor-fold defaultstate="collapsed" desc="String pathOfFile(String filenamePath)" >
     /**
      *
      * @param filenamePath
@@ -1641,7 +1643,7 @@ public class JsfUtil implements Serializable {
         return path;
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="String extensionOfFileInPath(String filenamePath)">
     /**
      *
@@ -1999,27 +2001,27 @@ public class JsfUtil implements Serializable {
                 for (StackTraceElement s : exception.getStackTrace()) {
 
                     if (s.getFileName() != null) {
-            if (s.getFileName().indexOf(nameOfClass) != -1) {
-                        if (c == 0) {
-                            c++;
-                            trace += "\n            {";
-                            trace += "\n            \"dateTime\":\"" + DateUtil.fechaHoraActual() + "\",";
-                            trace += "\n            \"fileName\":\"" + s.getFileName() + "\",";
-                            trace += "\n            \"className\":\"" + s.getClassName() + "\",";
-                            trace += "\n            \"methods\":\"" + s.getMethodName() + "\",";
-                            trace += "\n            \"lineNumbre\":\"" + s.getLineNumber() + "\",";
-                            trace += "\n            \"exception\":\"" + exception.getLocalizedMessage() + "\"";
-                            trace += "\n            }";
-                        } else {
-                            trace += "\n           ,{";
-                            trace += "\n            \"dateTime\":\"" + DateUtil.fechaHoraActual() + "\",";
-                            trace += "\n            \"fileName\":\"" + s.getFileName() + "\",";
-                            trace += "\n            \"className\":\"" + s.getClassName() + "\",";
-                            trace += "\n            \"methods\":\"" + s.getMethodName() + "\",";
-                            trace += "\n            \"lineNumbre\":\"" + s.getLineNumber() + "\",";
-                            trace += "\n            \"exception\":\"" + exception.getLocalizedMessage() + "\"";
-                            trace += "\n            }";
-                        }
+                        if (s.getFileName().indexOf(nameOfClass) != -1) {
+                            if (c == 0) {
+                                c++;
+                                trace += "\n            {";
+                                trace += "\n            \"dateTime\":\"" + DateUtil.fechaHoraActual() + "\",";
+                                trace += "\n            \"fileName\":\"" + s.getFileName() + "\",";
+                                trace += "\n            \"className\":\"" + s.getClassName() + "\",";
+                                trace += "\n            \"methods\":\"" + s.getMethodName() + "\",";
+                                trace += "\n            \"lineNumbre\":\"" + s.getLineNumber() + "\",";
+                                trace += "\n            \"exception\":\"" + exception.getLocalizedMessage() + "\"";
+                                trace += "\n            }";
+                            } else {
+                                trace += "\n           ,{";
+                                trace += "\n            \"dateTime\":\"" + DateUtil.fechaHoraActual() + "\",";
+                                trace += "\n            \"fileName\":\"" + s.getFileName() + "\",";
+                                trace += "\n            \"className\":\"" + s.getClassName() + "\",";
+                                trace += "\n            \"methods\":\"" + s.getMethodName() + "\",";
+                                trace += "\n            \"lineNumbre\":\"" + s.getLineNumber() + "\",";
+                                trace += "\n            \"exception\":\"" + exception.getLocalizedMessage() + "\"";
+                                trace += "\n            }";
+                            }
 
                         }
                     }
@@ -2035,7 +2037,7 @@ public class JsfUtil implements Serializable {
                 for (StackTraceElement s : exception.getStackTrace()) {
 
                     if (s.getFileName() != null) {
-           
+
                         if (c == 0) {
                             c++;
                             traceAll += "\n            {";
@@ -2057,18 +2059,10 @@ public class JsfUtil implements Serializable {
                             traceAll += "\n            }";
                         }
 
-                     
                     }
 
                 }
             }
-            
-            
-            
-            
-            
-            
-            
 
             json += trace;
 
@@ -2082,14 +2076,11 @@ public class JsfUtil implements Serializable {
              */
             insertarTextoArchivo(filePathDialy, "]", jsonDialy, true);
 
-            
             /**
              * Si se indica que se genera un archivo all
              */
             insertarTextoArchivo(filePathAll, "]", jsonAll, true);
 
-            
-            
             return true;
 
         } catch (Exception e) {
@@ -2217,6 +2208,7 @@ public class JsfUtil implements Serializable {
         }
         return false;
     }
+
     // </editor-fold>    
     // <editor-fold defaultstate="collapsed" desc="Boolean appendTextToLogJson(String filePath, String titulo, String text)">
     /**
@@ -2266,10 +2258,7 @@ public class JsfUtil implements Serializable {
 
             }
 
-           
-    
-
-            json += "{\n \"dateTime\":\"" + DateUtil.fechaHoraActual() + "\",\n \"titulo\":\"" + titulo +  "\",\n \"text\":\"" + text + "\"";
+            json += "{\n \"dateTime\":\"" + DateUtil.fechaHoraActual() + "\",\n \"titulo\":\"" + titulo + "\",\n \"text\":\"" + text + "\"";
 
             json += "\n}";
 
@@ -2471,7 +2460,7 @@ public class JsfUtil implements Serializable {
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Boolean insertarTextoArchivo(String rutaArchivo, String search, String textoInsertar, boolean antes)>
+    // <editor-fold defaultstate="collapsed" desc="Boolean insertarTextoArchivo(String rutaArchivo, String search, String textoInsertar, boolean antes)">
 
     /*
      * Inserta texto en el archivo antes o despues de la linea donde se
@@ -2522,38 +2511,38 @@ public class JsfUtil implements Serializable {
     }
     // </editor-fold>
 
-    
-    
     // <editor-fold defaultstate="collapsed" desc="String otp(int otplentgh)">
     /**
-     * Generador de otp estilo de codigos que usan en banca en linea es un codigo aleatorio numerico
+     * Generador de otp estilo de codigos que usan en banca en linea es un
+     * codigo aleatorio numerico
+     *
      * @param Optlentgh largo de digital que devolvera el opt
-     * @return otp
-     * Ejemplo  generateOtp(4)
-     * Puede generar: 7596 (4 digitos aleatorios)
+     * @return otp Ejemplo generateOtp(4) Puede generar: 7596 (4 digitos
+     * aleatorios)
      */
-    public static String otp(int otplentgh){
+    public static String otp(int otplentgh) {
         SplittableRandom sr = new SplittableRandom();
-                  StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         try {
-  
-            for(int i=0;i<otplentgh;i++){
-                sb.append(sr.nextInt(0,10));
+
+            for (int i = 0; i < otplentgh; i++) {
+                sb.append(sr.nextInt(0, 10));
             }
         } catch (Exception e) {
         }
-     return sb.toString();
+        return sb.toString();
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc=" metodo()">
     /**
      * Agrega contenido al archivo en la ruta local
+     *
      * @param fileName nombre del archivo sin el path
      * @param text texto a a agregar
-     * @return 
+     * @return
      */
-     public static String fileAddTextToLocal(String fileName, String text) {
+    public static String fileAddTextToLocal(String fileName, String text) {
         try {
 //            String fileName="filename.txt";
 
@@ -2570,13 +2559,72 @@ public class JsfUtil implements Serializable {
             writer.append(text);
 
             writer.close();
-         //   Util.infoDialog("save", "Exitoso");
+            //   Util.infoDialog("save", "Exitoso");
         } catch (Exception e) {
             //   errorServices.errorMessage(Util.nameOfClass(), Util.nameOfMethod(), e.getLocalizedMessage(), e);
-         //   Util.errorDialog("Error)(", e.getLocalizedMessage());
+            //   Util.errorDialog("Error)(", e.getLocalizedMessage());
 
         }
         return "";
     }
 // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="PasswordInfo passwordInformacion(String password)">
+    public static PasswordInfo passwordInformacion(String password) {
+        PasswordInfo passwordInfo = new PasswordInfo(0,0,0);
+        char clave;
+     Integer number = 0, upper = 0, lower = 0;
+        for (byte i = 0; i < password.length(); i++) {
+            clave = password.charAt(i);
+            String passValue = String.valueOf(clave);
+            if (passValue.matches("[A-Z]")) {
+                upper++;
+            } else if (passValue.matches("[a-z]")) {
+                lower++;
+            } else if (passValue.matches("[0-9]")) {
+                number++;
+            }
+        }
+
+        passwordInfo.setNumberOfLower(lower);
+        passwordInfo.setNumberOfUpper(upper);
+        passwordInfo.setNumberOfNumber(number);
+     
+        return passwordInfo;
+    }
+    // </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="Boolean validatePasswordContainsUpperLowerNumber( String password) ">
+   /**
+    * Valida un password que contenga minimo 8 caracteres, letra mayusculas y minusculas
+    * @param password
+    * @return 
+    */
+
+     public static Boolean validatePasswordContainsUpperLowerNumber( String password) {
+     patternPassword = Pattern.compile(PASSWORD_PATTERN); 
+     
+        matcherPassword = patternPassword.matcher(password);
+        return matcherPassword.matches();
+ 
+    }
+     // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="Boolean validatePasswordContainsUpperLowerNumber( String password, String pattern)">
+   /**
+    * Valida el password en base al patron
+    * @param password
+    * @param pattern
+    * @return 
+    */
+
+     public static Boolean validatePasswordContainsUpperLowerNumber( String password, String pattern) {
+     patternPassword = Pattern.compile(pattern); 
+     
+        matcherPassword = patternPassword.matcher(password);
+        return matcherPassword.matches();
+ 
+    }
+     // </editor-fold>
+
 }
