@@ -1181,21 +1181,53 @@ public class DateUtil implements Serializable {
 	
  }
     // </editor-fold>
-     // <editor-fold defaultstate="collapsed" desc="Date sumarSegundosFecha(Date date, int horas, int minutos,  int segundos)> 
-    public static Date sumarHorasMinutosSegundosAFecha(Date date, int horas, int minutos,  int segundos){
-	
-      Calendar calendar = Calendar.getInstance();
-
-      calendar.setTime(date); // Configuramos la fecha que se recibe
-	
-      calendar.add(Calendar.HOUR, horas);  // numero de horas a añadir, o restar en caso de horas<0
-      calendar.add(Calendar.MINUTE, minutos);  // numero de horas a añadir, o restar en caso de horas<0
-      calendar.add(Calendar.SECOND, segundos);  // numero de horas a añadir, o restar en caso de horas<0
-	
-      return calendar.getTime(); // Devuelve el objeto Date con las nuevas horas añadidas
+     // <editor-fold defaultstate="collapsed" desc="Date sumarSegundosFecha(Date date, int horas, int minutos,  int segundos)"> 
+    public static Date sumarMesDiasHorasMinutosSegundosAFecha(Date date,int mes, int dias, int horas, int minutos,  int segundos){
+	       LocalDateTime ld=convertToLocalDateTimeViaInstant(date);
+               
+               ld.plusMonths(mes);
+               ld.plusDays(dias);
+               ld.plusHours(horas);
+               ld.plusMinutes(minutos);
+               ld.plusSeconds(segundos);
+            
+        
+        return convertLocalDateTimeToJavaDate(ld);
+//      Calendar calendar = Calendar.getInstance();
+//
+//      calendar.setTime(date); // Configuramos la fecha que se recibe
+//	
+//      calendar.add(Calendar.HOUR, horas);  // numero de horas a añadir, o restar en caso de horas<0
+//      calendar.add(Calendar.MINUTE, minutos);  // numero de horas a añadir, o restar en caso de horas<0
+//      calendar.add(Calendar.SECOND, segundos);  // numero de horas a añadir, o restar en caso de horas<0
+//	
+//      return calendar.getTime(); // Devuelve el objeto Date con las nuevas horas añadidas
 	
  }
     // </editor-fold>
+     // <editor-fold defaultstate="collapsed" desc=" Date convertLocalDateTimeToJavaDate(LocalDateTime localDateTime) "> 
+  public static  Date convertLocalDateTimeToJavaDate(LocalDateTime localDateTime) {
+    return java.util.Date
+      .from(localDateTime.atZone(ZoneId.systemDefault())
+      .toInstant());
+}
+// </editor-fold>
+    
+     // <editor-fold defaultstate="collapsed" desc="LocalDateTime convertToLocalDateTimeViaInstant(Date dateToConvert)"> 
+    public static LocalDateTime convertJavaDateToLocalDateTime(Date dateToConvert) {
+    return dateToConvert.toInstant()
+      .atZone(ZoneId.systemDefault())
+      .toLocalDateTime();
+}
+ // </editor-fold>
+     // <editor-fold defaultstate="collapsed" desc="LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConvert)"> 
+public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConvert) {
+    return Instant.ofEpochMilli(dateToConvert.getTime())
+      .atZone(ZoneId.systemDefault())
+      .toLocalDateTime();
+}
+    // </editor-fold>
+    
      // <editor-fold defaultstate="collapsed" desc="Date sumarSegundosFecha(Date date, int segundos)"> 
     public static Date sumarSegundosFecha(Date date, int segundos){
 	
@@ -2015,7 +2047,7 @@ public class DateUtil implements Serializable {
      * @param dateToConvert
      * @return 
      */
-    public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConvert) {
+    public static LocalDateTime convertToLocalDateTimeViaMilisecond2(Date dateToConvert) {
         return Instant.ofEpochMilli(dateToConvert.getTime())
                 .atZone(ZoneId.systemDefault())
                 .toLocalDateTime();
