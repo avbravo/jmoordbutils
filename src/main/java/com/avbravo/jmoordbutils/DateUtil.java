@@ -2057,6 +2057,7 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
     
     
     
+    
         // <editor-fold defaultstate="collapsed" desc="String isoDateToString(Date date)"> 
     /**
      * Convierte un ISODATE a String
