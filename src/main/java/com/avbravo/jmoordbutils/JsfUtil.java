@@ -80,7 +80,7 @@ public class JsfUtil implements Serializable {
     private static String opertativeSystem = System.getProperty("os.name").toLowerCase();
    private static Pattern patternPassword;
     private static Matcher matcherPassword;
-    private static String PASSWORD_PATTERN = "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40})";
+    private static String PASSWORD_PATTERN = "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@.#$%!-,_*?]).{8,40})";
     
 // <editor-fold defaultstate="collapsed" desc="getSelectItems"> 
     public static SelectItem[] getSelectItems(List<?> entities, boolean selectOne) {
