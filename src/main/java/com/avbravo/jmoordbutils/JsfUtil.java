@@ -78,10 +78,10 @@ public class JsfUtil implements Serializable {
     private static Matcher matcher;
 
     private static String opertativeSystem = System.getProperty("os.name").toLowerCase();
-   private static Pattern patternPassword;
+    private static Pattern patternPassword;
     private static Matcher matcherPassword;
     private static String PASSWORD_PATTERN = "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@.#$%!-,_*?]).{8,40})";
-    
+
 // <editor-fold defaultstate="collapsed" desc="getSelectItems"> 
     public static SelectItem[] getSelectItems(List<?> entities, boolean selectOne) {
         int size = selectOne ? entities.size() + 1 : entities.size();
@@ -2571,9 +2571,9 @@ public class JsfUtil implements Serializable {
 
     // <editor-fold defaultstate="collapsed" desc="PasswordInfo passwordInformacion(String password)">
     public static PasswordInfo passwordInformacion(String password) {
-        PasswordInfo passwordInfo = new PasswordInfo(0,0,0);
+        PasswordInfo passwordInfo = new PasswordInfo(0, 0, 0);
         char clave;
-     Integer number = 0, upper = 0, lower = 0;
+        Integer number = 0, upper = 0, lower = 0;
         for (byte i = 0; i < password.length(); i++) {
             clave = password.charAt(i);
             String passValue = String.valueOf(clave);
@@ -2589,42 +2589,64 @@ public class JsfUtil implements Serializable {
         passwordInfo.setNumberOfLower(lower);
         passwordInfo.setNumberOfUpper(upper);
         passwordInfo.setNumberOfNumber(number);
-     
+
         return passwordInfo;
     }
     // </editor-fold>
-    
-    
+
     // <editor-fold defaultstate="collapsed" desc="Boolean validatePasswordContainsUpperLowerNumber( String password) ">
-   /**
-    * Valida un password que contenga minimo 8 caracteres, letra mayusculas y minusculas
-    * @param password
-    * @return 
-    */
+    /**
+     * Valida un password que contenga minimo 8 caracteres, letra mayusculas y
+     * minusculas
+     *
+     * @param password
+     * @return
+     */
+    public static Boolean validatePasswordContainsUpperLowerNumber(String password) {
+        patternPassword = Pattern.compile(PASSWORD_PATTERN);
 
-     public static Boolean validatePasswordContainsUpperLowerNumber( String password) {
-     patternPassword = Pattern.compile(PASSWORD_PATTERN); 
-     
         matcherPassword = patternPassword.matcher(password);
         return matcherPassword.matches();
- 
+
     }
-     // </editor-fold>
+    // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Boolean validatePasswordContainsUpperLowerNumber( String password, String pattern)">
-   /**
-    * Valida el password en base al patron
-    * @param password
-    * @param pattern
-    * @return 
-    */
 
-     public static Boolean validatePasswordContainsUpperLowerNumber( String password, String pattern) {
-     patternPassword = Pattern.compile(pattern); 
-     
+    /**
+     * Valida el password en base al patron
+     *
+     * @param password
+     * @param pattern
+     * @return
+     */
+
+    public static Boolean validatePasswordContainsUpperLowerNumber(String password, String pattern) {
+        patternPassword = Pattern.compile(pattern);
+
         matcherPassword = patternPassword.matcher(password);
         return matcherPassword.matches();
- 
-    }
-     // </editor-fold>
 
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="pathOfMicroprofileConfig()">
+    /**
+     * se usa con Microprofile Config para ejempp
+     * #-------------------------------------------------------------- #--Path
+     * Images #-- si pathBaseLinuxAddUserHome (solo para Linux
+     * JsfUtil.isLinux()) #-- si es true se agrega JsfUtil.userHome() al path
+     * (/asistencia/imagenes => /home/miuser/asistencia/imagenes) #-- si es
+     * false = se usa el path completo de pathLinux (/opt/asistencia/imagenes)
+     * pathBaseLinuxAddUserHome=true pathLinux=/asistencia/imagenes/
+     * pathWindows=C:\\asistencia\\imagenes\\
+     *
+     * @param addUserHome
+     * @param pahtLinux
+     * @param pathWindows
+     * @return
+     */
+    public static String pathOfMicroprofileConfig(Boolean addUserHome, String pahtLinux, String pathWindows) {
+        return isLinux() ? (addUserHome ? userHome() + pahtLinux : pahtLinux) : pathWindows;
+    }
+    // </editor-fold>
 }
