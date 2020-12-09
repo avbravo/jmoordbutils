@@ -7,6 +7,8 @@ package com.avbravo.jmoordbutils;
 // <editor-fold defaultstate="collapsed" desc="import">  
 
 import com.avbravo.jmoordbutils.crypto.CryptoConverter;
+import com.avbravo.jmoordbutils.email.EmailRecipients;
+import static com.lowagie.text.SpecialSymbol.index;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -31,6 +33,7 @@ import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
+import static java.lang.ProcessBuilder.Redirect.to;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -2647,6 +2650,27 @@ public class JsfUtil implements Serializable {
      */
     public static String pathOfMicroprofileConfig(Boolean addUserHome, String pahtLinux, String pathWindows) {
         return isLinux() ? (addUserHome ? userHome() + pahtLinux : pahtLinux) : pathWindows;
+    }
+    // </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="Boolean divideDestinatary(List<User> list)()">
+    /**
+     * Divide de una lista los emails
+     *
+     * @param list
+     * @return
+     */
+    public static EmailRecipients divideDestinatary(List<String> list) {
+        EmailRecipients  emailRecipients = new EmailRecipients();
+        try {
+            ////Divide para las copias y bcc,cc
+            emailRecipients.divide(list);
+           
+        } catch (Exception e) {
+            System.out.println("divideDestinatary() " + e.getLocalizedMessage());
+        }
+        return emailRecipients ;
     }
     // </editor-fold>
 }
