@@ -79,17 +79,17 @@ public class EmailRecipients {
 
             Integer size = list.size();
             if (size <= 10) {
-                to = new String[list.size() + 1];
+                to = new String[list.size() ];
                 cc = new String[0];
                 bcc = new String[0];
             } else {
                 if (size > 10 && size <= 20) {
-                    to = new String[10 + 1];
+                    to = new String[10 ];
                     cc = new String[size - 10];
                     bcc = new String[0];
                 } else {
-                    to = new String[10 + 1];
-                    cc = new String[10 + 1];
+                    to = new String[10 ];
+                    cc = new String[10 ];
                     bcc = new String[size - 20];
                 }
             }
