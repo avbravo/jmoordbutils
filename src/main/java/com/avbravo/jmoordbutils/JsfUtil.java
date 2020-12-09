@@ -2673,4 +2673,32 @@ public class JsfUtil implements Serializable {
         return emailRecipients ;
     }
     // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="void printEmailRecipients(EmailRecipients emailRecipients) ">
+/**
+ * iprime el contenido de emails recipients
+ * @param emailRecipients 
+ */
+    
+    public static void printEmailRecipients(EmailRecipients emailRecipients) {
+         //imporimo los array
+            String arrayto[] = emailRecipients.getTo();
+            String arrayBcc[] = emailRecipients.getBcc();
+            String arrayCc[] = emailRecipients.getCc();
+            System.out.println(">>>>TO");
+            for (int i = 0; i < arrayto.length; i++) {
+                System.out.println(" " + arrayto[i]);
+            }
+            System.out.println(">>>>bcc");
+            for (int i = 0; i < arrayBcc.length; i++) {
+                System.out.println(" " + arrayBcc[i]);
+            }
+            System.out.println(">>>>Ccc");
+            for (int i = 0; i < arrayCc.length; i++) {
+                System.out.println(" " + arrayCc[i]);
+            }
+    }
+            
+// </editor-fold>
+// </editor-fold>
 }
