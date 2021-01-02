@@ -2700,5 +2700,51 @@ public class JsfUtil implements Serializable {
     }
             
 // </editor-fold>
-// </editor-fold>
+
+    
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="long secondsToNanoseconds(Double seconds)">
+    /**
+     * Convierte segundos (Double ) a nanosegundos
+     * @param seconds
+     * @return 
+     */
+    public static long secondsToNanoseconds(Double seconds){
+        long result=0;
+          try {
+
+       
+            String doubleAsString = String.valueOf(seconds);
+            int indexOfDecimal = doubleAsString.indexOf(".");
+            Double in = Double.parseDouble(doubleAsString.substring(0, indexOfDecimal));
+
+            Integer len = doubleAsString.substring(indexOfDecimal).length();
+            Double dec = Double.parseDouble(doubleAsString.substring(indexOfDecimal));
+            long r2 = 0;
+            switch (len) {
+                case 1:
+                    dec = dec * 100;
+                    r2 = dec.longValue() * 1_00_000_000L;
+                    break;
+                case 2:
+                    dec = dec * 10;
+                    r2 = dec.longValue() * 1_00_000_000L;
+                    break;
+                case 3:
+                    dec = dec * 100;
+                    r2 = dec.longValue() * 1_0_000_000L;
+                    break;
+            }
+          
+            long r1 = in.longValue() * 1_000_000_000L;
+
+          result = r1 + r2;
+
+        } catch (Exception e) {
+            System.out.println("error " + e.getLocalizedMessage());
+        }
+          return result;
+    }
+    // </editor-fold>
 }
