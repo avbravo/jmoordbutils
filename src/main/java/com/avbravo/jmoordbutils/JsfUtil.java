@@ -7,8 +7,8 @@ package com.avbravo.jmoordbutils;
 // <editor-fold defaultstate="collapsed" desc="import">  
 
 import com.avbravo.jmoordbutils.crypto.CryptoConverter;
+import com.avbravo.jmoordbutils.domains.Ram;
 import com.avbravo.jmoordbutils.email.EmailRecipients;
-import static com.lowagie.text.SpecialSymbol.index;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -33,7 +33,6 @@ import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
-import static java.lang.ProcessBuilder.Redirect.to;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -84,6 +83,7 @@ public class JsfUtil implements Serializable {
     private static Pattern patternPassword;
     private static Matcher matcherPassword;
     private static String PASSWORD_PATTERN = "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@.#$%!-,_*?]).{8,40})";
+      private static final long MEGABYTE = 1024L * 1024L;
 
 // <editor-fold defaultstate="collapsed" desc="getSelectItems"> 
     public static SelectItem[] getSelectItems(List<?> entities, boolean selectOne) {
@@ -2747,4 +2747,52 @@ public class JsfUtil implements Serializable {
           return result;
     }
     // </editor-fold>
+    
+    
+    
+    /**
+     * Muestra la memoria RAM libre
+     *
+     * @return
+     */
+    public static Ram ramMemory() {
+        Ram ram = new Ram();
+        try {
+            Runtime rt = Runtime.getRuntime();
+            ram.setFreeMemory(rt.freeMemory());
+            ram.setMaxMemory(rt.maxMemory());
+            ram.setTotalMemory(rt.totalMemory());
+            long memory = ram.getTotalMemory() - ram.getFreeMemory();
+            ram.setMemoryUsedBytes(memory);
+            ram.setMemoryUsedMB(bytesToMegabytes(memory));
+            ram.setFreeMemory(bytesToMegabytes(ram.getFreeMemory()));
+            ram.setMaxMemory(bytesToMegabytes(ram.getMaxMemory()));
+            ram.setTotalMemory(bytesToMegabytes(ram.getTotalMemory()));
+
+//        System.out.println("Used memory is bytes: " + memory);
+//        System.out.println("Used memory is megabytes: "
+//                + bytesToMegabytes(memory));
+        } catch (Exception e) {
+            System.out.println("ramMemory " + e.getLocalizedMessage());
+        }
+
+        return ram;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="long bytesToMegabytes(long bytes)">
+    public static long bytesToMegabytes(long bytes) {
+        return bytes / MEGABYTE;
+    }
+    // </editor-fold>
+
+
+    // <editor-fold defaultstate="collapsed" desc="Long integerToLong(Integer i)">
+    public static Long integerToLong(Integer i) {
+        Long l = Long.valueOf(i.longValue());
+        return l;
+    } // </editor-fold>
+
+    
+
 }
