@@ -64,6 +64,7 @@ public class DownloadUtil {
             errorDialog("nameOfFileInPath()", e.getLocalizedMessage());
         }
         return name;
+        
     }
 
     // </editor-fold>
