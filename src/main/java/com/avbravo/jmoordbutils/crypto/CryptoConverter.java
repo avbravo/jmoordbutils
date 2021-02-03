@@ -6,8 +6,9 @@
  */
 package com.avbravo.jmoordbutils.crypto;
 
-import java.util.regex.Matcher;
-import com.lowagie.text.pdf.codec.Base64;
+
+
+import com.itextpdf.text.pdf.codec.Base64;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
