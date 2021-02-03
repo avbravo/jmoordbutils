@@ -7,6 +7,7 @@ package com.avbravo.jmoordbutils.downloadfile;
 
 import com.avbravo.jmoordbutils.DateUtil;
 import com.avbravo.jmoordbutils.DownloadUtil;
+import com.avbravo.jmoordbutils.JsfUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -203,4 +204,17 @@ public JmoordbViewImageServices() {
      public void showError(String message) {
         addMessage(FacesMessage.SEVERITY_ERROR, "Error Message", message);
     }
+     
+     
+       public StreamedContent genImage(String path){
+      try{  
+                    
+                    
+          fromDisk(path);
+             } catch (Exception e) {
+            JsfUtil.errorDialog("produdeImage()", e.getLocalizedMessage());
+        }
+            System.out.println("---> devuelto"+getFileDisk().getName());
+            return getFileDisk();
+        }
 }
