@@ -59,7 +59,7 @@ public class JMoordbMediaManager implements Serializable {
     public void init() {
         try {
      //       System.out.println("init() GraphImageView..");
- String fileDownloadPath = (String) JmoordbMediaContext.get("fileDownloadPath");
+ String fileDownloadPath = (String) JmoordbMediaContext.get("pathOfFile");
 
             if (fileDownloadPath == null || fileDownloadPath.equals("")) {
 //                System.out.println("Es null en el context");
@@ -207,7 +207,7 @@ public class JMoordbMediaManager implements Serializable {
                 path = filenamePath[0];
 
             }else{
-                 path = (String) JmoordbMediaContext.get("fileDownloadPath");
+                 path = (String) JmoordbMediaContext.get("pathOfFile");
 
             if (path== null || path.equals("")) {
                 path="";
@@ -245,7 +245,7 @@ public class JMoordbMediaManager implements Serializable {
                 path = filenamePath[0];
 
             }else{
-                 path = (String) JmoordbMediaContext.get("fileDownloadPath");
+                 path = (String) JmoordbMediaContext.get("pathOfFile");
 
             if (path== null || path.equals("")) {
                 path="";
