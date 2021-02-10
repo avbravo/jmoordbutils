@@ -91,8 +91,8 @@ public class JMoordbMediaManager implements Serializable {
                     .stream(() -> is)
                     .build();
         } catch (Exception e) {
-            System.out.println("generateImage() " + e.getLocalizedMessage());
-            JsfUtil.errorMessage("generateImage()" + e.getLocalizedMessage());
+            System.out.println("generate() " + e.getLocalizedMessage());
+       //     JsfUtil.errorMessage("generateImage()" + e.getLocalizedMessage());
         }
 
         return media;
