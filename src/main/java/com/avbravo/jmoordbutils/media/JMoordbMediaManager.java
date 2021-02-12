@@ -267,5 +267,23 @@ public class JMoordbMediaManager implements Serializable {
     }
     // </editor-fold>
     
+    // <editor-fold defaultstate="collapsed" desc=" Boolean isValid()">
+    
+    /**
+     * Veririca si el media es un StreamContext valid
+     * @return 
+     */
+    public Boolean isValid(){
+        try {
+            if(media!=null || media.getStream() == null || media.getName() == null){
+                return false;
+            }
+         return true;
+        } catch (Exception e) {
+              errorDialog("isValid()", e.getLocalizedMessage());
+        }
+        return false;
+    }
+        // </editor-fold>
     
 }
