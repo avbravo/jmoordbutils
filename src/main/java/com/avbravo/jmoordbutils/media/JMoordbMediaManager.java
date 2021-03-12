@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -285,5 +287,27 @@ public class JMoordbMediaManager implements Serializable {
         return false;
     }
         // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Boolean existsFile(String path)">
+    /**
+     * Verifica si existe el archivo
+     * @param path
+     * @return 
+     */
+  public Boolean existsFile(String path) {
+    try {
+      if (path == null || path.isBlank() || path.isEmpty()) {
+        return false;
+      }
+      if (Files.exists(Paths.get(path))) {
+
+        return true;
+      }
+    } catch (Exception e) {
+      JsfUtil.errorDialog("existsFile()", e.getLocalizedMessage());
+    }
+    return false;
+  }
+  // </editor-fold>
     
 }
