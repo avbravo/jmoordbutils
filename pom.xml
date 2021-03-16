@@ -4,7 +4,7 @@
 
     <groupId>com.avbravo</groupId>
     <artifactId>jmoordbutils</artifactId>
-    <version>1.31.100</version>
+    <version>1.32</version>
     <packaging>ejb</packaging>
 
     <name>jmoordbutils</name>
@@ -78,6 +78,12 @@
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>1.9.4</version>
+        </dependency>
+        
+          <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver</artifactId>
+            <version>3.6.0</version>
         </dependency>
         
         <!--
