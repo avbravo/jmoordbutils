@@ -60,7 +60,7 @@ public class JMoordbMediaManager implements Serializable {
     @PostConstruct
     public void init() {
         try {
-     //       System.out.println("init() GraphImageView..");
+   
  String fileDownloadPath = (String) JmoordbMediaContext.get("pathOfFile");
 
             if (fileDownloadPath == null || fileDownloadPath.equals("")) {
@@ -77,12 +77,12 @@ public class JMoordbMediaManager implements Serializable {
         // <editor-fold defaultstate="collapsed" desc="StreamedContent generate(String pathFile)">
     public StreamedContent generate(String pathFile) {
         try {
-//            System.out.println("-------------------------------------");
-//            System.out.println("------generateImage "+ pathFile);
-//            System.out.println("-------------------------------------");
+          
             String name = nameOfFileInPath(pathFile);
             String pathOfFile =pathOfFile(pathFile);
             String extensionOfFileInPath = extensionOfFileInPath(pathFile);
+            
+          
 
             File filet = new File(pathFile);
             is = new FileInputStream(filet);
