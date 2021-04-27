@@ -62,7 +62,7 @@ public class JMoordbMediaManager implements Serializable {
         try {
    
  String fileDownloadPath = (String) JmoordbMediaContext.get("pathOfFile");
-            System.out.println("@@@@ fileDownloadPath "+fileDownloadPath );
+            
             if (fileDownloadPath == null || fileDownloadPath.equals("")) {
 //                System.out.println("Es null en el context");
             } else {
@@ -81,16 +81,11 @@ public class JMoordbMediaManager implements Serializable {
             String name = nameOfFileInPath(pathFile);
             String pathOfFile =pathOfFile(pathFile);
             String extensionOfFileInPath = extensionOfFileInPath(pathFile);
-            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ generate");
-            System.out.println("@@@ name "+name);
-            System.out.println("@@@ pathOfFile "+pathOfFile);
-            System.out.println("@@@ extensionOfFileInPath  "+extensionOfFileInPath );
+            
 
             File filet = new File(pathFile);
             
-            System.out.println("@@@@@ filet.getName() "+filet.getName());
-            System.out.println("@@@@@ filet.getAbsolutePath() "+filet.getAbsolutePath());
-            System.out.println("@@@@@ filet.getCanonicalPath() "+filet.getCanonicalPath());
+           
             is = new FileInputStream(filet);
 
            media = DefaultStreamedContent.builder()
