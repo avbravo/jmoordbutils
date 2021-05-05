@@ -62,6 +62,8 @@ import java.util.Enumeration;
 import java.util.SplittableRandom;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
 
 // </editor-fold>
 /**
@@ -83,7 +85,7 @@ public class JsfUtil implements Serializable {
     private static Pattern patternPassword;
     private static Matcher matcherPassword;
     private static String PASSWORD_PATTERN = "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@.#$%!-,_*?]).{8,40})";
-      private static final long MEGABYTE = 1024L * 1024L;
+    private static final long MEGABYTE = 1024L * 1024L;
 
 // <editor-fold defaultstate="collapsed" desc="getSelectItems"> 
     public static SelectItem[] getSelectItems(List<?> entities, boolean selectOne) {
@@ -2622,7 +2624,6 @@ public class JsfUtil implements Serializable {
      * @param pattern
      * @return
      */
-
     public static Boolean validatePasswordContainsUpperLowerNumber(String password, String pattern) {
         patternPassword = Pattern.compile(pattern);
 
@@ -2652,8 +2653,7 @@ public class JsfUtil implements Serializable {
         return isLinux() ? (addUserHome ? userHome() + pahtLinux : pahtLinux) : pathWindows;
     }
     // </editor-fold>
-    
-    
+
     // <editor-fold defaultstate="collapsed" desc="Boolean divideDestinatary(List<User> list)()">
     /**
      * Divide de una lista los emails
@@ -2662,59 +2662,55 @@ public class JsfUtil implements Serializable {
      * @return
      */
     public static EmailRecipients divideDestinatary(List<String> list) {
-        EmailRecipients  emailRecipients = new EmailRecipients();
+        EmailRecipients emailRecipients = new EmailRecipients();
         try {
             ////Divide para las copias y bcc,cc
             emailRecipients.divide(list);
-           
+
         } catch (Exception e) {
             System.out.println("divideDestinatary() " + e.getLocalizedMessage());
         }
-        return emailRecipients ;
+        return emailRecipients;
     }
     // </editor-fold>
-    
-    // <editor-fold defaultstate="collapsed" desc="void printEmailRecipients(EmailRecipients emailRecipients) ">
-/**
- * iprime el contenido de emails recipients
- * @param emailRecipients 
- */
-    
-    public static void printEmailRecipients(EmailRecipients emailRecipients) {
-         //imporimo los array
-            String arrayto[] = emailRecipients.getTo();
-            String arrayBcc[] = emailRecipients.getBcc();
-            String arrayCc[] = emailRecipients.getCc();
-            System.out.println(">>>>TO");
-            for (int i = 0; i < arrayto.length; i++) {
-                System.out.println(" " + arrayto[i]);
-            }
-            System.out.println(">>>>bcc");
-            for (int i = 0; i < arrayBcc.length; i++) {
-                System.out.println(" " + arrayBcc[i]);
-            }
-            System.out.println(">>>>Ccc");
-            for (int i = 0; i < arrayCc.length; i++) {
-                System.out.println(" " + arrayCc[i]);
-            }
-    }
-            
-// </editor-fold>
 
-    
-    
-    
+    // <editor-fold defaultstate="collapsed" desc="void printEmailRecipients(EmailRecipients emailRecipients) ">
+    /**
+     * iprime el contenido de emails recipients
+     *
+     * @param emailRecipients
+     */
+    public static void printEmailRecipients(EmailRecipients emailRecipients) {
+        //imporimo los array
+        String arrayto[] = emailRecipients.getTo();
+        String arrayBcc[] = emailRecipients.getBcc();
+        String arrayCc[] = emailRecipients.getCc();
+        System.out.println(">>>>TO");
+        for (int i = 0; i < arrayto.length; i++) {
+            System.out.println(" " + arrayto[i]);
+        }
+        System.out.println(">>>>bcc");
+        for (int i = 0; i < arrayBcc.length; i++) {
+            System.out.println(" " + arrayBcc[i]);
+        }
+        System.out.println(">>>>Ccc");
+        for (int i = 0; i < arrayCc.length; i++) {
+            System.out.println(" " + arrayCc[i]);
+        }
+    }
+
+// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="long secondsToNanoseconds(Double seconds)">
     /**
      * Convierte segundos (Double ) a nanosegundos
+     *
      * @param seconds
-     * @return 
+     * @return
      */
-    public static long secondsToNanoseconds(Double seconds){
-        long result=0;
-          try {
+    public static long secondsToNanoseconds(Double seconds) {
+        long result = 0;
+        try {
 
-       
             String doubleAsString = String.valueOf(seconds);
             int indexOfDecimal = doubleAsString.indexOf(".");
             Double in = Double.parseDouble(doubleAsString.substring(0, indexOfDecimal));
@@ -2736,20 +2732,19 @@ public class JsfUtil implements Serializable {
                     r2 = dec.longValue() * 1_0_000_000L;
                     break;
             }
-          
+
             long r1 = in.longValue() * 1_000_000_000L;
 
-          result = r1 + r2;
+            result = r1 + r2;
 
         } catch (Exception e) {
             System.out.println("error " + e.getLocalizedMessage());
         }
-          return result;
+        return result;
     }
     // </editor-fold>
-    
-    
-    
+
+    // <editor-fold defaultstate="collapsed" desc="Ram ramMemory()">
     /**
      * Muestra la memoria RAM libre
      *
@@ -2786,14 +2781,24 @@ public class JsfUtil implements Serializable {
     }
     // </editor-fold>
 
-
     // <editor-fold defaultstate="collapsed" desc="Long integerToLong(Integer i)">
     public static Long integerToLong(Integer i) {
         Long l = Long.valueOf(i.longValue());
         return l;
     } // </editor-fold>
 
-    
-    
+    // <editor-fold defaultstate="collapsed" desc="method()">
+    public static String jsonToString(Object obj) {
+        String content = "";
+        try {
+            Jsonb jsonb = JsonbBuilder.create();
+            content = jsonb.toJson(obj);
+        } catch (Exception e) {
+            System.out.println("jsonToString() " + e.getLocalizedMessage());
+        }
+
+        return content;
+    }
+    // </editor-fold>
 
 }
