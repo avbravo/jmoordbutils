@@ -114,6 +114,12 @@ public class JMoordbMediaManager implements Serializable {
             case "jpg":
           text="image/jpg";
                 break;
+            case "jpeg":
+          text="image/jpeg";
+                break;
+            case "gif":
+               text="image/gif";
+                break;
             case "png":
                text="image/png";
                 break;
@@ -219,7 +225,7 @@ public class JMoordbMediaManager implements Serializable {
              if(!path.equals("")){
                  extension = path.substring(path.lastIndexOf('.') + 1, path.length());
            
-                 if(extension.equals("jpg") || extension.equals("png")){
+                 if(extension.equals("jpg") || extension.equals("png")  || extension.equals("jpeg")  || extension.equals("gif")){
                      valid=true;
                  }
              }
