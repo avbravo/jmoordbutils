@@ -9,8 +9,12 @@ import com.avbravo.jmoordbutils.JsfUtil;
 import static com.avbravo.jmoordbutils.JsfUtil.nameOfMethod;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import org.bson.Document;
+import org.primefaces.model.SortMeta;
+import org.primefaces.model.SortOrder;
 
 /**
  * @author avbravo
@@ -236,11 +240,59 @@ public interface IPaginator {
     default public Paginator loadPaginator(Paginator paginator) {
         return paginator;
     }
+
     // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="move(Paginator paginator)">
     public default void move(Paginator paginator, Object s) {
-        
+
     }
 
     // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="methods() ">
+    public default void processLazyDataModel(Paginator paginator, Paginator paginatorOld, int offset, Integer rowPage, Integer totalRecords, Map<String, SortMeta> sortBy) {
+//        List<Paginator> list = new ArrayList<>();
+        try {
+            String field;
+            SortOrder sortOder;
+            paginator.setTotalRecords(totalRecords);
+            for (Map.Entry<String, SortMeta> e : sortBy.entrySet()) {
+
+                field = e.getValue().getField();
+                sortOder = e.getValue().getOrder();
+                if (sortOder.isAscending()) {
+                    paginator.setSort(new Document(field, 1));
+                } else {
+                    if (sortOder.isDescending()) {
+                        paginator.setSort(new Document(field, -1));
+                    } else {
+                        if (sortOder.isUnsorted()) {
+                            paginator.setSort(new Document(new Document()));
+                        }
+                    }
+                }
+            }
+
+            if (paginatorOld.getQuery() == null || paginatorOld.getQuery().equals("")) {
+                paginatorOld = paginator;
+            }
+            if (offset == 0) {
+                paginator.setPage(1);
+            } else {
+                if (paginatorOld.getQuery().equals(paginator.getQuery())) {
+                    paginator.setPage((offset / rowPage) + 1);
+
+                } else {
+                    paginatorOld = paginator;
+                    paginator.setPage(1);
+                }
+
+            }
+        } catch (Exception e) {
+            System.out.println("processLazyDataModel() " + e.getLocalizedMessage());
+        }
+//        list.add(paginator);
+//        list.add(paginatorOld);
+//        return list;
+    }
+// </editor-fold>
 }
