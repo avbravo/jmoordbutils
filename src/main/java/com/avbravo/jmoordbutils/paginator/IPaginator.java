@@ -5,9 +5,11 @@
  */
 package com.avbravo.jmoordbutils.paginator;
 
+import com.avbravo.jmoordbutils.DateUtil;
 import com.avbravo.jmoordbutils.JsfUtil;
 import static com.avbravo.jmoordbutils.JsfUtil.nameOfMethod;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -295,4 +297,28 @@ public interface IPaginator {
         return list;
     }
 // </editor-fold>
+    
+    
+      // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
+   default public String showDate(Date date) {
+        String h = "";
+        try {
+      
+            h = DateUtil.dateFormatToString(date, "dd/MM/yyyy");
+        } catch (Exception e) {
+            System.out.println("showDate() "+e.getLocalizedMessage());
+        }
+        return h;
+    }// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="String showHour(Date date)">
+  default  public String showHour(Date date) {
+        String h = "";
+        try {
+            h = DateUtil.hourFromDateToString(date);
+        } catch (Exception e) {
+               System.out.println("showHour() "+e.getLocalizedMessage());
+        }
+        return h;
+    }// </editor-fold>
 }
