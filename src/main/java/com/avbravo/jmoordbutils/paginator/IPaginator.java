@@ -248,9 +248,9 @@ public interface IPaginator {
     }
 
     // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="methods() ">
-    public default void processLazyDataModel(Paginator paginator, Paginator paginatorOld, int offset, Integer rowPage, Integer totalRecords, Map<String, SortMeta> sortBy) {
-//        List<Paginator> list = new ArrayList<>();
+    // <editor-fold defaultstate="collapsed" desc="List<Paginator> processLazyDataModel(Paginator paginator, Paginator paginatorOld, int offset, Integer rowPage, Integer totalRecords, Map<String, SortMeta> sortBy)  ">
+    public default List<Paginator> processLazyDataModel(Paginator paginator, Paginator paginatorOld, int offset, Integer rowPage, Integer totalRecords, Map<String, SortMeta> sortBy) {
+        List<Paginator> list = new ArrayList<>();
         try {
             String field;
             SortOrder sortOder;
@@ -290,9 +290,9 @@ public interface IPaginator {
         } catch (Exception e) {
             System.out.println("processLazyDataModel() " + e.getLocalizedMessage());
         }
-//        list.add(paginator);
-//        list.add(paginatorOld);
-//        return list;
+        list.add(paginator);
+        list.add(paginatorOld);
+        return list;
     }
 // </editor-fold>
 }
