@@ -157,6 +157,18 @@ public class JsfUtil implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, msg, ""));
         LOG.warning(msg);
     }    // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="warningMessage(String msg, Exception e)"> 
+
+    public static void warningMessage(String msg, Exception e) {
+        String msgExtra=""; 
+        if(e==null){
+                
+                }else{
+                   msgExtra =e.getLocalizedMessage();
+                }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, msg + " "+msgExtra, ""));
+        LOG.warning(msg);
+    }    // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="fatalMessage"> 
 
     public static void fatalMessage(String msg) {
@@ -194,6 +206,20 @@ public class JsfUtil implements Serializable {
         PrimeFaces.current().dialog().showMessageDynamic(message);
 
     }    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="warningDialog(String titulo, String texto, Exception e)"> 
+    public static void warningDialog(String titulo, String texto, Exception e) {
+        String msgExtra=""; 
+        if(e==null){
+                
+                }else{
+                   msgExtra =e.getLocalizedMessage();
+                }
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, titulo,
+                texto+ " "+msgExtra);
+
+        PrimeFaces.current().dialog().showMessageDynamic(message);
+
+    }    // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="fatalDialog"> 
 
     public static void fatalDialog(String titulo, String texto) {
@@ -201,11 +227,24 @@ public class JsfUtil implements Serializable {
                 texto);
         PrimeFaces.current().dialog().showMessageDynamic(message);
     }    // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="errorDialog"> 
+// <editor-fold defaultstate="collapsed" desc="errorDialog(String titulo, String texto)"> 
 
     public static void errorDialog(String titulo, String texto) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                 titulo, texto);
+        PrimeFaces.current().dialog().showMessageDynamic(message);
+    }    // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="errorDialog(String titulo, String texto, Exception e)"> 
+
+    public static void errorDialog(String titulo, String texto, Exception e) {
+          String msgExtra=""; 
+        if(e==null){
+                
+                }else{
+                   msgExtra =e.getLocalizedMessage();
+                }
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                titulo, texto +" "+msgExtra);
         PrimeFaces.current().dialog().showMessageDynamic(message);
     }    // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="converterDate"> 
