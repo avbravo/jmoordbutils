@@ -2037,6 +2037,11 @@ public class JsfUtil implements Serializable {
             }
 
             /**
+             * Genera un id para indicar la relación de todos los mensajes
+             */
+            String uuid =UUID.randomUUID().toString();
+            
+            /**
              * procesa el trace
              */
             String trace = "";
@@ -2049,6 +2054,7 @@ public class JsfUtil implements Serializable {
                             if (c == 0) {
                                 c++;
                                 trace += "\n            {";
+                                trace += "\n            \"id\":\"" + uuid + "\",";
                                 trace += "\n            \"dateTime\":\"" + DateUtil.fechaHoraActual() + "\",";
                                 trace += "\n            \"fileName\":\"" + s.getFileName() + "\",";
                                 trace += "\n            \"className\":\"" + s.getClassName() + "\",";
@@ -2058,6 +2064,7 @@ public class JsfUtil implements Serializable {
                                 trace += "\n            }";
                             } else {
                                 trace += "\n           ,{";
+                                 trace += "\n            \"id\":\"" + uuid + "\",";
                                 trace += "\n            \"dateTime\":\"" + DateUtil.fechaHoraActual() + "\",";
                                 trace += "\n            \"fileName\":\"" + s.getFileName() + "\",";
                                 trace += "\n            \"className\":\"" + s.getClassName() + "\",";
@@ -2085,6 +2092,7 @@ public class JsfUtil implements Serializable {
                         if (c == 0) {
                             c++;
                             traceAll += "\n            {";
+                             trace += "\n            \"id\":\"" + uuid + "\",";
                             traceAll += "\n            \"dateTime\":\"" + DateUtil.fechaHoraActual() + "\",";
                             traceAll += "\n            \"fileName\":\"" + s.getFileName() + "\",";
                             traceAll += "\n            \"className\":\"" + s.getClassName() + "\",";
@@ -2094,6 +2102,7 @@ public class JsfUtil implements Serializable {
                             traceAll += "\n            }";
                         } else {
                             traceAll += "\n           ,{";
+                             trace += "\n            \"id\":\"" + uuid + "\",";
                             traceAll += "\n            \"dateTime\":\"" + DateUtil.fechaHoraActual() + "\",";
                             traceAll += "\n            \"fileName\":\"" + s.getFileName() + "\",";
                             traceAll += "\n            \"className\":\"" + s.getClassName() + "\",";
