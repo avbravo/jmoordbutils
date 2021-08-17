@@ -9,11 +9,13 @@ package com.avbravo.jmoordbutils;
 import com.avbravo.jmoordbutils.crypto.CryptoConverter;
 import com.avbravo.jmoordbutils.domains.Ram;
 import com.avbravo.jmoordbutils.email.EmailRecipients;
+import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-
+import org.apache.commons.lang.RandomStringUtils;
+import org.imgscalr.Scalr;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -43,6 +45,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.TreeMap;
@@ -62,8 +65,10 @@ import java.util.Enumeration;
 import java.util.SplittableRandom;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import javax.imageio.ImageIO;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
+import org.primefaces.model.file.UploadedFile;
 
 // </editor-fold>
 /**
@@ -2835,7 +2840,7 @@ public class JsfUtil implements Serializable {
         return l;
     } // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="method()">
+    // <editor-fold defaultstate="collapsed" desc="String jsonToString(Object obj)>
     public static String jsonToString(Object obj) {
         String content = "";
         try {
@@ -2849,4 +2854,43 @@ public class JsfUtil implements Serializable {
     }
     // </editor-fold>
 
+    
+    // <editor-fold defaultstate="collapsed" desc="String getFileExt(UploadedFile file)">
+
+    public static String getFileExt(UploadedFile file) {
+        String nombre = file.getFileName();
+        int lastIndexOf = nombre.lastIndexOf(".");
+        if (lastIndexOf == -1) {
+            return ""; // empty extension
+        }
+        return nombre.substring(lastIndexOf);
+    }
+    // </editor-fold>
+    
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="String generarNombre()">
+
+    public static String generarNombre() {
+        return Long.toString(new Date().getTime())
+                + RandomStringUtils.randomAlphanumeric(7).toLowerCase();
+    }
+// </editor-fold>
+    
+     // <editor-fold defaultstate="collapsed" desc="BufferedImage reducirImagen()">
+
+    public static BufferedImage reducirImagen(UploadedFile file) {
+        try {
+            BufferedImage imagenOriginal = ImageIO.read(file.getInputStream());
+
+            if (imagenOriginal.getHeight() > 1200) {
+                return Scalr.resize(imagenOriginal, 1024);
+            }
+            return imagenOriginal;
+        } catch (IOException ex) {
+        JsfUtil.errorDialog("reducirImagen() ", ex.getLocalizedMessage());
+
+            return null;
+        }
+    }// </editor-fold>
 }
