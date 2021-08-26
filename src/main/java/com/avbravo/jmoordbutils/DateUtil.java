@@ -2104,4 +2104,117 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
         return conveter;
     }
          // </editor-fold>
+   // <editor-fold defaultstate="collapsed" desc=" LocalTime  convertDateToLocalTime(Date date) "> 
+  /**
+   * 
+   * @param date
+   * @return 
+   */
+    public static  LocalTime  convertDateToLocalTime(Date date) {
+      LocalTime time ;
+        try {
+            return     time = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).toLocalTime();
+         
+      
+        } catch (Exception e) {
+            System.out.println("stringToISODateFrom() " + e.getLocalizedMessage());
+
+        }
+        return null;
+    }
+         // </editor-fold>
+    
+  
+     // <editor-fold defaultstate="collapsed" desc=" String converterLocalTimeToStringAMPM(LocalTime time)"> 
+    /**
+     * Convierte un LocalTime a un String agregando AM/PM
+     * Desarrollado por Isral Deago
+     * @param time
+     * @return 
+     *   LocalTime time = LocalDateTime.ofInstant(new Date().toInstant(), ZoneId.systemDefault()).toLocalTime();
+        String timeString = converterLocalTimeToStringAMPM(time);
+        System.out.println(".......timeString "+timeString);
+     */
+     public static String converterLocalTimeToStringAMPM(LocalTime time){
+        String tiempoString ="";
+        try {
+         
+            String amPM = "AM";
+            int horas = time.getHour();
+            int minutos = time.getMinute();
+            if (horas > 12) {
+                horas = horas - 12;
+                amPM = "PM";
+            } else if (horas == 0) {
+                horas = 12;
+            } else if (horas == 12) {
+                amPM = "PM";
+            }
+
+            String horasFinales;
+            String minutosFinales;
+            horasFinales = (horas < 10) ? "0" + horas : String.valueOf(horas);
+            minutosFinales = (minutos < 10) ? "0" + minutos : String.valueOf(minutos);
+           tiempoString = horasFinales + ":" + minutosFinales + " " + amPM;
+      
+        } catch (Exception e) {
+            System.out.println("timeToStringAMPM() "+e.getLocalizedMessage());
+        }
+        return tiempoString;
+    }
+     // </editor-fold>
+     
+     // <editor-fold defaultstate="collapsed" desc=" LocalTime convertStringToLocalTimeAMPM(String submittedValue) "> 
+     
+     /**
+      * Convierte un StringAMPM a un LocalTime
+      * @param submittedValue
+      * @return 
+      */
+        public static LocalTime convertStringToLocalTimeAMPM(String submittedValue) {
+        try {
+
+            DateFormat parser = null;
+            Object returnValue = null;
+            LocalTime tiempo;
+            String hora;
+            String minutos;
+          
+            if (submittedValue == null || submittedValue.isEmpty()) {
+
+                return null;
+            }
+            submittedValue =submittedValue.toUpperCase();
+            if (submittedValue.contains("AM") || submittedValue.contains("PM")) {
+                String tiempoAMPM[] = submittedValue.split(" ");
+                String horasMinutos[] = tiempoAMPM[0].split(":");
+
+                hora = horasMinutos[0];
+                minutos = horasMinutos[1];
+                if (hora.equals("12") && tiempoAMPM[1].equals("AM")) {
+                    hora = "00";
+                } else if (tiempoAMPM[1].equals("PM") && !hora.equals("12")) {
+                    int horaMilitar = Integer.parseInt(hora) + 12;
+                    hora = String.valueOf(horaMilitar);
+                }
+
+
+            } else {
+                
+                String horasMinutos[] = submittedValue.split(":");
+                hora = horasMinutos[0];
+                minutos = horasMinutos[1];
+
+            }
+            tiempo = LocalTime.of(Integer.parseInt(hora), Integer.parseInt(minutos));
+            return tiempo;
+        } catch (Exception e) {
+            System.out.println("la hora no es valida");
+            return null;
+        }
+
+//        return hora+":"+minutos;
+    }
+     // </editor-fold>
+    
 }

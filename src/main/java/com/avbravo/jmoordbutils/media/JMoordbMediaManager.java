@@ -63,7 +63,7 @@ public class JMoordbMediaManager implements Serializable {
         try {
    
  String fileDownloadPath = (String) JmoordbMediaContext.get("pathOfFile");
-            
+           
             if (fileDownloadPath == null || fileDownloadPath.equals("")) {
 //                System.out.println("Es null en el context");
             } else {
@@ -74,6 +74,8 @@ public class JMoordbMediaManager implements Serializable {
         }
     }
    // </editor-fold>
+    
+      
     
         // <editor-fold defaultstate="collapsed" desc="StreamedContent generate(String pathFile)">
     public StreamedContent generate(String pathFile) {
