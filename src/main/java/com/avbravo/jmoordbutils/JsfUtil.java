@@ -62,13 +62,16 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import org.apache.commons.beanutils.BeanUtils;
 import org.primefaces.PrimeFaces;
 import java.util.Enumeration;
+import java.util.Objects;
 import java.util.SplittableRandom;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import javax.imageio.ImageIO;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
+import org.bson.Document;
 import org.primefaces.model.file.UploadedFile;
+import org.apache.commons.io.FilenameUtils;
 
 // </editor-fold>
 /**
@@ -211,6 +214,109 @@ public class JsfUtil implements Serializable {
         PrimeFaces.current().dialog().showMessageDynamic(message);
 
     }    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="warningSaveDialog(Exception exception,String...languague) ">
+    public static void warningSaveDialog(Exception exception,String...languague){
+        try {
+            String translation="es";
+
+            if (languague.length != 0) {
+                translation = languague[0];
+            }
+            translation=translation.toLowerCase();
+            String titulo ="Advertencia";
+            String message="No se guardo el registro";
+            switch(translation){
+                case "es":
+                    titulo="Advertencia";
+                    message="No se guardo el registro";
+                    break;
+                case "en":
+                    titulo="Warning";
+                    message="No save";
+                    break;
+                    
+            }
+            if(exception != null){
+                warningDialog(titulo, message, exception);
+            }else{
+                warningDialog(titulo, message);
+            }
+                    
+            
+        } catch (Exception e) {
+            warningDialog(nameOfMethod(),e.getLocalizedMessage());
+        }
+    }
+    
+// </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="warningUpdateDialog(Exception exception,String...languague) ">
+    public static void warningUpdateDialog(Exception exception,String...languague){
+        try {
+            String translation="es";
+
+            if (languague.length != 0) {
+                translation = languague[0];
+            }
+            translation=translation.toLowerCase();
+            String titulo ="Advertencia";
+            String message="No se actualizo el registro";
+            switch(translation){
+                case "es":
+                    titulo="Advertencia";
+                    message="No se actualizo el registro";
+                    break;
+                case "en":
+                    titulo="Warning";
+                    message="No update";
+                    break;
+                    
+            }
+            if(exception != null){
+                warningDialog(titulo, message, exception);
+            }else{
+                warningDialog(titulo, message);
+            }
+                    
+            
+        } catch (Exception e) {
+            warningDialog(nameOfMethod(),e.getLocalizedMessage());
+        }
+    }
+    
+// </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="warningUpdateDialog(Exception exception,String...languague) ">
+    public static void warningEqualsUpdateDialog(String...languague){
+        try {
+            String translation="es";
+
+            if (languague.length != 0) {
+                translation = languague[0];
+            }
+            translation=translation.toLowerCase();
+            String titulo ="Advertencia";
+            String message="No hay ningun cambio no sera actualizado el registro";
+            switch(translation){
+                case "es":
+                    titulo="Advertencia";
+                    message="No hay ningun cambio no sera actualizado el registro";
+                    break;
+                case "en":
+                    titulo="Warning";
+                    message="No change for update";
+                    break;
+                    
+            }
+             warningDialog(titulo, message);
+            
+        } catch (Exception e) {
+            warningDialog(nameOfMethod(),e.getLocalizedMessage());
+        }
+    }
+    
+// </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="warningDialog(String titulo, String texto, Exception e)"> 
     public static void warningDialog(String titulo, String texto, Exception e) {
         String msgExtra=""; 
@@ -2877,6 +2983,14 @@ public class JsfUtil implements Serializable {
     }
 // </editor-fold>
     
+    // <editor-fold defaultstate="collapsed" desc="String generateName()">
+
+    public static String generateName() {
+        return Long.toString(new Date().getTime())
+                + RandomStringUtils.randomAlphanumeric(7).toLowerCase();
+    }
+// </editor-fold>
+    
      // <editor-fold defaultstate="collapsed" desc="BufferedImage reducirImagen()">
 
     public static BufferedImage reducirImagen(UploadedFile file) {
@@ -2893,4 +3007,82 @@ public class JsfUtil implements Serializable {
             return null;
         }
     }// </editor-fold>
+    
+    
+
+    // <editor-fold defaultstate="collapsed" desc=" checkImage(UploadedFile localFile)">
+    public static Boolean checkImage(UploadedFile localFile) {
+        try {
+
+       
+            return ImageIO.read(localFile.getInputStream()) != null;
+
+        } catch (IOException ex) {
+           
+
+ JsfUtil.errorDialog(nameOfMethod(), ex.getLocalizedMessage());
+            return false;
+        }
+    }// </editor-fold>
+   
+
+    
+    // <editor-fold defaultstate="collapsed" desc="Boolean equals(Object object1, Object object2)">
+    
+    /**
+     * Compara dos objectos, lo hacemos convirtiendoslos a JSOn y luebo comparando esos objetos json
+     * @param object1
+     * @param object2
+     * @return 
+     */
+    public static Boolean equals(Object object1, Object object2){
+        try {
+            Jsonb jsonb = JsonbBuilder.create();
+                    String json1 = jsonb.toJson(object1);
+                    String json2 = jsonb.toJson(object2);
+                    if(json1.equals(json2)){
+                        return true;
+                    }
+        } catch (Exception e) {
+             JsfUtil.errorDialog(nameOfMethod(), e.getLocalizedMessage());
+        }
+        return false;
+    }
+// </editor-fold>
+    
+    
+     // <editor-fold defaultstate="collapsed" desc="Boolean saveImage(BufferedImage imagenGuardar,UploadedFile localFile) ">
+    /**
+     * Guarda la imagen y devuelve el nombre del archivo geneardo con el pathIndicado
+     * @param imagenGuardar
+     * @param localFile
+     * @param fieldValue
+     * @param directoryImagenes
+     * @return 
+     */
+    public static String saveImage( UploadedFile localFile, String fieldValue, String directoryImagenes) {
+        String imageFilePath = "";
+        try {
+       BufferedImage imagenReduced=reducirImagen(localFile);    
+            String nombre;
+            File archivo;
+            if (Objects.isNull(fieldValue)
+                    || fieldValue.isBlank()
+                    || fieldValue.equals("")) {
+                nombre = JsfUtil.generateName();
+
+            } else {
+                nombre = FilenameUtils.getBaseName(fieldValue);
+            }
+            archivo = new File(directoryImagenes + nombre + JsfUtil.getFileExt(localFile));
+            ImageIO.write(imagenReduced, JsfUtil.getFileExt(localFile).substring(1), archivo);
+            imageFilePath = directoryImagenes + nombre + JsfUtil.getFileExt(localFile);
+
+        } catch (IOException e) {
+            JsfUtil.errorDialog(nameOfMethod(), e.getLocalizedMessage());
+
+        }
+        return imageFilePath;
+    }
+// </editor-fold>
 }
