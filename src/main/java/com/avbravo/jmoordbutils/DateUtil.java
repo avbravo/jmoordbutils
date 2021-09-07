@@ -25,6 +25,7 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -1779,6 +1780,21 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
         }
         return h;
     }// </editor-fold>
+    
+          // <editor-fold defaultstate="collapsed" desc="String showDateLocalDate(LocalDate date)">
+    public String showDateLocalDate(LocalDate date) {
+        String h = "";
+        try {
+            DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+h = date.format(formatters);
+            
+        } catch (Exception e) {
+            JsfUtil.errorMessage("showDateLocalDate()" + e.getLocalizedMessage());
+        }
+
+        return h;
+    }// </editor-fold>
+      
 
     // <editor-fold defaultstate="collapsed" desc="String showHour(Date date)">
     public static String showHour(Date date) {
@@ -2216,5 +2232,7 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
 //        return hora+":"+minutos;
     }
      // </editor-fold>
-    
+ 
+        
+        
 }
