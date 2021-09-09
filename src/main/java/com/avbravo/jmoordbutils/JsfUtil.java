@@ -206,8 +206,17 @@ public class JsfUtil implements Serializable {
     }
 
     // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="warningDialog"> 
+    // <editor-fold defaultstate="collapsed" desc="warningDialog(String titulo, String texto)"> 
     public static void warningDialog(String titulo, String texto) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, titulo,
+                texto);
+
+        PrimeFaces.current().dialog().showMessageDynamic(message);
+
+    }    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="warningDialogwarningDialog(String texto) "> 
+    public static void warningDialog(String texto) {
+      String titulo ="Advertencia";
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, titulo,
                 texto);
 
