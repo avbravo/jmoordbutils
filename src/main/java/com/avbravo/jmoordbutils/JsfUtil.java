@@ -3094,4 +3094,19 @@ public class JsfUtil implements Serializable {
         return imageFilePath;
     }
 // </editor-fold>
+    
+   // <editor-fold defaultstate="collapsed" desc="Boolean tieneEspaciosBlanco(String texto)">
+    public static Boolean tieneEspaciosBlanco(String texto) {
+        try {
+            texto = texto.trim();
+            Pattern pattern = Pattern.compile("\\s");
+            Matcher matcher = pattern.matcher(texto);
+            boolean found = matcher.find();
+            return found;
+        } catch (Exception e) {
+            errorMessage("tieneEspaciosBlanco() "+e.getLocalizedMessage());
+        }
+        return Boolean.FALSE;
+    }
+// </editor-fold>
 }
