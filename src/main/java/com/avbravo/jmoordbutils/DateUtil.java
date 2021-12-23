@@ -1781,6 +1781,40 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
         return h;
     }// </editor-fold>
     
+
+    
+     // <editor-fold defaultstate="collapsed" desc="hourFromDateToString(Date fecha)"> 
+    /**
+     * Devuelve una hora en formato hh:mm a o se puede especificar el formato
+     * deseado
+     *
+     * @param fecha
+     * @param format
+     * @return
+     */
+    public static String hourFromDateLocalDateTimeToString(java.time.LocalDateTime fecha, String... format) {
+        String h = "";
+        try {
+            String f = "hh:mm a";
+            if (format.length != 0) {
+                f = format[0];
+
+            }
+
+            h = dateFormatLocalDateTimeToString(fecha, f);
+        } catch (Exception e) {
+            JsfUtil.errorMessage("hourFromDateToString() " + e.getLocalizedMessage());
+        }
+        return h;
+
+    }
+
+    // </editor-fold>
+    
+    
+    
+    
+    
           // <editor-fold defaultstate="collapsed" desc="String showDateLocalDate(LocalDate date)">
     public String showDateLocalDate(LocalDate date) {
         String h = "";
@@ -2233,6 +2267,53 @@ h = date.format(formatters);
     }
      // </editor-fold>
  
-        
+         // <editor-fold defaultstate="collapsed" desc="String showDateLocalDateTime(java.time.LocalDateTime date) ">
+    public static String showDateLocalDateTime(java.time.LocalDateTime date) {
+        String h = "";
+        try {
+            h =  dateFormatLocalDateTimeToString(date, "dd/MM/yyyy");
+        } catch (Exception e) {
+            JsfUtil.errorMessage("showDate() " + e.getLocalizedMessage());
+        }
+        return h;
+    }// </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="String dateFormatLocalDateTimeToString(java.time.LocalDateTime  fecha, String... format) {"> 
+
+    /**
+     * formatea una fecha a "dd/MM/yyyy hh:mm a"
+     *
+     * @param fecha
+     * @param format
+     * @return
+     */
+    public static String dateFormatLocalDateTimeToString(java.time.LocalDateTime  fecha, String... format) {
+        String dateformat = "";
+        String f = "dd/MM/yyyy hh:mm a";
+        try {
+            if (format.length != 0) {
+                f = format[0];
+
+            }
+            SimpleDateFormat sdf = new SimpleDateFormat(f);
+            dateformat = sdf.format(fecha);
+        } catch (Exception e) {
+        }
+        return dateformat;
+    }
+
+    // </editor-fold>
+    
+    
+     // <editor-fold defaultstate="collapsed" desc="String showHourLocalDateTime(java.time.LocalDateTime  date)">
+    public static String showHourLocalDateTime(java.time.LocalDateTime  date) {
+        String h = "";
+        try {
+            h =  hourFromDateLocalDateTimeToString(date);
+        } catch (Exception e) {
+            JsfUtil.errorMessage("showHour() " + e.getLocalizedMessage());
+        }
+        return h;
+    }// </editor-fold>
         
 }
