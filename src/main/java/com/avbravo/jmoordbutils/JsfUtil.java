@@ -35,6 +35,7 @@ import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -63,6 +64,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.primefaces.PrimeFaces;
 import java.util.Enumeration;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.SplittableRandom;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -2707,7 +2709,7 @@ public class JsfUtil implements Serializable {
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc=" metodo()">
+    // <editor-fold defaultstate="collapsed" desc=" String fileAddTextToLocal(String fileName, String text)">
     /**
      * Agrega contenido al archivo en la ruta local
      *
@@ -3109,4 +3111,41 @@ public class JsfUtil implements Serializable {
         return Boolean.FALSE;
     }
 // </editor-fold>
+    
+     // <editor-fold defaultstate="collapsed" desc="BigInteger toBigInteger(Integer number)>  
+            
+    public static BigInteger toBigInteger(Integer number){
+        return BigInteger.valueOf(number);
+    }
+// </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc=" int longToInteger(Long n)">    
+    
+    public static int longToInteger(Long n){
+     return  n.intValue();
+    }
+// </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc=" propertiesBigIntegerToContext(Properties properties, String key)">
+    /**
+     * Lee una propiedad y la asigna al context
+     * 
+     * @param properties
+     * @param key 
+     */
+    public static void propertiesBigIntegerToContext(Properties properties, String key){
+        try {
+             if (properties.getProperty(key) == null) {
+                    JsfUtil.warningMessage("no existe la propiedad" +key);
+//                    JmoordbContext.put(key, 0);
+                } else {
+                    Integer value = Integer.parseInt(properties.getProperty(key));
+//                    JmoordbContext.put(key,value);
+                }
+        } catch (Exception e) {
+        }
+    }
+// </editor-fold>
+    
 }
