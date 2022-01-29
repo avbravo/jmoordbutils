@@ -2323,8 +2323,8 @@ h = date.format(formatters);
 
         
          if (DateUtil.esMismoDia(fechaInicio, fechaFin)) {
-                    if (DateUtil.horaDeUnaFecha(fechaInicio).equals(DateUtil.horaDeUnaFecha(fechaInicio))) {
-                        if (DateUtil.minutosDeUnaFecha(fechaInicio).equals(DateUtil.minutosDeUnaFecha(fechaInicio))) {
+                    if (DateUtil.horaDeUnaFecha(fechaInicio).equals(DateUtil.horaDeUnaFecha(fechaFin))) {
+                        if (DateUtil.minutosDeUnaFecha(fechaInicio).equals(DateUtil.minutosDeUnaFecha(fechaFin))) {
 iguales=Boolean.TRUE;
                         }
                     }
