@@ -5,21 +5,18 @@
  */
 package com.avbravo.jmoordbutils;
 
-import com.lowagie.text.Element;
 import com.lowagie.text.Font;
-import com.lowagie.text.FontFactory;
-import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfPCell;
+import jakarta.faces.context.FacesContext;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 //import com.itextpdf.text.Font;
 //import com.itextpdf.text.Paragraph;
 //import com.itextpdf.text.pdf.PdfPCell;
 import java.io.Serializable;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import javax.faces.context.FacesContext;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  *

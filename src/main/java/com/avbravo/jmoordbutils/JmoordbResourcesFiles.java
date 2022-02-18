@@ -5,13 +5,13 @@
  */
 package com.avbravo.jmoordbutils;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.faces.bean.SessionScoped;
+import jakarta.faces.context.FacesContext;
+import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.inject.Named;
 
 /**
  *

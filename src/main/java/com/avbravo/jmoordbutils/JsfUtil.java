@@ -9,6 +9,19 @@ package com.avbravo.jmoordbutils;
 import com.avbravo.jmoordbutils.crypto.CryptoConverter;
 import com.avbravo.jmoordbutils.domains.Ram;
 import com.avbravo.jmoordbutils.email.EmailRecipients;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.component.UIInput;
+import jakarta.faces.component.UISelectItem;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.model.SelectItem;
+import jakarta.faces.convert.Converter;
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -28,12 +41,6 @@ import java.io.RandomAccessFile;
 import java.util.UUID;
 import java.util.List;
 import java.util.logging.Logger;
-import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import javax.faces.model.SelectItem;
-import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
@@ -54,11 +61,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
-import javax.faces.component.UIInput;
-import javax.faces.component.UISelectItem;
-import javax.faces.context.ExternalContext;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import org.apache.commons.beanutils.BeanUtils;
 import org.primefaces.PrimeFaces;
@@ -69,11 +71,11 @@ import java.util.SplittableRandom;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import javax.imageio.ImageIO;
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
-import org.bson.Document;
+//import org.apache.commons.beanutils.Converter;
 import org.primefaces.model.file.UploadedFile;
 import org.apache.commons.io.FilenameUtils;
+
+
 
 // </editor-fold>
 /**
@@ -194,7 +196,7 @@ public class JsfUtil implements Serializable {
 
     // <editor-fold defaultstate="collapsed" desc="getObjectFromRequestParameter"> 
     public static Object getObjectFromRequestParameter(String requestParameterName,
-            Converter converter, UIComponent component) {
+     Converter converter, UIComponent component) {
         String theId = JsfUtil.getRequestParameter(requestParameterName);
         return converter.getAsObject(FacesContext.getCurrentInstance(), component, theId);
     }
@@ -204,7 +206,7 @@ public class JsfUtil implements Serializable {
     public static void infoDialog(String titulo, String texto) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, titulo,
                 texto);
-        PrimeFaces.current().dialog().showMessageDynamic(message);
+        PrimeFaces.current().dialog().showMessageDynamic(message );
     }
 
     // </editor-fold>
