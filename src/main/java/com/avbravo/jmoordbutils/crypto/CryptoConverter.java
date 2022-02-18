@@ -10,6 +10,8 @@ package com.avbravo.jmoordbutils.crypto;
 
 //import com.itextpdf.text.pdf.codec.Base64;
 import com.lowagie.text.pdf.codec.Base64;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -18,8 +20,6 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
 
 /**
  *

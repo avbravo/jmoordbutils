@@ -10,15 +10,15 @@ package com.avbravo.jmoordbutils.media;
 
 import com.avbravo.jmoordbutils.JsfUtil;
 import static com.avbravo.jmoordbutils.JsfUtil.errorDialog;
+import jakarta.annotation.PostConstruct;
+import jakarta.faces.bean.RequestScoped;
+import jakarta.inject.Named;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 

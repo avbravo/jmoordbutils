@@ -6,10 +6,10 @@
 package com.avbravo.jmoordbutils.logger;
 
 import static com.avbravo.jmoordbutils.JsfUtil.errorDialog;
+import jakarta.faces.bean.SessionScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import java.io.Serializable;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  *

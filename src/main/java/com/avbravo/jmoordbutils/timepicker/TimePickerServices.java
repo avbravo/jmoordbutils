@@ -8,11 +8,10 @@ package com.avbravo.jmoordbutils.timepicker;
 
 import com.avbravo.jmoordbutils.DateUtil;
 import com.avbravo.jmoordbutils.JsfUtil;
+import jakarta.ejb.Stateless;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
-import javax.ejb.Stateless;
-import javax.inject.Inject;
 
 /**
  *

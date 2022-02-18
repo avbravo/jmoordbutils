@@ -5,8 +5,8 @@
  */
 package com.avbravo.jmoordbutils.exceptions;
 
-import javax.faces.context.ExceptionHandler;
-import javax.faces.context.ExceptionHandlerFactory;
+import jakarta.faces.context.ExceptionHandler;
+import jakarta.faces.context.ExceptionHandlerFactory;
 
 /**
  *
