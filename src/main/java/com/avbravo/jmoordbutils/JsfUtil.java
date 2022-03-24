@@ -6,7 +6,7 @@
 package com.avbravo.jmoordbutils;
 // <editor-fold defaultstate="collapsed" desc="import">  
 
-import com.avbravo.jmoordbutils.crypto.CryptoConverter;
+
 import com.avbravo.jmoordbutils.domains.Ram;
 import com.avbravo.jmoordbutils.email.EmailRecipients;
 import jakarta.faces.application.FacesMessage;
@@ -61,7 +61,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
-import net.sf.jasperreports.engine.JasperCompileManager;
+//import net.sf.jasperreports.engine.JasperCompileManager;
 import org.apache.commons.beanutils.BeanUtils;
 import org.primefaces.PrimeFaces;
 import java.util.Enumeration;
@@ -829,12 +829,12 @@ public class JsfUtil implements Serializable {
      * @param key : mykey
      * @return
      */
-    public static String encriptar(String texto) {
+    public static String encriptar(String texto, String key) {
 
         try {
-            CryptoConverter cryptoConverter = new CryptoConverter();
+          
 
-            return cryptoConverter.convertToDatabaseColumn(texto);
+            return encriptar(texto, key);
         } catch (Exception e) {
             errorMessage("encriptar() " + e.getLocalizedMessage());
         }
@@ -850,11 +850,11 @@ public class JsfUtil implements Serializable {
      * @param key : mykey
      * @return
      */
-    public static String desencriptar(String textoencriptado) {
+    public static String desencriptar(String textoEncriptado, String secretKey) {
         try {
-            CryptoConverter cryptoConverter = new CryptoConverter();
+          
 
-            return cryptoConverter.convertToEntityAttribute(textoencriptado);
+            return encriptar(textoEncriptado, secretKey);
         } catch (Exception e) {
             errorMessage("desencriptar() " + e.getLocalizedMessage());
         }
@@ -1297,19 +1297,19 @@ public class JsfUtil implements Serializable {
         return numero == null || numero.equals("") || numero < 0;
     }// </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="createJasper">  
-    private Boolean createJasper(String reportSource, String pathJasper) {
-        try {
-
-            JasperCompileManager.compileReportToFile(reportSource, pathJasper);
-
-            return true;
-        } catch (Exception e) {
-
-            errorMessage("createJasper() " + e.getLocalizedMessage());
-        }
-        return false;
-    }// </editor-fold> 
+//    // <editor-fold defaultstate="collapsed" desc="createJasper">  
+//    private Boolean createJasper(String reportSource, String pathJasper) {
+//        try {
+//
+//            JasperCompileManager.compileReportToFile(reportSource, pathJasper);
+//
+//            return true;
+//        } catch (Exception e) {
+//
+//            errorMessage("createJasper() " + e.getLocalizedMessage());
+//        }
+//        return false;
+//    }// </editor-fold> 
 
     // <editor-fold defaultstate="collapsed" desc="primercaracter()">
     public static String primerCaracter(String texto) {
