@@ -8,7 +8,8 @@ package com.avbravo.jmoordbutils.timepicker;
 
 import com.avbravo.jmoordbutils.DateUtil;
 import com.avbravo.jmoordbutils.JsfUtil;
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.ejb.Stateless;
+
 import java.io.Serializable;
 
 import java.time.LocalTime;
@@ -19,9 +20,8 @@ import java.util.Map;
  *
  * @author avbravo
  */
-//@Stateless
-@RequestScoped
-public class TimePickerServices  implements Serializable{
+@Stateless
+public class TimePickerServices  {
     
     
  private Map<String, String> numbers;
