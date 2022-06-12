@@ -4,7 +4,7 @@
 
     <groupId>com.avbravo</groupId>
     <artifactId>jmoordbutils</artifactId>
-    <version>3.2</version>
+    <version>3.3</version>
     <packaging>ejb</packaging>
 
     <name>jmoordbutils</name>
@@ -119,11 +119,12 @@
         </dependency>
         
      
-                
-        <dependency>
+            
+             <dependency>
             <groupId>org.mongodb</groupId>
-            <artifactId>mongodb-driver</artifactId>
-            <version>3.6.0</version>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <!--<version>4.0.6</version>-->
+            <version>4.6.0</version>
         </dependency>
         
         <!--
